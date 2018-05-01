@@ -34,11 +34,13 @@ int implementation_v1(void)
             putchar(c);
         }
     }
+
+    return 0;
 }
 
 int implementation_v2(void)
 {
-    int c, d;
+    int c;
 
     while((c = getchar())!= EOF)
     {
@@ -70,6 +72,8 @@ int implementation_v2(void)
             }
         }
     }
+
+    return 0;
 }
 
 
@@ -80,7 +84,7 @@ int main(void)
     int is_special_char = 0;
     while((c = getchar()) != EOF)
     {
-        is_special_char == 0;
+        is_special_char = 0;
         
         REPLACE_CHAR(c, '\t', 't');
         REPLACE_CHAR(c, '\b', 'b');

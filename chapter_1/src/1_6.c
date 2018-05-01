@@ -1,7 +1,6 @@
 #include <stdio.h>
 
-/* count digits, white space, others  */
-void main()
+int main(void)
 {
     int c,  i, nwhite, nother;
     int ndigit[10];
@@ -19,7 +18,7 @@ void main()
         {
             ++ndigit[c - '0'];
         }
-        else if(c == ' ' || c == '\t' || c == '\n')
+        else if(c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f')
         {
             ++nwhite;
         }
@@ -37,5 +36,7 @@ void main()
     }
 
     printf(", white space  = %d, other = %d\n", nwhite, nother);
+
+    return 0;
 }
 

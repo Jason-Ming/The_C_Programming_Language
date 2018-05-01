@@ -2,7 +2,9 @@
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
+#include "text.h"
 int generate_input_files(void)
 {
     FILE *			f;
@@ -16,14 +18,16 @@ int generate_input_files(void)
                         	"a b c d e f g h i j k l m "
                         	"n\n";
 
+    system("mkdir test_files");
+    
 	/* Generate the following: */
 	/* 0. input file contains zero words */
-	f = fopen("test0", "w");
+	f = fopen("./test_files/test0.txt", "w");
 	assert(f != NULL);
 	fclose(f);
 
 	/* 1. input file contains 1 enormous word without any newlines */
-	f = fopen("test1", "w");
+	f = fopen("./test_files/test1.txt", "w");
 	assert(f != NULL);
 	for (i = 0; i < ((66000ul / 26) + 1); i++)
 	{
@@ -32,7 +36,7 @@ int generate_input_files(void)
 	fclose(f);
 
 	/* 2. input file contains all white space without newlines */
-	f = fopen("test2", "w");
+	f = fopen("./test_files/test2.txt", "w");
 	assert(f != NULL);
 	for (i = 0; i < ((66000ul / 4) + 1); i++)
 	{
@@ -41,7 +45,7 @@ int generate_input_files(void)
 	fclose(f);
 
 	/* 3. input file contains 66000 newlines */
-	f = fopen("test3", "w");
+	f = fopen("./test_files/test3.txt", "w");
 	assert(f != NULL);
 	for (i = 0; i < 66000; i++)
 	{
@@ -53,7 +57,7 @@ int generate_input_files(void)
 	* {huge sequence of whitespace of different kinds}
 	* /word
 	*/
-	f = fopen("test4", "w");
+	f = fopen("./test_files/test4.txt", "w");
 	assert(f != NULL);
 	fputs("word", f);
 	for (i = 0; i < ((66000ul / 26) + 1); i++)
@@ -66,7 +70,7 @@ int generate_input_files(void)
 	/* 5. input file contains 66000 single letter words,
 	* 66 to the line
 	*/
-	f = fopen("test5", "w");
+	f = fopen("./test_files/test5.txt", "w");
 	assert(f != NULL);
 	for (i = 0; i < 1000; i++)
 	{
@@ -75,7 +79,7 @@ int generate_input_files(void)
 	fclose(f);
 
 	/* 6. input file contains 66000 words without any newlines */
-	f = fopen("test6", "w");
+	f = fopen("./test_files/test6.txt", "w");
 	assert(f != NULL);
 	for (i = 0; i < 66000; i++)
 	{
@@ -85,9 +89,21 @@ int generate_input_files(void)
 	return 0;
 }
 
+#define CHECK(condition) \
+    do\
+    {\
+        if(!(condition))\
+        {\
+            printf(#condition" failed!\n");\
+        }\
+        else\
+        {\
+            printf(#condition" success!\n");\
+        }\
+    }while(0)
+
 int main(int argc, char**argv)
 {
-	int i ;
     printf(" %d parameters: \n", argc);
     for(int i = 0; i < argc; i++)
     {
@@ -102,7 +118,13 @@ int main(int argc, char**argv)
     }
     else if(strcmp(argv[1], "t") == 0)
     {
-        
+        CHECK(count_words("./test_files/test0.txt")==0);
+        CHECK(count_words("./test_files/test1.txt")==1);
+        CHECK(count_words("./test_files/test2.txt")==0);
+        CHECK(count_words("./test_files/test3.txt")==0);
+        CHECK(count_words("./test_files/test4.txt")==2);
+        CHECK(count_words("./test_files/test5.txt")==66000);
+        CHECK(count_words("./test_files/test6.txt")==66000);
     }
     else
     {

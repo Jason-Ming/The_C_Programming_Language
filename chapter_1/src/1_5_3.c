@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void main()
+int main(void)
 {
     long nc, c_n, c_r;
     int c;
@@ -25,6 +25,7 @@ void main()
 
     printf("%ld, %ld, %ld\n", nc, c_n, c_r);
 
+    return 0;
 }
 
 
