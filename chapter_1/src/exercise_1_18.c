@@ -56,28 +56,33 @@ int cutoff_space_and_tabs(char *pstr_buf)
     return 0;
 }
 
-int process_lines_and_output(const char *filename, const char *filename_output)
+ENUM_RETURN process_lines_and_output(const char *filename, const char *filename_output, int *lines)
 {
     int len; //current line length
-    int lines = 0; //maximum length seen so far
+    
     char line[MAX_LINE_BUFFER]; //current input line
+    
     FILE *fp = fopen(filename, "r");
-    assert(fp != NULL);
+    R_ASSERT(fp != NULL, RETURN_FAILURE);
     FILE *fpw = fopen(filename_output, "w");
-    assert(fpw != NULL);
+    R_ASSERT(fpw != NULL, RETURN_FAILURE);
+    R_ASSERT(lines != NULL, RETURN_FAILURE);
+
+    *lines = 0; //maximum length seen so far
+    
     while((len = getline(fp, line, MAX_LINE_BUFFER)) > 0)
     {
         cutoff_space_and_tabs(line);
         if(strlen(line) != 0)
         {
             fputs(line, fpw);
-            lines++;
+            (*lines)++;
         }
     }
 
     fclose(fp);
     fclose(fpw);
-    return lines;
+    return RETURN_SUCCESS;
 }
 
 typedef struct TAG_STRU_TEST_INFO
@@ -181,7 +186,8 @@ int generate_input_files(void)
 int test_input_files_and_output(void)
 {
     int  lines = 0;
-
+    ENUM_RETURN ret_val = RETURN_SUCCESS;
+    
     printf("*************test result:*********************\n");
     
     for(int i = 0; i < SIZE_OF_ARRAY(test_info); i++)
@@ -189,16 +195,17 @@ int test_input_files_and_output(void)
         int result = 0;
         
         printf(" %2d:    %s\n", i, test_info[i].filename);
-        lines = process_lines_and_output(test_info[i].filename, test_info[i].filename_output);
+        ret_val = process_lines_and_output(test_info[i].filename, test_info[i].filename_output, &lines);
+        R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
         if(lines != test_info[i].expect_line_number)
         {
             result = 1;
-            printf("      lines: %d, expect: %d\n", lines, test_info[i].expect_line_number);
+            R_LOG("      lines: %d, expect: %d\n", lines, test_info[i].expect_line_number);
         }
 
         if(result == 0)
         {
-            printf("        result: success!\n");
+            R_LOG("        result: success!\n");
         }
     }
 
@@ -207,17 +214,15 @@ int test_input_files_and_output(void)
 int main(int argc, char **argv)
 {
 
-    assert(argc == 2);
-    assert(argv[1] != NULL);
+    R_ASSERT(argc == 2, RETURN_FAILURE);
+    R_ASSERT(argv[1] != NULL, RETURN_FAILURE);
 
-    printf(" %d parameters: \n", argc);
+    R_LOG(" %d parameters: \n", argc);
     for(int i = 0; i < argc; i++)
     {
-        printf("argv[%d]: %s\n", i, argv[i] );
+        R_LOG("argv[%d]: %s\n", i, argv[i] );
     }
     
-    assert(argc == 2);
-
     if(strcmp(argv[1], "g") == 0)
     {
         generate_input_files();
@@ -228,7 +233,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        perror("parameters error!\n");
+        R_LOG("parameters error!\n");
         return -1;
     }
     

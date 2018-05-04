@@ -36,9 +36,9 @@ PRIVATE int getline(FILE *fp, char line[], int maxline)
     return i;
 }
 
-int reverse(char *pstr_buf)
+ENUM_RETURN reverse(char *pstr_buf)
 {
-    assert(pstr_buf != NULL);
+    R_ASSERT(pstr_buf != NULL, RETURN_FAILURE);
     int start = 0;
     int end = strlen(pstr_buf) - 1;
     char temp;
@@ -51,31 +51,37 @@ int reverse(char *pstr_buf)
         end--;
     }
 
-    return 0;
+    return RETURN_SUCCESS;
 }
 
-int process_lines_and_output(const char *filename, const char *filename_output)
+ENUM_RETURN process_lines_and_output(const char *filename, const char *filename_output, int *lines)
 {
     int len; //current line length
-    int lines = 0; //maximum length seen so far
+    ENUM_RETURN ret_val = RETURN_SUCCESS;
+    
     char line[MAX_LINE_BUFFER]; //current input line
     FILE *fp = fopen(filename, "r");
-    assert(fp != NULL);
+    R_ASSERT(fp != NULL, RETURN_FAILURE);
     FILE *fpw = fopen(filename_output, "w");
-    assert(fpw != NULL);
+    R_ASSERT(fpw != NULL, RETURN_FAILURE);
+
+    R_ASSERT(lines != NULL, RETURN_FAILURE);
+    *lines = 0; //maximum length seen so far
+    
     while((len = getline(fp, line, MAX_LINE_BUFFER)) > 0)
     {
-        reverse(line);
+        ret_val = reverse(line);
+        R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
         if(strlen(line) != 0)
         {
             fputs(line, fpw);
-            lines++;
+            (*lines)++;
         }
     }
 
     fclose(fp);
     fclose(fpw);
-    return lines;
+    return RETURN_SUCCESS;
 }
 
 typedef struct TAG_STRU_TEST_INFO
@@ -168,35 +174,37 @@ int generate_input_files(void)
     for(int i = 0; i < SIZE_OF_ARRAY(test_info); i++)
     {
         f = fopen(test_info[i].filename, "w");
-    	assert(f != NULL);
+    	R_ASSERT(f != NULL, RETURN_FAILURE);
         fputs(test_info[i].input_lines, f);
     	fclose(f);
     }
 
-	return 0;
+	return RETURN_SUCCESS;
 }
 
 int test_input_files_and_output(void)
 {
+    ENUM_RETURN ret_val = RETURN_SUCCESS;
     int  lines = 0;
 
-    printf("*************test result:*********************\n");
+    R_LOG("*************test result:*********************\n");
     
     for(int i = 0; i < SIZE_OF_ARRAY(test_info); i++)
     {
         int result = 0;
         
-        printf(" %2d:    %s\n", i, test_info[i].filename);
-        lines = process_lines_and_output(test_info[i].filename, test_info[i].filename_output);
+        R_LOG(" %2d:    %s\n", i, test_info[i].filename);
+        ret_val = process_lines_and_output(test_info[i].filename, test_info[i].filename_output, &lines);
+        R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
         if(lines != test_info[i].expect_line_number)
         {
             result = 1;
-            printf("      lines: %d, expect: %d\n", lines, test_info[i].expect_line_number);
+            R_LOG("      lines: %d, expect: %d\n", lines, test_info[i].expect_line_number);
         }
 
         if(result == 0)
         {
-            printf("        result: success!\n");
+            R_LOG("        result: success!\n");
         }
     }
 
@@ -204,17 +212,17 @@ int test_input_files_and_output(void)
 }
 int main(int argc, char **argv)
 {
+    R_ASSERT(log_init() == RETURN_SUCCESS, RETURN_FAILURE);
 
-    assert(argc == 2);
-    assert(argv[1] != NULL);
+    R_ASSERT_LOG(argc == 2, RETURN_FAILURE, "argc = %d", argc);
+    R_ASSERT(argv[1] != NULL, RETURN_FAILURE);
 
-    printf(" %d parameters: \n", argc);
+    R_LOG(" %d parameters: \n", argc);
+    
     for(int i = 0; i < argc; i++)
     {
-        printf("argv[%d]: %s\n", i, argv[i] );
+        R_LOG("argv[%d]: %s\n", i, argv[i] );
     }
-    
-    assert(argc == 2);
 
     if(strcmp(argv[1], "g") == 0)
     {
@@ -226,7 +234,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        perror("parameters error!\n");
+        R_LOG("parameters error!\n");
         return -1;
     }
     
