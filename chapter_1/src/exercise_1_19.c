@@ -3,56 +3,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "defines.h"
+#include "s_defines.h"
+#include "s_text.h"
+#include "s_cmd.h"
+#include "s_log.h"
 
-#define MAX_LINE_BUFFER 100 //maximum input line length
+#define MAX_LINE_BUFFER 1000 //maximum input line length
 
-/* read a line into line, return length */
-PRIVATE int getline(FILE *fp, char line[], int maxline)
-{
-    int c;
-    int i = 0;
 
-    while((c = fgetc(fp)) != EOF && c != '\n')
-    {
-        if(i < maxline-1)
-        {
-            line[i] = c;
-        }
-        ++i;
-    }
-
-    if(c == '\n')
-    {
-        if(i < (maxline-1))
-        {
-            line[i] = c;
-        }
-        ++i;
-    }
-
-    line[(maxline - 1) > i ? i : (maxline - 1)] = '\0';
-
-    return i;
-}
-
-ENUM_RETURN reverse(char *pstr_buf)
-{
-    R_ASSERT(pstr_buf != NULL, RETURN_FAILURE);
-    int start = 0;
-    int end = strlen(pstr_buf) - 1;
-    char temp;
-    while(start < end)
-    {
-        temp = pstr_buf[start];
-        pstr_buf[start] = pstr_buf[end];
-        pstr_buf[end] = temp;
-        start++;
-        end--;
-    }
-
-    return RETURN_SUCCESS;
-}
 
 ENUM_RETURN process_lines_and_output(const char *filename, const char *filename_output, int *lines)
 {
@@ -62,8 +20,9 @@ ENUM_RETURN process_lines_and_output(const char *filename, const char *filename_
     char line[MAX_LINE_BUFFER]; //current input line
     FILE *fp = fopen(filename, "r");
     R_ASSERT(fp != NULL, RETURN_FAILURE);
+    
     FILE *fpw = fopen(filename_output, "w");
-    R_ASSERT(fpw != NULL, RETURN_FAILURE);
+    R_ASSERT_DO(fpw != NULL, RETURN_FAILURE, fclose(fp));
 
     R_ASSERT(lines != NULL, RETURN_FAILURE);
     *lines = 0; //maximum length seen so far
@@ -165,7 +124,7 @@ STRU_TEST_INFO test_info[] =
     },
 };
 
-int generate_input_files(void)
+ENUM_RETURN generate_input_files(struct TAG_STRU_VALUE *value)
 {
     FILE *f = NULL;
 
@@ -182,7 +141,7 @@ int generate_input_files(void)
 	return RETURN_SUCCESS;
 }
 
-int test_input_files_and_output(void)
+ENUM_RETURN test_input_files_and_output(struct TAG_STRU_VALUE *value)
 {
     ENUM_RETURN ret_val = RETURN_SUCCESS;
     int  lines = 0;
@@ -210,35 +169,52 @@ int test_input_files_and_output(void)
 
     return 0;
 }
+
+ENUM_RETURN process_input_files_and_output(struct TAG_STRU_VALUE *value)
+{
+    if(value == NULL)
+    {
+        printf("need input and output file name\n");
+        return RETURN_FAILURE;
+    }
+
+    struct TAG_STRU_VALUE *temp = value;
+
+    char* file1 = temp->value;
+    char *file2 = NULL;
+    
+    temp = temp->next;
+
+    if(temp != NULL)
+    {
+        file2 = temp->value;
+    }
+    
+    ENUM_RETURN ret_val; 
+    int lines;
+    ret_val = process_lines_and_output(file1,file2, &lines);
+    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+
+    return RETURN_SUCCESS;
+}
+
 int main(int argc, char **argv)
 {
-    R_ASSERT(log_init() == RETURN_SUCCESS, RETURN_FAILURE);
-
-    R_ASSERT_LOG(argc == 2, RETURN_FAILURE, "argc = %d", argc);
-    R_ASSERT(argv[1] != NULL, RETURN_FAILURE);
-
-    R_LOG(" %d parameters: \n", argc);
+    ENUM_RETURN ret_val;
+    ret_val = register_introduction("this program reverses the character strings in each line of input file.");
+    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     
-    for(int i = 0; i < argc; i++)
-    {
-        R_LOG("argv[%d]: %s\n", i, argv[i] );
-    }
+    ret_val = register_option("-g", OPTION_TYPE_OPTIONAL, VALUE_TYPE_SWITCH, generate_input_files, "generate test files in directory[./test_files]");
+    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-    if(strcmp(argv[1], "g") == 0)
-    {
-        generate_input_files();
-    }
-    else if(strcmp(argv[1], "t") == 0)
-    {
-        test_input_files_and_output();
-    }
-    else
-    {
-        R_LOG("parameters error!\n");
-        return -1;
-    }
+    ret_val = register_option("-t", OPTION_TYPE_OPTIONAL, VALUE_TYPE_SWITCH, test_input_files_and_output, "process test files in directory[./test_files]");
+    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+
+    ret_val = register_option("-f", OPTION_TYPE_OPTIONAL, VALUE_TYPE_DATA, process_input_files_and_output, "-f file1 file2 process file1 and output result to file2");
+    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     
-    return 0;
+    return process(argc, argv);
+    
 }
 
 /*

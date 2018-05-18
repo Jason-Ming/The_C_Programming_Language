@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-#include "defines.h"
+#include "s_defines.h"
 
 //these lines is for test:
 //this line's length is 100: 

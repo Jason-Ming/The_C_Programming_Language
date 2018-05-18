@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <assert.h>
-#include "text.h"
+#include "s_text.h"
 
 #ifndef ARRAY_SIZE
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof((a)[0]))

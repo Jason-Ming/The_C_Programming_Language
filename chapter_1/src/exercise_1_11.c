@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "text.h"
+#include "s_text.h"
 int generate_input_files(void)
 {
     FILE *			f;

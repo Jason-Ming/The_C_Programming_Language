@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "defines.h"
+#include "s_defines.h"
+#include "s_log.h"
 
 #define MAX_LINE_BUFFER 100 //maximum input line length
 

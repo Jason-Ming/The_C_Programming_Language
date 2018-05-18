@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "draw.h"
-#include "defines.h"
+#include "s_draw.h"
+#include "s_defines.h"
 
 #define MAX_ChARACTOR 256 //ASCII字符个数，如果有中文，那么字符的值可能超过127
 #define ARRAY_LENGTH_OF_NUM_OF_CHARACTORS (MAX_ChARACTOR)

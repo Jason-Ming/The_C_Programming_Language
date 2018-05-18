@@ -1,6 +1,7 @@
 LIB_PATH=$(HOME)/github/stupid_lib
 
 CC      := gcc
+#CFLAGS  += -M
 CFLAGS  += -g -Wall
 CFLAGS  += -std=c99
 #CFLAGS  += -D CPPUTEST
@@ -15,7 +16,7 @@ CPPFLAGS  += -g -Wall
 #CXXFLAGS += -include $(CPPUTEST_HOME)/include/CppUTest/MemoryLeakDetectorNewMacros.h
 
 #LDFLAGS := -L$(CPPUTEST_HOME)/lib -lCppUTest
-LDFLAGS += -L$(LIB_PATH)/lib -lstupid
+LDFLAGS += -L$(LIB_PATH)/debug/lib -Wl,-rpath $(LIB_PATH)/debug/lib -lstupid
 
 
 TARGET = 1_1.bin 1_2.bin 1_3.bin 1_4.bin 1_5_1.bin 1_5_2.bin 1_5_3.bin 1_5_4.bin 1_6.bin 1_7.bin  1_8.bin 1_9.bin
@@ -26,6 +27,13 @@ all: $(TARGET)
 
 %.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS)
+
+%.d:%.c
+	@set -e; rm -f $@; $(CC) -MM $< $(INCLUDEFLAGS) > $@.$$$$; \
+	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
+
+-include $(OBJS:.o=.d)
 
 .PHONY: clean
 clean:
