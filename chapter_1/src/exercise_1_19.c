@@ -124,7 +124,7 @@ STRU_TEST_INFO test_info[] =
     },
 };
 
-ENUM_RETURN generate_input_files(struct TAG_STRU_VALUE *value)
+ENUM_RETURN generate_input_files(struct TAG_STRU_ARG *value)
 {
     FILE *f = NULL;
 
@@ -141,7 +141,7 @@ ENUM_RETURN generate_input_files(struct TAG_STRU_VALUE *value)
 	return RETURN_SUCCESS;
 }
 
-ENUM_RETURN test_input_files_and_output(struct TAG_STRU_VALUE *value)
+ENUM_RETURN test_input_files_and_output(struct TAG_STRU_ARG *value)
 {
     ENUM_RETURN ret_val = RETURN_SUCCESS;
     int  lines = 0;
@@ -170,7 +170,7 @@ ENUM_RETURN test_input_files_and_output(struct TAG_STRU_VALUE *value)
     return 0;
 }
 
-ENUM_RETURN process_input_files_and_output(struct TAG_STRU_VALUE *value)
+ENUM_RETURN process_input_files_and_output(struct TAG_STRU_ARG *value)
 {
     if(value == NULL)
     {
@@ -178,7 +178,7 @@ ENUM_RETURN process_input_files_and_output(struct TAG_STRU_VALUE *value)
         return RETURN_FAILURE;
     }
 
-    struct TAG_STRU_VALUE *temp = value;
+    struct TAG_STRU_ARG *temp = value;
 
     char* file1 = temp->value;
     char *file2 = NULL;
@@ -204,13 +204,13 @@ int main(int argc, char **argv)
     ret_val = register_introduction("this program reverses the character strings in each line of input file.");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     
-    ret_val = register_option("-g", OPTION_TYPE_OPTIONAL, VALUE_TYPE_SWITCH, generate_input_files, "generate test files in directory[./test_files]");
+    ret_val = register_option("-g", OPTION_TYPE_OPTIONAL, ARG_TYPE_SWITCH, generate_input_files, "generate test files in directory[./test_files]");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-    ret_val = register_option("-t", OPTION_TYPE_OPTIONAL, VALUE_TYPE_SWITCH, test_input_files_and_output, "process test files in directory[./test_files]");
+    ret_val = register_option("-t", OPTION_TYPE_OPTIONAL, ARG_TYPE_SWITCH, test_input_files_and_output, "process test files in directory[./test_files]");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-    ret_val = register_option("-f", OPTION_TYPE_OPTIONAL, VALUE_TYPE_DATA, process_input_files_and_output, "-f file1 file2 process file1 and output result to file2");
+    ret_val = register_option("-f", OPTION_TYPE_OPTIONAL, ARG_TYPE_DATA, process_input_files_and_output, "-f file1 file2 process file1 and output result to file2");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     
     return process(argc, argv);
