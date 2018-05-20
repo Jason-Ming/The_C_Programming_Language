@@ -14,23 +14,41 @@
 
 ENUM_RETURN process_lines_and_output(const char *filename, const char *filename_output, int *lines)
 {
+    R_ASSERT(filename != NULL, RETURN_FAILURE);
+    R_ASSERT(filename_output != NULL, RETURN_FAILURE);
+    R_ASSERT(lines != NULL, RETURN_FAILURE);
+    
     int len; //current line length
     ENUM_RETURN ret_val = RETURN_SUCCESS;
     
     char line[MAX_LINE_BUFFER]; //current input line
     FILE *fp = fopen(filename, "r");
-    R_ASSERT(fp != NULL, RETURN_FAILURE);
+    if(fp == NULL)
+    {
+        ret_val = add_current_user_error(ERROR_CODE_FILE_NOT_EXIST, filename);
+        R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+
+        return RETURN_FAILURE;
+    }
     
     FILE *fpw = fopen(filename_output, "w");
-    R_ASSERT_DO(fpw != NULL, RETURN_FAILURE, fclose(fp));
+    if(fp == NULL)
+    {
+        fclose(fp);
+        
+        ret_val = add_current_user_error(ERROR_CODE_FILE_NOT_EXIST, filename_output);
+        R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-    R_ASSERT(lines != NULL, RETURN_FAILURE);
+        return RETURN_FAILURE;
+    }
+
+    
     *lines = 0; //maximum length seen so far
     
     while((len = getline(fp, line, MAX_LINE_BUFFER)) > 0)
     {
         ret_val = reverse(line);
-        R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+        R_ASSERT_DO(ret_val == RETURN_SUCCESS, RETURN_FAILURE, fclose(fp);fclose(fpw););
         if(strlen(line) != 0)
         {
             fputs(line, fpw);
@@ -124,7 +142,7 @@ STRU_TEST_INFO test_info[] =
     },
 };
 
-ENUM_RETURN generate_input_files(struct TAG_STRU_ARG *value)
+ENUM_RETURN subcmd_generate_proc(STRU_OPTION_RUN_BLOCK *value)
 {
     FILE *f = NULL;
 
@@ -141,7 +159,7 @@ ENUM_RETURN generate_input_files(struct TAG_STRU_ARG *value)
 	return RETURN_SUCCESS;
 }
 
-ENUM_RETURN test_input_files_and_output(struct TAG_STRU_ARG *value)
+ENUM_RETURN subcmd_test_proc(STRU_OPTION_RUN_BLOCK *value)
 {
     ENUM_RETURN ret_val = RETURN_SUCCESS;
     int  lines = 0;
@@ -170,26 +188,25 @@ ENUM_RETURN test_input_files_and_output(struct TAG_STRU_ARG *value)
     return 0;
 }
 
-ENUM_RETURN process_input_files_and_output(struct TAG_STRU_ARG *value)
+PRIVATE const char *output_file = NULL;
+ENUM_RETURN subcmd_reverse_option_o_proc(STRU_ARG *arg)
 {
-    if(value == NULL)
-    {
-        printf("need input and output file name\n");
-        return RETURN_FAILURE;
-    }
+    R_ASSERT(arg != NULL, RETURN_FAILURE);
+    R_ASSERT(arg->value != NULL, RETURN_FAILURE);
 
-    struct TAG_STRU_ARG *temp = value;
+    /* 检查文件名是否合法 */
+    output_file = arg->value;
 
-    char* file1 = temp->value;
-    char *file2 = NULL;
-    
-    temp = temp->next;
+    return RETURN_SUCCESS;
+}
 
-    if(temp != NULL)
-    {
-        file2 = temp->value;
-    }
-    
+ENUM_RETURN subcmd_reverse_proc(STRU_OPTION_RUN_BLOCK *value)
+{
+    R_ASSERT(value != NULL, RETURN_FAILURE);
+
+    const char* file1 = get_input_file_of_subcmd(value->subcmd);
+    const char *file2 = output_file;
+
     ENUM_RETURN ret_val; 
     int lines;
     ret_val = process_lines_and_output(file1,file2, &lines);
@@ -201,16 +218,22 @@ ENUM_RETURN process_input_files_and_output(struct TAG_STRU_ARG *value)
 int main(int argc, char **argv)
 {
     ENUM_RETURN ret_val;
-    ret_val = register_introduction("this program reverses the character strings in each line of input file.");
+    ret_val = register_introduction("This program reverses the character strings in each line of input file.");
+    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+
+    ret_val = register_usage("<sub-command> [<input files>] [<options> [<args>]]");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     
-    ret_val = register_option("-g", OPTION_TYPE_OPTIONAL, ARG_TYPE_SWITCH, generate_input_files, "generate test files in directory[./test_files]");
+    ret_val = register_subcmd("generate", BOOLEAN_FALSE, subcmd_generate_proc, "generate test files in directory[./test_files]");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-    ret_val = register_option("-t", OPTION_TYPE_OPTIONAL, ARG_TYPE_SWITCH, test_input_files_and_output, "process test files in directory[./test_files]");
+    ret_val = register_subcmd("test", BOOLEAN_FALSE, subcmd_test_proc, "process test files in directory[./test_files]");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-    ret_val = register_option("-f", OPTION_TYPE_OPTIONAL, ARG_TYPE_DATA, process_input_files_and_output, "-f file1 file2 process file1 and output result to file2");
+    ret_val = register_subcmd("reverse", BOOLEAN_TRUE, subcmd_reverse_proc, "process file1 and output result to file2");
+    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+
+    ret_val = register_option("reverse", "-o", OPTION_TYPE_OPTIONAL, ARG_TYPE_DATA, subcmd_reverse_option_o_proc, "-o <file>file1 file2 process file1 and output result to file2");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     
     return process(argc, argv);
