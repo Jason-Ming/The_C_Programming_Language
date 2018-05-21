@@ -164,24 +164,24 @@ ENUM_RETURN subcmd_test_proc(STRU_OPTION_RUN_BLOCK *value)
     ENUM_RETURN ret_val = RETURN_SUCCESS;
     int  lines = 0;
 
-    R_LOG("*************test result:*********************\n");
+    printf("*************test result:*********************\n");
     
     for(int i = 0; i < SIZE_OF_ARRAY(test_info); i++)
     {
         int result = 0;
         
-        R_LOG(" %2d:    %s\n", i, test_info[i].filename);
+        printf(" %2d:    %s\n", i, test_info[i].filename);
         ret_val = process_lines_and_output(test_info[i].filename, test_info[i].filename_output, &lines);
         R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
         if(lines != test_info[i].expect_line_number)
         {
             result = 1;
-            R_LOG("      lines: %d, expect: %d\n", lines, test_info[i].expect_line_number);
+            printf("      lines: %d, expect: %d\n", lines, test_info[i].expect_line_number);
         }
 
         if(result == 0)
         {
-            R_LOG("        result: success!\n");
+            printf("        result: success!\n");
         }
     }
 
