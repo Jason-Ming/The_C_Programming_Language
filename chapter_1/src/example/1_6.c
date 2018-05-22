@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main(void)
+int main_1_6(void)
 {
     int c,  i, nwhite, nother;
     int ndigit[10];

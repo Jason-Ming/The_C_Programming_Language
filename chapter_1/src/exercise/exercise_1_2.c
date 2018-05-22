@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main(void)
+int exercise_1_2(void)
 {
     printf("Audible or visual alert. \a\n");
     printf("Form feed \f\n");

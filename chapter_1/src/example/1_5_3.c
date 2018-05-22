@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main(void)
+int main_1_5_3(void)
 {
     long nc, c_n, c_r;
     int c;

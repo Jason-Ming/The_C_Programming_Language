@@ -3,7 +3,7 @@
 /* count charactors in input; 2nd version */
 #define COUNT_CHAR(v, c, l) if(v == c){++l;}
 
-int main()
+int exercise_1_8()
 {
     int c, last_c;
     double number_charactor, number_tab = 0, number_blank = 0, number_newline = 0;

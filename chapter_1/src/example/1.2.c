@@ -1,15 +1,9 @@
 #include <stdio.h> 
+#include "1.2.h"
 /* 当 fahr=0，20，… ，300 时，分别
  打印华氏温度与摄氏温度对照表 */ 
 
-
-void float_format(void)
-{
-    float f = 0.15625;
-    printf("0x%x\n", *(int*)&f);
-}
-
-void version_1(void)
+void main_1_2_version_1(void)
 {
     int fahr, celsius; 
     int lower, upper, step; 
@@ -28,7 +22,7 @@ void version_1(void)
     }
 }
 
-void version_2(void)
+void main_1_2_version_2(void)
 {    
     float fahr, celsius; 
     float lower, upper, step; 
@@ -50,9 +44,12 @@ void version_2(void)
 
 }
 
-int main(void) 
+ENUM_RETURN main_1_2(void) 
 { 
-    version_2();
-    return 0;
+    main_1_2_version_1();
+    
+    main_1_2_version_2();
+    
+    return RETURN_SUCCESS;
 } 
 

@@ -26,7 +26,7 @@ ENUM_RETURN subcmd_fold_proc(STRU_OPTION_RUN_BLOCK *value)
     return RETURN_SUCCESS;
 }
 
-int main(int argc, char **argv)
+int exercise_1_22(int argc, char **argv)
 {
     ENUM_RETURN ret_val;
     ret_val = register_introduction("this program folds the lines of input file.");

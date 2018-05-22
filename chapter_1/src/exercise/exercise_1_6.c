@@ -8,7 +8,7 @@
 * respond.
 */
 #include <stdio.h>
-int main(void)
+int exercise_1_6(void)
 {
     printf("Press a key. Enter would be nice :-)\n\n");
     printf("The expression getchar() != EOF evaluates %d\n", getchar() != EOF);

@@ -57,7 +57,7 @@ int cutoff_space_and_tabs(char *pstr_buf)
     return 0;
 }
 
-ENUM_RETURN process_lines_and_output(const char *filename, const char *filename_output, int *lines)
+ENUM_RETURN exercise_1_18_process_lines_and_output(const char *filename, const char *filename_output, int *lines)
 {
     int len; //current line length
     
@@ -96,7 +96,7 @@ typedef struct TAG_STRU_TEST_INFO
 
 #define TEST_FILE_NAME(index) "./test_files/test_exercise_1_18_"#index".txt","./test_files/test_exercise_1_18_"#index"_output.txt"
 
-STRU_TEST_INFO test_info[] =
+STRU_TEST_INFO exercise_1_18_test_info[] =
 {
     {/* 0. input file contains zero words */
         TEST_FILE_NAME(0), 
@@ -167,41 +167,41 @@ STRU_TEST_INFO test_info[] =
     },
 };
 
-int generate_input_files(void)
+int exercise_1_18_generate_input_files(void)
 {
     FILE *f = NULL;
 
     system("mkdir test_files");
 
-    for(int i = 0; i < SIZE_OF_ARRAY(test_info); i++)
+    for(int i = 0; i < SIZE_OF_ARRAY(exercise_1_18_test_info); i++)
     {
-        f = fopen(test_info[i].filename, "w");
+        f = fopen(exercise_1_18_test_info[i].filename, "w");
     	assert(f != NULL);
-        fputs(test_info[i].input_lines, f);
+        fputs(exercise_1_18_test_info[i].input_lines, f);
     	fclose(f);
     }
 
 	return 0;
 }
 
-int test_input_files_and_output(void)
+int exercise_1_18_test_input_files_and_output(void)
 {
     int  lines = 0;
     ENUM_RETURN ret_val = RETURN_SUCCESS;
     
     printf("*************test result:*********************\n");
     
-    for(int i = 0; i < SIZE_OF_ARRAY(test_info); i++)
+    for(int i = 0; i < SIZE_OF_ARRAY(exercise_1_18_test_info); i++)
     {
         int result = 0;
         
-        printf(" %2d:    %s\n", i, test_info[i].filename);
-        ret_val = process_lines_and_output(test_info[i].filename, test_info[i].filename_output, &lines);
+        printf(" %2d:    %s\n", i, exercise_1_18_test_info[i].filename);
+        ret_val = exercise_1_18_process_lines_and_output(exercise_1_18_test_info[i].filename, exercise_1_18_test_info[i].filename_output, &lines);
         R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
-        if(lines != test_info[i].expect_line_number)
+        if(lines != exercise_1_18_test_info[i].expect_line_number)
         {
             result = 1;
-            R_LOG("      lines: %d, expect: %d\n", lines, test_info[i].expect_line_number);
+            R_LOG("      lines: %d, expect: %d\n", lines, exercise_1_18_test_info[i].expect_line_number);
         }
 
         if(result == 0)
@@ -212,7 +212,7 @@ int test_input_files_and_output(void)
 
     return 0;
 }
-int main(int argc, char **argv)
+int exercise_1_18(int argc, char **argv)
 {
 
     R_ASSERT(argc == 2, RETURN_FAILURE);
@@ -226,11 +226,11 @@ int main(int argc, char **argv)
     
     if(strcmp(argv[1], "g") == 0)
     {
-        generate_input_files();
+        exercise_1_18_generate_input_files();
     }
     else if(strcmp(argv[1], "t") == 0)
     {
-        test_input_files_and_output();
+        exercise_1_18_test_input_files_and_output();
     }
     else
     {

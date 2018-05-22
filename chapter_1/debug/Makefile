@@ -1,7 +1,9 @@
 OBJS=*.o
 ALL_OBJS = $(ROOT_DIR)/$(OBJS_DIR)/$(OBJS)
 
-all: $(ROOT_DIR)/$(BIN_DIR)/$(BIN)
+all: clean $(ROOT_DIR)/$(BIN_DIR)/$(BIN)
+clean:
+	@rm -rf $(ROOT_DIR)/$(BIN_DIR)/$(BIN)
 
 $(ROOT_DIR)/$(BIN_DIR)/$(BIN):
 	$(CC) -o $@ $(ALL_OBJS) $(LDFLAGS)

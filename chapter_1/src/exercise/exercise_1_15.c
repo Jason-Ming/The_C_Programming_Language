@@ -9,7 +9,7 @@ void float_format(void)
     printf("0x%x\n", *(int*)&f);
 }
 
-void version_1(void)
+void exercise_1_15_version_1(void)
 {
     int fahr, celsius; 
     int lower, upper, step; 
@@ -33,7 +33,7 @@ float FtoC(float x)
     return (5.0 / 9.0)*(x-32); 
 }
 
-void version_2(void)
+void exercise_1_15_version_2(void)
 {    
     float fahr, celsius; 
     float lower, upper, step; 
@@ -55,9 +55,9 @@ void version_2(void)
 
 }
 
-int main(void) 
+int exercise_1_15(void) 
 { 
-    version_2();
+    exercise_1_15_version_2();
     return 0;
 } 
 

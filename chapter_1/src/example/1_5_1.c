@@ -22,9 +22,10 @@ void copy_input_to_output2()
     };
 }
 
-int main(void)
+int main_1_5_1(void)
 {
     copy_input_to_output1();
-    
+
+    return 0;
 }
 

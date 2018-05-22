@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 #include "s_text.h"
-int generate_input_files(void)
+int exercise_1_11_generate_input_files(void)
 {
     FILE *			f;
 	unsigned long	i;
@@ -102,7 +102,7 @@ int generate_input_files(void)
         }\
     }while(0)
 
-int main(int argc, char**argv)
+int exercise_1_11(int argc, char**argv)
 {
     printf(" %d parameters: \n", argc);
     for(int i = 0; i < argc; i++)
@@ -114,7 +114,7 @@ int main(int argc, char**argv)
 
     if(strcmp(argv[1], "g") == 0)
     {
-        generate_input_files();
+        exercise_1_11_generate_input_files();
     }
     else if(strcmp(argv[1], "t") == 0)
     {

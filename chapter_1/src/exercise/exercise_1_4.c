@@ -2,7 +2,7 @@
 /* 当 fahr=0，20，… ，300 时，分别
  打印华氏温度与摄氏温度对照表 */ 
 
-int main(void) 
+int exercise_1_4(void) 
 { 
     float fahr, celsius; 
     float lower, upper, step; 

@@ -123,7 +123,7 @@ PRIVATE ENUM_RETURN output_word_length(const char* filename_input)
     return RETURN_SUCCESS;
 }
 
-int main(int argc, char** argv)
+int exercise_1_13(int argc, char** argv)
 {
     int retval;
     assert(argc == 2);

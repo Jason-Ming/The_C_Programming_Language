@@ -81,7 +81,7 @@ PRIVATE ENUM_RETURN output_charactors_number(const char* filename_input)
     return RETURN_SUCCESS;
 }
 
-int main(int argc, char** argv)
+int exercise_1_14(int argc, char** argv)
 {
     int retval;
     assert(argc == 2);

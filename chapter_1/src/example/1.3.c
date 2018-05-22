@@ -1,8 +1,10 @@
 #include <stdio.h> 
+#include "1.3.h"
+
 /* 当 fahr=0，20，… ，300 时，分别
  打印华氏温度与摄氏温度对照表 */ 
 
-int main(void) 
+ENUM_RETURN main_1_3(void) 
 { 
     float fahr, celsius; 
     
@@ -14,5 +16,6 @@ int main(void)
         printf("%3.0f\t%6.1f\n", fahr, celsius); 
     }
 
+    return RETURN_SUCCESS;
 } 
 

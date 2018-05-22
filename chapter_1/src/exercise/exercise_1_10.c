@@ -78,7 +78,7 @@ int implementation_v2(void)
 
 
 #define REPLACE_CHAR(old, c, new) if(old == c){ putchar('\\'); putchar(new); is_special_char = 1;}
-int main(void)
+int exercise_1_10(void)
 {
     int c;
     int is_special_char = 0;

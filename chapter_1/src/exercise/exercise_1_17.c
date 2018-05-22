@@ -66,7 +66,7 @@ typedef struct TAG_STRU_TEST_INFO
 }STRU_TEST_INFO;
 
 #define TEST_FILE_NAME(index) "./test_files/test_exercise_1_17_"#index".txt"
-STRU_TEST_INFO test_info[] =
+STRU_TEST_INFO exercise_1_17_test_info[] =
 {
     {/* 0. input file contains zero words */
         TEST_FILE_NAME(0), 
@@ -132,39 +132,39 @@ STRU_TEST_INFO test_info[] =
     },
 };
 
-int generate_input_files(void)
+int exercise_1_17_generate_input_files(void)
 {
     FILE *f = NULL;
 
     system("mkdir test_files");
 
-    for(int i = 0; i < SIZE_OF_ARRAY(test_info); i++)
+    for(int i = 0; i < SIZE_OF_ARRAY(exercise_1_17_test_info); i++)
     {
-        f = fopen(test_info[i].filename, "w");
+        f = fopen(exercise_1_17_test_info[i].filename, "w");
     	assert(f != NULL);
-        fputs(test_info[i].input_lines, f);
+        fputs(exercise_1_17_test_info[i].input_lines, f);
     	fclose(f);
     }
 
 	return 0;
 }
 
-int test_input_files(void)
+int exercise_1_17_test_input_files(void)
 {
     int  lines = 0;
 
     printf("*************test result:*********************\n");
     
-    for(int i = 0; i < SIZE_OF_ARRAY(test_info); i++)
+    for(int i = 0; i < SIZE_OF_ARRAY(exercise_1_17_test_info); i++)
     {
         int result = 0;
         
-        printf(" %2d:    %s\n", i, test_info[i].filename);
-        lines = find_spec_line_and_length(test_info[i].filename);
-        if(lines != test_info[i].expect_line_number)
+        printf(" %2d:    %s\n", i, exercise_1_17_test_info[i].filename);
+        lines = find_spec_line_and_length(exercise_1_17_test_info[i].filename);
+        if(lines != exercise_1_17_test_info[i].expect_line_number)
         {
             result = 1;
-            printf("      lines: %d, expect: %d\n", lines, test_info[i].expect_line_number);
+            printf("      lines: %d, expect: %d\n", lines, exercise_1_17_test_info[i].expect_line_number);
         }
 
         if(result == 0)
@@ -175,7 +175,7 @@ int test_input_files(void)
 
     return 0;
 }
-int main(int argc, char **argv)
+int exercise_1_17(int argc, char **argv)
 {
 
     assert(argc == 2);
@@ -191,11 +191,11 @@ int main(int argc, char **argv)
 
     if(strcmp(argv[1], "g") == 0)
     {
-        generate_input_files();
+        exercise_1_17_generate_input_files();
     }
     else if(strcmp(argv[1], "t") == 0)
     {
-        test_input_files();
+        exercise_1_17_test_input_files();
     }
     else
     {

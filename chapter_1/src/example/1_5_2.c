@@ -24,7 +24,7 @@ void count_charactors_in_input_v2()
     printf("%.0f\n", nc);
 }
 
-int main(void)
+int main_1_5_2(void)
 {
     count_charactors_in_input_v2();
     return 0;

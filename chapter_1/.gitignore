@@ -1,0 +1,9 @@
+*.out
+*.o
+*.bin
+*.txt
+*.i
+*.d
+./debug/bin
+./debug/lib
+./debug/obj

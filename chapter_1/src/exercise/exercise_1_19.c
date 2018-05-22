@@ -215,7 +215,7 @@ ENUM_RETURN subcmd_reverse_proc(STRU_OPTION_RUN_BLOCK *value)
     return RETURN_SUCCESS;
 }
 
-int main(int argc, char **argv)
+int exercise_1_19(int argc, char **argv)
 {
     ENUM_RETURN ret_val;
     ret_val = register_introduction("This program reverses the character strings in each line of input file.");

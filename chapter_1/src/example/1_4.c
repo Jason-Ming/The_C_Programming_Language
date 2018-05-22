@@ -6,7 +6,7 @@
 #define UPPER 300 /* upper limit of table */
 #define STEP 20 /* step size */
 
-int main(void) 
+int main_1_4(void) 
 { 
     float fahr, celsius; 
     

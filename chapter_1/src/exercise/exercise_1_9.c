@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int implementation_v1(void)
+int exercise_1_9_implementation_v1(void)
 {
     int c;
     int inspace = 0;
@@ -27,7 +27,7 @@ int implementation_v1(void)
     return 0;
 }
 
-int implementation_v2(void)
+int exercise_1_9_implementation_v2(void)
 {
     int c, pc;/* c = charactor, pc = previous charactor */
 
@@ -57,7 +57,7 @@ int implementation_v2(void)
     return 0;
 }
 
-int main(void)
+int exercise_1_9(void)
 {
     int c, last_c = '\0';
     while((c = getchar()) != EOF)
