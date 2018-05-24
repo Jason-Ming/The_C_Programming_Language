@@ -38,7 +38,13 @@ int exercise_1_22(int argc, char **argv)
     ret_val = register_subcmd("fold", BOOLEAN_TRUE, subcmd_fold_proc, "fold each line in input files");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-    ret_val = register_option("fold", "-n", OPTION_TYPE_OPTIONAL, ARG_TYPE_DATA, subcmd_fold_option_n_proc, "set the fold number");
+    ret_val = register_option("fold", 
+        "-n", 
+        OPTION_TYPE_OPTIONAL, 
+        ARG_TYPE_DATA, 
+        subcmd_fold_option_n_proc, 
+        BOOLEAN_FALSE,
+        "set the fold number");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     
     return process(argc, argv);

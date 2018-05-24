@@ -233,7 +233,12 @@ int exercise_1_19(int argc, char **argv)
     ret_val = register_subcmd("reverse", BOOLEAN_TRUE, subcmd_reverse_proc, "process file1 and output result to file2");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-    ret_val = register_option("reverse", "-o", OPTION_TYPE_OPTIONAL, ARG_TYPE_DATA, subcmd_reverse_option_o_proc, "-o <file>file1 file2 process file1 and output result to file2");
+    ret_val = register_option("reverse", "-o", 
+        OPTION_TYPE_OPTIONAL, 
+        ARG_TYPE_DATA, 
+        subcmd_reverse_option_o_proc, 
+        BOOLEAN_FALSE,
+        "-o <file>file1 file2 process file1 and output result to file2");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     
     return process(argc, argv);
