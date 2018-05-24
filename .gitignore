@@ -4,4 +4,4 @@
 *.txt
 *.i
 *.d
-./*/debug/bin/*
+*/debug/bin/*
