@@ -18,13 +18,23 @@ typedef struct TAG_STRU_EXAMPLE_PROC
 {
     const char * n_value;
     FUNC_MAIN_PROC handler;
+    const char * introduction;
 }STRU_EXAMPLE_PROC;
 
 STRU_EXAMPLE_PROC main_proc_array[] =
 {
-    {"1.1", main_1_1},
-    {"1.2", main_1_2},
-    {"1.3", main_1_3},
+    {"1.1", main_1_1, "print 'hello, world' "},
+    {"1.2", main_1_2, "print Fahrenheit-Celsius table for fahr = 0, 20, ..., 300. use 'while'"},
+    {"1.3", main_1_3, "print Fahrenheit-Celsius table for fahr = 0, 20, ..., 300. use 'for'"},
+    {"1.4", main_1_4, "print Fahrenheit-Celsius table for fahr = 0, 20, ..., 300. use macro"},
+    {"1.5.1", main_1_5_1, "copy input to output"},
+    {"1.5.2", main_1_5_2, "count characters in input"},
+    {"1.5.3", main_1_5_3, "count lines in input"},
+    {"1.5.4", main_1_5_4, "count lines, words, and characters in input"},
+    {"1.6", main_1_6, "count digits, white space, others"},
+    {"1.7", main_1_7, "test power function"},
+    {"1.8", main_1_8, "test power function use parameter as a temporary variable"},
+    {"1.9.h", main_1_9, "print the longest input line"},
 };
 
 FUNC_MAIN_PROC get_example_handler_by_name(const char *name)
@@ -67,11 +77,11 @@ ENUM_RETURN subcmd_example_option_l_proc(struct TAG_STRU_ARG *value)
     R_ASSERT(value != NULL, RETURN_FAILURE);
     R_ASSERT(value->value != NULL, RETURN_FAILURE);
 
-    printf("Here is the example list:");
+    printf("Here is the example list:\n");
     
     for(int i = 0; i < SIZE_OF_ARRAY(main_proc_array); i++)
     {
-        printf(" %s", main_proc_array[i].n_value);
+        printf(" %-20s    %s\n", main_proc_array[i].n_value, main_proc_array[i].introduction);
 
     }
 
@@ -114,8 +124,6 @@ int main(int argc, char **argv)
         "excute example by name");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-
-    
     return process(argc, argv);
 }
 

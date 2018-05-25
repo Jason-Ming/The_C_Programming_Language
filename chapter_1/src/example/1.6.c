@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "1.6.h"
 
 int main_1_6(void)
 {

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "1.7.h"
 
 /* power: raise base to n-th power; n >= 0 */
 int power_1_7(int base, int n)

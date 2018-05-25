@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "1.5.1.h"
 
 void copy_input_to_output1()
 {
@@ -24,6 +25,7 @@ void copy_input_to_output2()
 
 int main_1_5_1(void)
 {
+    printf("type some charactors, CTRL+D to exit\n");
     copy_input_to_output1();
 
     return 0;

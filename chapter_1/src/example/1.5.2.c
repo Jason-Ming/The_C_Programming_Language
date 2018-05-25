@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "1.5.2.h"
 /* count charactors in input; 1st version */
 void count_charactors_in_input_v1()
 {

@@ -13,6 +13,8 @@ void main_1_2_version_1(void)
     step = 20; /* ²½³¤ */
     
     fahr = lower; 
+
+    printf(" ==========Fahrenhiet-Celcius Table==========\n");
     
     while (fahr <= upper) 
     { 
@@ -33,7 +35,7 @@ void main_1_2_version_2(void)
     
     fahr = lower; 
 
-    printf(" ==========Fahrenhiet-Celcius Table==========\n");
+    printf(" ==========Fahrenhiet-Celcius Table  floating-point version==========\n");
     
     while (fahr <= upper) 
     { 
