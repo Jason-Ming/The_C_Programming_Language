@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "exercise.1.8.h"
 
 /* count charactors in input; 2nd version */
 #define COUNT_CHAR(v, c, l) if(v == c){++l;}

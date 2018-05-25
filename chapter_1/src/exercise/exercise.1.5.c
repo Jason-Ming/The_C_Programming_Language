@@ -1,4 +1,6 @@
 #include <stdio.h> 
+#include "exercise.1.5.h"
+
 /* 当 fahr=0，20，… ，300 时，分别
  打印华氏温度与摄氏温度对照表 */ 
 

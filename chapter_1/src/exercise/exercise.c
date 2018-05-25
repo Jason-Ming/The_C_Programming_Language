@@ -12,6 +12,11 @@
 #include "exercise.1.1.h"
 #include "exercise.1.2.h"
 #include "exercise.1.3.h"
+#include "exercise.1.4.h"
+#include "exercise.1.5.h"
+#include "exercise.1.6.h"
+#include "exercise.1.7.h"
+#include "exercise.1.8.h"
 
 #define SUBCMD_EXERCISE "exercise"
 #define SUBCMD_EXERCISE_OPTION_N "-n"
@@ -22,6 +27,11 @@ STRU_MAIN_PROC exercise_proc_array[] =
     {"1.1", exercise_1_1, "print 'hello, world' "},
     {"1.2", exercise_1_2, "using a non-specified escape sequence"},
     {"1.3", exercise_1_3, "print Fahrenheit-Celsius table with a heading"},
+    {"1.4", exercise_1_4, "print Celsius-Fahrenheit table"},
+    {"1.5", exercise_1_5, "print Fahrenhiet-Celcius Table in reverse order"},
+    {"1.6", exercise_1_6, "verify that the expression getchar() != EOF is 0 or 1"},
+    {"1.7", exercise_1_7, "print the value of EOF"},
+    {"1.8", exercise_1_8, "count blanks, tabs, and newlines in input"},
 
 };
 

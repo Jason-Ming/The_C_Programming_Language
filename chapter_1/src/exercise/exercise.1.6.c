@@ -1,3 +1,4 @@
+#include "exercise.1.6.h"
 /* This program prompts for input, and then captures a character
 * from the keyboard. If EOF is signalled (typically through a
 * control-D or control-Z character, though not necessarily),
