@@ -96,7 +96,7 @@ ENUM_RETURN subcmd_example_option_l_proc(struct TAG_STRU_ARG *value)
     return RETURN_SUCCESS;
 }
 
-int ENUM_RETURN example_init(void)
+ENUM_RETURN example_init(void)
 {
 
     ENUM_RETURN ret_val = RETURN_SUCCESS;

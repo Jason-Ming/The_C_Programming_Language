@@ -31,9 +31,9 @@ CFLAGS  += -g -Wall
 CFLAGS  += -std=c99
 #CFLAGS  += -D CPPUTEST
 #CFLAGS  += -include $(CPPUTEST_HOME)/include/CppUTest/MemoryLeakDetectorMallocMacros.h
-CFLAGS   += -I$(ROOT_DIR)/include
+CFLAGS   += -I$(ROOT_DIR)/include -I$(ROOT_DIR)/src/include
 CFLAGS   += -I$(LIB_PATH)/include
-INCLUDEFLAGS = -I$(ROOT_DIR)/include
+INCLUDEFLAGS = -I$(ROOT_DIR)/include -I$(ROOT_DIR)/src/include
 INCLUDEFLAGS += -I$(LIB_PATH)/include
 LDFLAGS += -L$(LIB_PATH)/debug/lib -Wl,-rpath $(LIB_PATH)/debug/lib -lstupid
 
@@ -64,12 +64,16 @@ $(CUR_OBJS):%.o:%.c
 
 -include $(CUR_OBJS:.o=.d)
 
-ALL_D = $(shell find -type f -name *.d)
-ALL_O = $(shell find -type f -name *.o)
+ALL_D = $(shell find -type f -name '*.d')
+ALL_D_TEMP = $(shell find -type f -name '*.d.*')
+ALL_O = $(shell find -type f -name '*.o')
+ALL_TXT = $(shell find -type f -name '*.txt')
 
 clean:
 	@rm -rf $(OBJS_DIR)/*
 	@rm -rf $(BIN_DIR)/*
 	@rm -rf $(LIB_DIR)/*
 	@rm -rf $(ALL_D)
+	@rm -rf $(ALL_D_TEMP)
+	@rm -rf $(ALL_TXT)
 	@rm -rf $(ALL_O)

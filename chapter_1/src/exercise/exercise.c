@@ -11,6 +11,7 @@
 #include "exercise.h"
 #include "exercise.1.1.h"
 #include "exercise.1.2.h"
+#include "exercise.1.3.h"
 
 #define SUBCMD_EXERCISE "exercise"
 #define SUBCMD_EXERCISE_OPTION_N "-n"
@@ -20,16 +21,8 @@ STRU_MAIN_PROC exercise_proc_array[] =
 {
     {"1.1", exercise_1_1, "print 'hello, world' "},
     {"1.2", exercise_1_2, "using a non-specified escape sequence"},
-    {"1.3", main_1_3, "print Fahrenheit-Celsius table for fahr = 0, 20, ..., 300. use 'for'"},
-    {"1.4", main_1_4, "print Fahrenheit-Celsius table for fahr = 0, 20, ..., 300. use macro"},
-    {"1.5.1", main_1_5_1, "copy input to output"},
-    {"1.5.2", main_1_5_2, "count characters in input"},
-    {"1.5.3", main_1_5_3, "count lines in input"},
-    {"1.5.4", main_1_5_4, "count lines, words, and characters in input"},
-    {"1.6", main_1_6, "count digits, white space, others"},
-    {"1.7", main_1_7, "test power function"},
-    {"1.8", main_1_8, "test power function use parameter as a temporary variable"},
-    {"1.9", main_1_9, "print the longest input line"},
+    {"1.3", exercise_1_3, "print Fahrenheit-Celsius table with a heading"},
+
 };
 
 FUNC_MAIN_PROC get_exercise_handler_by_name(const char *name)

@@ -3,8 +3,6 @@
 #include "s_clinkage.h"
 #include "s_defines.h"
 
-#include "main.h"
-
 __BEGIN_C_DECLS
 __END_C_DECLS
 
