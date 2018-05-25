@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "exercise.1.2.h"
 
 int exercise_1_2(void)
 {
