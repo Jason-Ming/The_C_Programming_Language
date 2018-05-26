@@ -5,6 +5,21 @@
 #include <stdlib.h>
 
 #include "s_text.h"
+#include "exercise.1.11.h"
+
+#define CHECK(condition) \
+    do\
+    {\
+        if(!(condition))\
+        {\
+            printf(#condition" failed!\n");\
+        }\
+        else\
+        {\
+            printf(#condition" success!\n");\
+        }\
+    }while(0)
+
 int exercise_1_11_generate_input_files(void)
 {
     FILE *			f;
@@ -89,50 +104,67 @@ int exercise_1_11_generate_input_files(void)
 	return 0;
 }
 
-#define CHECK(condition) \
-    do\
-    {\
-        if(!(condition))\
-        {\
-            printf(#condition" failed!\n");\
-        }\
-        else\
-        {\
-            printf(#condition" success!\n");\
-        }\
-    }while(0)
-
-int exercise_1_11(int argc, char**argv)
+void print_prompt_info(void)
 {
-    printf(" %d parameters: \n", argc);
-    for(int i = 0; i < argc; i++)
-    {
-        printf("argv[%d]: %s\n", i, argv[i] );
-    }
-    
-    assert(argc == 2);
+    printf("type charactor to execute different operations:\n");
+    printf("    h:    display help information\n");
+    printf("    g:    generate test files\n");
+    printf("    t:    test test files\n");
+    printf("    q:    quit\n\n");
+}
 
-    if(strcmp(argv[1], "g") == 0)
+int exercise_1_11(void)
+{
+    print_prompt_info();
+
+    int c;
+    while((c = getchar()) != EOF)
     {
-        exercise_1_11_generate_input_files();
-    }
-    else if(strcmp(argv[1], "t") == 0)
-    {
-        CHECK(count_words("./test_files/test0.txt")==0);
-        CHECK(count_words("./test_files/test1.txt")==1);
-        CHECK(count_words("./test_files/test2.txt")==0);
-        CHECK(count_words("./test_files/test3.txt")==0);
-        CHECK(count_words("./test_files/test4.txt")==2);
-        CHECK(count_words("./test_files/test5.txt")==66000);
-        CHECK(count_words("./test_files/test6.txt")==66000);
-    }
-    else
-    {
-        perror("parameters error!\n");
-        return -1;
+        switch(c)
+        {
+            case '\n':
+            {
+                break;
+            }
+            
+            case 'g':
+            {
+                exercise_1_11_generate_input_files();
+                break;
+            }
+
+            case 't':
+            {
+                CHECK(count_words("./test_files/test0.txt")==0);
+                CHECK(count_words("./test_files/test1.txt")==1);
+                CHECK(count_words("./test_files/test2.txt")==0);
+                CHECK(count_words("./test_files/test3.txt")==0);
+                CHECK(count_words("./test_files/test4.txt")==2);
+                CHECK(count_words("./test_files/test5.txt")==66000);
+                CHECK(count_words("./test_files/test6.txt")==66000);
+                break;
+            }
+
+            case 'h':
+            {
+                print_prompt_info();
+                break;
+            }
+
+            case 'q':
+            {
+                return RETURN_SUCCESS;
+            }
+
+            default:
+            {
+                printf("unkown operation option\n");
+                break;
+            }
+        }
     }
 
-    return 0;
+    return RETURN_SUCCESS;
 }
 
 

@@ -19,6 +19,8 @@
 #include "exercise.1.8.h"
 #include "exercise.1.9.h"
 #include "exercise.1.10.h"
+#include "exercise.1.11.h"
+
 
 #define SUBCMD_EXERCISE "exercise"
 #define SUBCMD_EXERCISE_OPTION_N "-n"
@@ -36,6 +38,7 @@ STRU_MAIN_PROC exercise_proc_array[] =
     {"1.8", exercise_1_8, "count blanks, tabs, and newlines in input"},
     {"1.9", exercise_1_9, "replacing each string of one or more blanks by a single blank"},
     {"1.10", exercise_1_10, "replace tabs, backslash and backspaces by \\t, \\ and \b"},
+    {"1.11", exercise_1_11, "test the program of 'count words'"},
 
 };
 
