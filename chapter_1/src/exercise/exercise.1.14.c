@@ -81,13 +81,21 @@ PRIVATE ENUM_RETURN output_charactors_number(const char* filename_input)
     return RETURN_SUCCESS;
 }
 
-int exercise_1_14(int argc, char** argv)
+void print_prompt_info_1_14(void)
+{
+    printf("type the input file name, the program will draw the charactor histogram to the output file named _output.txt\n");
+}
+
+int exercise_1_14(void)
 {
     int retval;
-    assert(argc == 2);
+    print_prompt_info_1_14();
 
-    retval = calculate_charactors(argv[1]);
-    retval = output_charactors_number(argv[1]);
+    char buff[256] = {'\0'};
+    scanf("%s", buff);
+
+    retval = calculate_charactors(buff);
+    retval = output_charactors_number(buff);
 
     return retval;
 }
