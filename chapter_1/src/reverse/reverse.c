@@ -142,7 +142,7 @@ STRU_TEST_INFO test_info[] =
     },
 };
 
-ENUM_RETURN subcmd_generate_proc(STRU_OPTION_RUN_BLOCK *value)
+ENUM_RETURN subcmd_reverse_option_g_proc(STRU_ARG *arg)
 {
     FILE *f = NULL;
 
@@ -159,7 +159,7 @@ ENUM_RETURN subcmd_generate_proc(STRU_OPTION_RUN_BLOCK *value)
 	return RETURN_SUCCESS;
 }
 
-ENUM_RETURN subcmd_test_proc(STRU_OPTION_RUN_BLOCK *value)
+ENUM_RETURN subcmd_reverse_option_t_proc(STRU_ARG *arg)
 {
     ENUM_RETURN ret_val = RETURN_SUCCESS;
     int  lines = 0;
@@ -215,33 +215,50 @@ ENUM_RETURN subcmd_reverse_proc(STRU_OPTION_RUN_BLOCK *value)
     return RETURN_SUCCESS;
 }
 
-int exercise_1_19(int argc, char **argv)
+int reverse_init(void)
 {
     ENUM_RETURN ret_val;
-    ret_val = register_introduction("This program reverses the character strings in each line of input file.");
+
+    ret_val = register_subcmd(
+        "reverse", 
+        subcmd_reverse_proc, 
+        "reverse the lines to input file and output the result to output file");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-    ret_val = register_usage("<sub-command> [<input files>] [<options> [<args>]]");
-    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
-    
-    ret_val = register_subcmd("generate", BOOLEAN_FALSE, subcmd_generate_proc, "generate test files in directory[./test_files]");
+    ret_val = register_option(
+        "reverse", 
+        "-g",
+        BOOLEAN_FALSE, 
+        OPTION_TYPE_OPTIONAL,
+        ARG_TYPE_SWITCH,
+        subcmd_reverse_option_g_proc, 
+        BOOLEAN_TRUE, 
+        "generate test input files in directory[./test_files]");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-    ret_val = register_subcmd("test", BOOLEAN_FALSE, subcmd_test_proc, "process test files in directory[./test_files]");
+    ret_val = register_option(
+        "reverse",
+        "-t",
+        BOOLEAN_FALSE, 
+        OPTION_TYPE_OPTIONAL,
+        ARG_TYPE_SWITCH,
+        subcmd_reverse_option_t_proc,
+        BOOLEAN_TRUE, 
+        "process test input files in directory[./test_files]");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-    ret_val = register_subcmd("reverse", BOOLEAN_TRUE, subcmd_reverse_proc, "process file1 and output result to file2");
-    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
-
-    ret_val = register_option("reverse", "-o", 
-        OPTION_TYPE_OPTIONAL, 
+    ret_val = register_option(
+        "reverse", 
+        "-o", 
+        BOOLEAN_TRUE, 
+        OPTION_TYPE_MANDATORY, 
         ARG_TYPE_DATA, 
         subcmd_reverse_option_o_proc, 
-        BOOLEAN_FALSE,
-        "-o <file>file1 file2 process file1 and output result to file2");
+        BOOLEAN_TRUE,
+        "specify output file name as <arg>");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     
-    return process(argc, argv);
+    return ret_val;
     
 }
 

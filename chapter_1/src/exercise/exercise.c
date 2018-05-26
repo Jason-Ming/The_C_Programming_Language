@@ -115,13 +115,13 @@ int exercise_init(void)
     ENUM_RETURN ret_val = RETURN_SUCCESS;
 
     ret_val = register_subcmd(SUBCMD_EXERCISE, 
-        BOOLEAN_FALSE, 
         subcmd_exercise_proc, 
         "execute exercises.");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
     ret_val = register_option(SUBCMD_EXERCISE, 
         SUBCMD_EXERCISE_OPTION_L, 
+        BOOLEAN_FALSE, 
         OPTION_TYPE_OPTIONAL, 
         ARG_TYPE_SWITCH, 
         subcmd_exercise_option_l_proc, 
@@ -130,7 +130,8 @@ int exercise_init(void)
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
     ret_val = register_option(SUBCMD_EXERCISE, 
-        SUBCMD_EXERCISE_OPTION_N, 
+        SUBCMD_EXERCISE_OPTION_N, 
+        BOOLEAN_FALSE, 
         OPTION_TYPE_MANDATORY, 
         ARG_TYPE_DATA, 
         subcmd_exercise_option_n_proc, 

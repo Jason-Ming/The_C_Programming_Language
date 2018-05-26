@@ -31,15 +31,17 @@ int exercise_1_22(int argc, char **argv)
     ENUM_RETURN ret_val;
     ret_val = register_introduction("this program folds the lines of input file.");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
-    
-    ret_val = register_usage("<sub-command> [<input files>] [<options> [<args>]]");
+
+    ret_val = register_subcmd(
+        "fold", 
+        subcmd_fold_proc, 
+        "fold each line in input files");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-    ret_val = register_subcmd("fold", BOOLEAN_TRUE, subcmd_fold_proc, "fold each line in input files");
-    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
-
-    ret_val = register_option("fold", 
+    ret_val = register_option(
+        "fold", 
         "-n", 
+        BOOLEAN_TRUE, 
         OPTION_TYPE_OPTIONAL, 
         ARG_TYPE_DATA, 
         subcmd_fold_option_n_proc, 

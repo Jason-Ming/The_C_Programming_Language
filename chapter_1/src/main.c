@@ -9,6 +9,7 @@
 #include "main.h"
 #include "exercise.h"
 #include "example.h"
+#include "reverse.h"
 
 
 int main(int argc, char **argv)
@@ -18,15 +19,14 @@ int main(int argc, char **argv)
     ret_val = register_introduction("this program execute examples and exerceses in chapter 1.");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     
-    ret_val = register_usage("<sub-command> [<input files>] [<options> [<args>]]");
-    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
-
     ret_val = example_init();
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
     ret_val = exercise_init();
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
-    
+
+    ret_val = reverse_init();
+    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     return process(argc, argv);
 }
 
