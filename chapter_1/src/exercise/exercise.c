@@ -24,6 +24,7 @@
 #include "exercise.1.13.h"
 #include "exercise.1.14.h"
 #include "exercise.1.15.h"
+#include "exercise.1.16.h"
 
 
 #define SUBCMD_EXERCISE "exercise"
@@ -47,6 +48,7 @@ STRU_MAIN_PROC exercise_proc_array[] =
     {"1.13", exercise_1_13, "draw the word histogram of input file"},
     {"1.14", exercise_1_14, "draw the charactor histogram of input file"},
     {"1.15", exercise_1_15, "print Celsius-Fahrenheit table use function"},
+    {"1.16", exercise_1_16, "test the program of 'print the longest input line'"},
 
 };
 
