@@ -17,6 +17,8 @@
 #include "exercise.1.6.h"
 #include "exercise.1.7.h"
 #include "exercise.1.8.h"
+#include "exercise.1.9.h"
+#include "exercise.1.10.h"
 
 #define SUBCMD_EXERCISE "exercise"
 #define SUBCMD_EXERCISE_OPTION_N "-n"
@@ -32,6 +34,8 @@ STRU_MAIN_PROC exercise_proc_array[] =
     {"1.6", exercise_1_6, "verify that the expression getchar() != EOF is 0 or 1"},
     {"1.7", exercise_1_7, "print the value of EOF"},
     {"1.8", exercise_1_8, "count blanks, tabs, and newlines in input"},
+    {"1.9", exercise_1_9, "replacing each string of one or more blanks by a single blank"},
+    {"1.10", exercise_1_10, "replace tabs, backslash and backspaces by \\t, \\ and \b"},
 
 };
 
