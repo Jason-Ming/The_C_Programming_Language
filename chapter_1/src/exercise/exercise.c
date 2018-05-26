@@ -21,6 +21,7 @@
 #include "exercise.1.10.h"
 #include "exercise.1.11.h"
 #include "exercise.1.12.h"
+#include "exercise.1.13.h"
 
 
 #define SUBCMD_EXERCISE "exercise"
@@ -41,6 +42,7 @@ STRU_MAIN_PROC exercise_proc_array[] =
     {"1.10", exercise_1_10, "replace tabs, backslash and backspaces by \\t, \\ and \b"},
     {"1.11", exercise_1_11, "test the program of 'count words'"},
     {"1.12", exercise_1_12, "prints its input one word per line"},
+    {"1.13", exercise_1_13, "draw the word histogram of input file"},
 
 };
 

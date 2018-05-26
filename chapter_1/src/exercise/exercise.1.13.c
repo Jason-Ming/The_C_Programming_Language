@@ -123,13 +123,19 @@ PRIVATE ENUM_RETURN output_word_length(const char* filename_input)
     return RETURN_SUCCESS;
 }
 
-int exercise_1_13(int argc, char** argv)
+void print_prompt_info_1_13(void)
 {
-    int retval;
-    assert(argc == 2);
+    printf("type the input file name, the program will draw the word histogram to the output file named _output.txt\n");
+}
+int exercise_1_13(void)
+{
 
-    retval = calculate_word_length(argv[1]);
-    retval = output_word_length(argv[1]);
+    print_prompt_info_1_13();
+
+    char buff[256] = {'\0'};
+    scanf("%s", buff);
+    int retval = calculate_word_length(buff);
+    retval = output_word_length(buff);
 
     return retval;
 }
