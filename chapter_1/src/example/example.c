@@ -40,7 +40,7 @@ STRU_MAIN_PROC main_proc_array[] =
     {"1.6", main_1_6, "count digits, white space, others"},
     {"1.7", main_1_7, "test power function"},
     {"1.8", main_1_8, "test power function use parameter as a temporary variable"},
-    {"1.9", main_1_9, "print the longest input line"},
+    {"1.9", main_1_9, "print the longest(less than 100) input line"},
 };
 
 FUNC_MAIN_PROC get_example_handler_by_name(const char *name)

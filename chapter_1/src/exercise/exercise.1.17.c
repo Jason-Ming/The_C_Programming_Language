@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "s_defines.h"
+#include "exercise.1.17.h"
 
 #define MAX_LINE_BUFFER 100 //maximum input line length
 
@@ -175,35 +176,61 @@ int exercise_1_17_test_input_files(void)
 
     return 0;
 }
-int exercise_1_17(int argc, char **argv)
+void print_prompt_info_exercise_1_17(void)
 {
+    printf("type charactor to execute different operations:\n");
+    printf("    h:    display help information\n");
+    printf("    g:    generate test files\n");
+    printf("    t:    test test files\n");
+    printf("    q:    quit\n\n");
+}
 
-    assert(argc == 2);
-    assert(argv[1] != NULL);
+int exercise_1_17(void)
+{
+    print_prompt_info_exercise_1_17();
 
-    printf(" %d parameters: \n", argc);
-    for(int i = 0; i < argc; i++)
+    int c;
+    while((c = getchar()) != EOF)
     {
-        printf("argv[%d]: %s\n", i, argv[i] );
-    }
-    
-    assert(argc == 2);
+        switch(c)
+        {
+            case '\n':
+            {
+                break;
+            }
+            
+            case 'g':
+            {
+                exercise_1_17_generate_input_files();
+                break;
+            }
 
-    if(strcmp(argv[1], "g") == 0)
-    {
-        exercise_1_17_generate_input_files();
+            case 't':
+            {
+                exercise_1_17_test_input_files();
+                break;
+            }
+
+            case 'h':
+            {
+                print_prompt_info_exercise_1_17();
+                break;
+            }
+
+            case 'q':
+            {
+                return RETURN_SUCCESS;
+            }
+
+            default:
+            {
+                printf("unkown operation option\n");
+                break;
+            }
+        }
     }
-    else if(strcmp(argv[1], "t") == 0)
-    {
-        exercise_1_17_test_input_files();
-    }
-    else
-    {
-        perror("parameters error!\n");
-        return -1;
-    }
-    
-    return 0;
+
+    return RETURN_SUCCESS;
 }
 
 /*
