@@ -5,3 +5,5 @@
 *.i
 *.d
 */debug/bin/*
+*.txt.*
+

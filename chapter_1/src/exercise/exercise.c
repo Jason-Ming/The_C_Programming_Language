@@ -20,6 +20,7 @@
 #include "exercise.1.9.h"
 #include "exercise.1.10.h"
 #include "exercise.1.11.h"
+#include "exercise.1.12.h"
 
 
 #define SUBCMD_EXERCISE "exercise"
@@ -39,6 +40,7 @@ STRU_MAIN_PROC exercise_proc_array[] =
     {"1.9", exercise_1_9, "replacing each string of one or more blanks by a single blank"},
     {"1.10", exercise_1_10, "replace tabs, backslash and backspaces by \\t, \\ and \b"},
     {"1.11", exercise_1_11, "test the program of 'count words'"},
+    {"1.12", exercise_1_12, "prints its input one word per line"},
 
 };
 
