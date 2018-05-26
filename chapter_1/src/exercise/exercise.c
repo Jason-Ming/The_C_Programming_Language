@@ -26,6 +26,7 @@
 #include "exercise.1.15.h"
 #include "exercise.1.16.h"
 #include "exercise.1.17.h"
+#include "exercise.1.18.h"
 
 
 #define SUBCMD_EXERCISE "exercise"
@@ -51,6 +52,7 @@ STRU_MAIN_PROC exercise_proc_array[] =
     {"1.15", exercise_1_15, "print Celsius-Fahrenheit table use function"},
     {"1.16", exercise_1_16, "test the program of 'print the longest(any length) input line'"},
     {"1.17", exercise_1_17, "test the program of 'print the specified length(>80) input line'"},
+    {"1.18", exercise_1_18, "test the program of 'o remove all trailing blanks and tabs from each line of input, and to delete entirely blank lines.'"},
 
 };
 

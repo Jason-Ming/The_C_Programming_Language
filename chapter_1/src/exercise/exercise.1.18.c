@@ -5,7 +5,7 @@
 
 #include "s_defines.h"
 #include "s_log.h"
-
+#include "exercise.1.18.h"
 #define MAX_LINE_BUFFER 100 //maximum input line length
 
 /* read a line into line, return length */
@@ -41,19 +41,43 @@ int cutoff_space_and_tabs(char *pstr_buf)
 {
     assert(pstr_buf != NULL);
     int pos = strlen(pstr_buf);
-    while(pos != 0)
+    while(pos > 1)
     {
-        if(pstr_buf[pos - 1] == '\t' || pstr_buf[pos - 1] == ' ')
+        if(pstr_buf[pos - 1] == '\n')
         {
-            pstr_buf[pos - 1] = '\0';
-            pos--;
+            if(pstr_buf[pos - 2] == '\t' || pstr_buf[pos - 2] == ' ')
+            {
+                pstr_buf[pos - 2] = '\n';
+                pstr_buf[pos - 1] = '\0';
+                pos--;
+            }
+            else
+            {
+                break;
+            }
         }
         else
         {
-            break;
+            if(pstr_buf[pos - 1] == '\t' || pstr_buf[pos - 1] == ' ')
+            {
+                pstr_buf[pos - 1] = '\0';
+                pos--;
+            }
+            else
+            {
+                break;
+            }
         }
     }
 
+    if(strlen(pstr_buf) == 1)
+    {
+        if(pstr_buf[0] == '\n' || pstr_buf[0] == '\t' || pstr_buf[0] == ' ')
+        {
+            pstr_buf[0] = '\0';
+        }
+    }
+    
     return 0;
 }
 
@@ -201,44 +225,73 @@ int exercise_1_18_test_input_files_and_output(void)
         if(lines != exercise_1_18_test_info[i].expect_line_number)
         {
             result = 1;
-            R_LOG("      lines: %d, expect: %d\n", lines, exercise_1_18_test_info[i].expect_line_number);
+            printf("      lines: %d, expect: %d\n", lines, exercise_1_18_test_info[i].expect_line_number);
         }
 
         if(result == 0)
         {
-            R_LOG("        result: success!\n");
+            printf("        result: success!\n");
         }
     }
 
     return 0;
 }
-int exercise_1_18(int argc, char **argv)
+
+void print_prompt_info_exercise_1_18(void)
 {
+    printf("type charactor to execute different operations:\n");
+    printf("    h:    display help information\n");
+    printf("    g:    generate test files\n");
+    printf("    t:    test test files\n");
+    printf("    q:    quit\n\n");
+}
 
-    R_ASSERT(argc == 2, RETURN_FAILURE);
-    R_ASSERT(argv[1] != NULL, RETURN_FAILURE);
+int exercise_1_18(void)
+{
+    print_prompt_info_exercise_1_18();
 
-    R_LOG(" %d parameters: \n", argc);
-    for(int i = 0; i < argc; i++)
+    int c;
+    while((c = getchar()) != EOF)
     {
-        R_LOG("argv[%d]: %s\n", i, argv[i] );
+        switch(c)
+        {
+            case '\n':
+            {
+                break;
+            }
+            
+            case 'g':
+            {
+                exercise_1_18_generate_input_files();
+                break;
+            }
+
+            case 't':
+            {
+                exercise_1_18_test_input_files_and_output();
+                break;
+            }
+
+            case 'h':
+            {
+                print_prompt_info_exercise_1_18();
+                break;
+            }
+
+            case 'q':
+            {
+                return RETURN_SUCCESS;
+            }
+
+            default:
+            {
+                printf("unkown operation option\n");
+                break;
+            }
+        }
     }
-    
-    if(strcmp(argv[1], "g") == 0)
-    {
-        exercise_1_18_generate_input_files();
-    }
-    else if(strcmp(argv[1], "t") == 0)
-    {
-        exercise_1_18_test_input_files_and_output();
-    }
-    else
-    {
-        R_LOG("parameters error!\n");
-        return -1;
-    }
-    
-    return 0;
+
+    return RETURN_SUCCESS;
 }
 
 /*
