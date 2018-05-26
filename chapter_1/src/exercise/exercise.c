@@ -23,6 +23,7 @@
 #include "exercise.1.12.h"
 #include "exercise.1.13.h"
 #include "exercise.1.14.h"
+#include "exercise.1.15.h"
 
 
 #define SUBCMD_EXERCISE "exercise"
@@ -45,6 +46,7 @@ STRU_MAIN_PROC exercise_proc_array[] =
     {"1.12", exercise_1_12, "prints its input one word per line"},
     {"1.13", exercise_1_13, "draw the word histogram of input file"},
     {"1.14", exercise_1_14, "draw the charactor histogram of input file"},
+    {"1.15", exercise_1_15, "print Celsius-Fahrenheit table use function"},
 
 };
 

@@ -11,7 +11,7 @@
 //存储单词长度为1~20，及20以上的数组个数的
 STRU_CHART_DATA num_of_charactors[ARRAY_LENGTH_OF_NUM_OF_CHARACTORS];
 
-#define OUTPUTFILE_SUFFIX ".output"
+#define OUTPUTFILE_SUFFIX "_output.txt"
 
 PRIVATE void init_chart_data_array(void)
 {
