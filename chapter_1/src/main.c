@@ -11,6 +11,7 @@
 #include "example.h"
 #include "reverse.h"
 #include "fold.h"
+#include "delcom.h"
 
 
 int main(int argc, char **argv)
@@ -30,6 +31,9 @@ int main(int argc, char **argv)
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
     ret_val = fold_init();
+    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+
+    ret_val = delcom_init();
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     
     return process(argc, argv);

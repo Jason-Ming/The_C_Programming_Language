@@ -87,8 +87,6 @@ ENUM_RETURN subcmd_fold_proc(STRU_OPTION_RUN_BLOCK *value)
 int fold_init(void)
 {
     ENUM_RETURN ret_val;
-    ret_val = register_introduction("this program folds the lines of input file.");
-    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
     ret_val = register_subcmd(
         SUBCMD_FOLD, 
