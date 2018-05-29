@@ -349,7 +349,7 @@ ENUM_RETURN subcmd_delcom_proc(STRU_OPTION_RUN_BLOCK *value)
     }
 
     ret_val = subcmd_delcom_proc_do(pfr, pfw);
-    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+    R_ASSERT_DO(ret_val == RETURN_SUCCESS, RETURN_FAILURE,fclose(pfr);fclose(pfw););
 
     fclose(pfr);
     fclose(pfw);
