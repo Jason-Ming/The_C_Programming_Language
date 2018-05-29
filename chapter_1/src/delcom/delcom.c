@@ -8,6 +8,16 @@
 #include "s_log.h"
 #include "delcom.h"
 
+//this is a test comment
+//test snippet begin
+#define STRING "delcom//  /**/\t  'this is a string' \" good! \"\n"//a line comment
+
+#define CALCULATE(x, y, z) (x/y/*this is a comment"a common string" 'a' // x/y/z*//z)
+#define STRING1 'this is a single quote// /* lalala */ \" "hehe" \'sssss\''//a line comment
+//a line comment
+
+//test snippet end
+
 #define SUBCMD_DELCOM "delcom"
 #define SUBCMD_DELCOM_OPTION "-o"
 
@@ -16,7 +26,8 @@ PRIVATE const char *output_file = NULL;
 typedef enum TAG_ENUM_DELCOM_STM
 {
     DELCOM_STM_NORMAL = 0,
-    DELCOM_STM_STRING,
+    DELCOM_STM_STRING_DOUBLE_QUOTE,
+    DELCOM_STM_STRING_SINGLE_QUOTE,
     DELCOM_STM_ONELINE_COMMENT,
     DELCOM_STM_PAIR_COMMENT,
     DELCOM_STM_INTERMEDIATE,
@@ -34,7 +45,8 @@ typedef struct TAG_STRU_DELCOM_STM_PROC
 }STRU_DELCOM_STM_PROC;
 
 PRIVATE ENUM_RETURN del_stm_proc_normal(FILE *pfr, FILE *pfw, int c);
-PRIVATE ENUM_RETURN del_stm_proc_string(FILE *pfr, FILE *pfw, int c);
+PRIVATE ENUM_RETURN del_stm_proc_string_double_quote(FILE *pfr, FILE *pfw, int c);
+PRIVATE ENUM_RETURN del_stm_proc_string_single_quote(FILE *pfr, FILE *pfw, int c);
 PRIVATE ENUM_RETURN del_stm_proc_oneline_comment(FILE *pfr, FILE *pfw, int c);
 PRIVATE ENUM_RETURN del_stm_proc_pair_comment(FILE *pfr, FILE *pfw, int c);
 PRIVATE ENUM_RETURN del_stm_proc_intermediate(FILE *pfr, FILE *pfw, int c);
@@ -43,7 +55,8 @@ PRIVATE ENUM_RETURN del_stm_proc_intermediate(FILE *pfr, FILE *pfw, int c);
 PRIVATE STRU_DELCOM_STM_PROC delcom_stm_proc[DELCOM_STM_MAX] = 
 {
     {DELCOM_STM_NORMAL, del_stm_proc_normal, "normal"},
-    {DELCOM_STM_STRING, del_stm_proc_string, "string"},
+    {DELCOM_STM_STRING_DOUBLE_QUOTE, del_stm_proc_string_double_quote, "string double quote"},
+    {DELCOM_STM_STRING_SINGLE_QUOTE, del_stm_proc_string_single_quote, "string single quote"},
     {DELCOM_STM_ONELINE_COMMENT, del_stm_proc_oneline_comment, "oneline comment"},
     {DELCOM_STM_PAIR_COMMENT, del_stm_proc_pair_comment, "pair comment"},
     {DELCOM_STM_INTERMEDIATE, del_stm_proc_intermediate, "intermediate"},
@@ -103,15 +116,21 @@ PRIVATE ENUM_RETURN del_stm_proc_normal(FILE *pfr, FILE *pfw, int c)
 
     switch (c)
     {
-        case '"':
-        {
+        case '"'://this is a test comment
+        {/* this is a test comment */
             fputc(c, pfw);
-            set_current_stm_state(DELCOM_STM_STRING);
+            set_current_stm_state(DELCOM_STM_STRING_DOUBLE_QUOTE);
             break;
         }
         case '/':
         {
             set_current_stm_state(DELCOM_STM_INTERMEDIATE);
+            break;
+        }
+        case '\'':
+        {
+            fputc(c, pfw);
+            set_current_stm_state(DELCOM_STM_STRING_SINGLE_QUOTE);
             break;
         }
         case '\n':
@@ -124,14 +143,49 @@ PRIVATE ENUM_RETURN del_stm_proc_normal(FILE *pfr, FILE *pfw, int c)
     
     return RETURN_SUCCESS;
 }
-
-PRIVATE ENUM_RETURN del_stm_proc_string(FILE *pfr, FILE *pfw, int c)
+//this is a test comment
+PRIVATE ENUM_RETURN del_stm_proc_string_double_quote(FILE *pfr, FILE *pfw, int c)
 {
     static ENUM_BOOLEAN backslash = BOOLEAN_FALSE;
     
     switch (c)
     {
-        case '"':
+        case '"'://a line comment
+        {
+            fputc(c, pfw);
+            if(backslash == BOOLEAN_FALSE)
+            {
+                set_current_stm_state(DELCOM_STM_NORMAL);
+            }
+
+            backslash = BOOLEAN_FALSE;
+            break;
+        }
+        case '\\':
+        {
+            backslash = BOOLEAN_TRUE;
+            fputc(c, pfw);
+            break;
+        }
+        case '\n':
+        default:
+        {
+            backslash = BOOLEAN_FALSE;
+            fputc(c, pfw);
+            break;
+        }
+    }
+
+    return RETURN_SUCCESS;
+}
+
+PRIVATE ENUM_RETURN del_stm_proc_string_single_quote(FILE *pfr, FILE *pfw, int c)
+{
+    static ENUM_BOOLEAN backslash = BOOLEAN_FALSE;
+    
+    switch (c)
+    {
+        case '\''://a line comment
         {
             fputc(c, pfw);
             if(backslash == BOOLEAN_FALSE)
