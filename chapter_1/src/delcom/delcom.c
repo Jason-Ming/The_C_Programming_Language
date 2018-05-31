@@ -82,26 +82,26 @@ PRIVATE ENUM_RETURN delcom_stm_init(void)
     return RETURN_SUCCESS;
 }
 
-const char* get_delcom_stm_string(ENUM_DELCOM_STM state)
+PRIVATE const char* get_delcom_stm_string(ENUM_DELCOM_STM state)
 {
     R_ASSERT(is_delcom_stm_state_valid(state) == BOOLEAN_TRUE, NULL);
 
     return delcom_stm_proc[(state)].info;
 }
 
-DELCOM_STM_PROC get_delcom_stm_proc(ENUM_DELCOM_STM state)
+PRIVATE DELCOM_STM_PROC get_delcom_stm_proc(ENUM_DELCOM_STM state)
 {
     R_ASSERT(is_delcom_stm_state_valid(state) == BOOLEAN_TRUE, NULL);
 
     return delcom_stm_proc[(state)].handler;
 }
 
-ENUM_DELCOM_STM get_current_stm_state(void)
+PRIVATE ENUM_DELCOM_STM get_current_stm_state(void)
 {
     return delcom_stm_state;
 }
 
-void set_current_stm_state(ENUM_DELCOM_STM arg)
+PRIVATE void set_current_stm_state(ENUM_DELCOM_STM arg)
 {
     V_ASSERT(arg >= DELCOM_STM_NORMAL && arg < DELCOM_STM_MAX);
     R_LOG("state change from %s to %s", 
@@ -290,7 +290,7 @@ PRIVATE ENUM_RETURN del_stm_proc_intermediate(FILE *pfr, FILE *pfw, int c)
     return RETURN_SUCCESS;
 }
 
-ENUM_RETURN subcmd_delcom_option_o_proc(STRU_ARG *arg)
+PRIVATE ENUM_RETURN subcmd_delcom_option_o_proc(STRU_ARG *arg)
 {
     R_ASSERT(arg != NULL, RETURN_FAILURE);
     R_ASSERT(arg->value != NULL, RETURN_FAILURE);
@@ -301,7 +301,7 @@ ENUM_RETURN subcmd_delcom_option_o_proc(STRU_ARG *arg)
     return RETURN_SUCCESS;
 }
 
-ENUM_RETURN subcmd_delcom_proc_do(FILE *pfr, FILE *pfw)
+PRIVATE ENUM_RETURN subcmd_delcom_proc_do(FILE *pfr, FILE *pfw)
 {
     R_ASSERT(pfr != NULL, RETURN_FAILURE);
     R_ASSERT(pfw != NULL, RETURN_FAILURE);
@@ -322,7 +322,7 @@ ENUM_RETURN subcmd_delcom_proc_do(FILE *pfr, FILE *pfw)
     return RETURN_SUCCESS;
 }
 
-ENUM_RETURN subcmd_delcom_proc(STRU_OPTION_RUN_BLOCK *value)
+PRIVATE ENUM_RETURN subcmd_delcom_proc(STRU_OPTION_RUN_BLOCK *value)
 {
     ENUM_RETURN ret_val = RETURN_SUCCESS;
     
