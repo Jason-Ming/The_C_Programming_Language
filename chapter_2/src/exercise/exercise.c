@@ -14,6 +14,8 @@
 #include "exercise.2.3.h"
 #include "exercise.2.4.h"
 #include "exercise.2.5.h"
+#include "exercise.2.6.h"
+#include "exercise.2.7.h"
 
 
 #define SUBCMD_EXERCISE "exercise"
@@ -31,6 +33,10 @@ string s1 that matches any character in the string s2 ."},
     {"2.5", exercise_2_5, "any: returns the first location in the string s1\
 where any character from the string s2 occurs, or -1 if s1 contains no characters\
 from s2 ."},
+    {"2.6", exercise_2_6, "setbits(x,p,n,y): returns x with the n bits that begin at\
+position p set to the rightmost n bits of y, leaving the other bits unchanged"},
+    {"2.7", exercise_2_7, "invert(x,p,n): returns x with the n bits that begin at position p\
+inverted (i.e., 1 changed into 0 and vice versa), leaving the others unchanged."},
 
 };
 
