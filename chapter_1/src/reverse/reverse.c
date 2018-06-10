@@ -45,7 +45,7 @@ ENUM_RETURN process_lines_and_output(const char *filename, const char *filename_
     
     *lines = 0; //maximum length seen so far
     
-    while((len = getline(fp, line, MAX_LINE_BUFFER)) > 0)
+    while((len = get_line(fp, line, MAX_LINE_BUFFER)) > 0)
     {
         ret_val = reverse(line);
         R_ASSERT_DO(ret_val == RETURN_SUCCESS, RETURN_FAILURE, fclose(fp);fclose(fpw););
