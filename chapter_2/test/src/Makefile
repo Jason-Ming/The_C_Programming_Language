@@ -1,20 +1,14 @@
-#debug文件夹里的makefile文件需要最后执行，所以这里需要执行的子目录要排除debug文件夹，这里使用awk排除了debug文件夹，读取剩下的文件夹
-SUBDIRS=$(shell ls -l | grep ^d | awk '{if($$9 != "debug") print $$9}')
-
+#子目录的Makefile直接读取其子目录就行
+SUBDIRS=$(shell ls -l | grep ^d | awk '{print $$9}')
 CUR_DIR=$(shell pwd)
 #以下同根目录下的makefile的相同代码的解释
 CUR_SOURCE=${wildcard *.cpp}
 CUR_OBJS=${patsubst %.cpp, %.o, $(CUR_SOURCE)}
 
-#注意这里的顺序，需要先执行SUBDIRS最后才能是DEBUG
-all:$(SUBDIRS) $(CUR_OBJS) DEBUG
+all:$(SUBDIRS) $(CUR_OBJS)
 
 $(SUBDIRS):ECHO
 	make -C $@
-
-DEBUG:ECHO
-#直接去debug目录下执行makefile文件
-	make -C debug
 
 $(CUR_OBJS):%.o:%.cpp
 	$(CPP) -o $@ -c $< $(CPPFLAGS) $(CXXFLAGS)

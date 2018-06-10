@@ -10,6 +10,9 @@
 
 #include "exercise.h"
 #include "exercise.2.1.h"
+#include "exercise.2.2.h"
+#include "exercise.2.3.h"
+#include "exercise.2.4.h"
 
 
 #define SUBCMD_EXERCISE "exercise"
@@ -19,6 +22,9 @@
 STRU_MAIN_PROC exercise_proc_array[] =
 {
     {"2.1", exercise_2_1, "print type size and extremum "},
+    {"2.2", exercise_2_2, "get line form input "},
+    {"2.3", exercise_2_3, "htou "},
+    {"2.4", exercise_2_4, "squeeze "},
 
 };
 

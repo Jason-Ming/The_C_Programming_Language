@@ -1,18 +1,13 @@
-#ifndef __EXERCISE_2_1_H__
-#define __EXERCISE_2_1_H__
+#ifndef __2_3_H__
+#define __2_3_H__
 #include "s_clinkage.h"
 #include "s_defines.h"
 
 __BEGIN_C_DECLS
-ENUM_RETURN exercise_2_1(void);
+ENUM_RETURN main_2_3(void);
 __END_C_DECLS
     
 #endif
-
-
-
-
-
 
 
 

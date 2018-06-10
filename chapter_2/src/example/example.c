@@ -8,6 +8,9 @@
 #include "s_log.h"
 #include "main_proc.h"
 #include "example.h"
+#include "2.3.h"
+#include "2.4.h"
+#include "2.5.h"
 
 
 #define SUBCMD_EXAMPLE "example"
@@ -16,7 +19,9 @@
 
 STRU_MAIN_PROC main_proc_array[] =
 {
-    //{"1.1", main_1_1, "print 'hello, world' "},
+    {"2.3", main_2_3, " constant "},
+    {"2.4", main_2_4, " declaration "},
+    {"2.5", main_2_5, " leap year "},
 };
 
 FUNC_MAIN_PROC get_example_handler_by_name(const char *name)

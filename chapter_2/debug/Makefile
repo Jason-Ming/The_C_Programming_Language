@@ -7,6 +7,7 @@ clean:
 
 $(ROOT_DIR)/$(BIN_DIR)/$(BIN):
 	$(CC) -o $@ $(ALL_OBJS) $(LDFLAGS)
+
 #	$(CC) -o $@ /home/jason/github/The_C_Programming_Language/chapter_1/src/exercise/exercise_1_19.o $(LDFLAGS)
 #$(ROOT_DIR)/$(LIB_DIR)/lib${BIN}.a:
 #	ar -cr $@ $(ROOT_DIR)/$(OBJS_DIR)/$(OBJS)
