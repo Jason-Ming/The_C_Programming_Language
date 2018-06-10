@@ -4,6 +4,7 @@
 #include "s_mem.h"
 #include "s_text.h"
 #include "s_type.h"
+#include "s_bits.h"
 
 #include "exercise.2.7.h"
 
