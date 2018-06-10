@@ -16,6 +16,7 @@
 #include "exercise.2.5.h"
 #include "exercise.2.6.h"
 #include "exercise.2.7.h"
+#include "exercise.2.8.h"
 
 
 #define SUBCMD_EXERCISE "exercise"
@@ -37,6 +38,8 @@ from s2 ."},
 position p set to the rightmost n bits of y, leaving the other bits unchanged"},
     {"2.7", exercise_2_7, "invert(x,p,n): returns x with the n bits that begin at position p\
 inverted (i.e., 1 changed into 0 and vice versa), leaving the others unchanged."},
+    {"2.8", exercise_2_8, "rightrot(x,n): returns the value of the integer x rotated to the\
+right by n bit positions."},
 
 };
 
