@@ -1,14 +1,14 @@
 #include <stdio.h>
-#include "s_mem.h"
+#include "s_time.h"
 #include "2.5.h"
 
-int main_2_5(void)
+ENUM_RETURN main_2_5(_VOID)
 {
-    int year;
+    _U32 year;
     printf("input year:\n");
-    scanf("%d", &year);
+    scanf("%u", &year);
 
-    if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
+    if (is_leapyear(year) == BOOLEAN_TRUE)
     {
         printf("%d is a leap year\n", year); 
     }
@@ -17,6 +17,6 @@ int main_2_5(void)
         printf("%d is not a leap year\n", year); 
     }
     
-    return 0;
+    return RETURN_SUCCESS;
 }
 

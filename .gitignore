@@ -7,4 +7,7 @@
 */debug/bin/*
 */test/debug/bin*
 *.txt.*
+*.o
+*.so
+*.a
 

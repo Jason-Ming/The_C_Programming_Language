@@ -1,16 +1,25 @@
+ALL_SOURCE = $(shell find ../ -type f -name *.c)
+
 OBJS=*.o
-ALL_OBJS = $(ROOT_DIR)/$(OBJS_DIR)/$(OBJS)
 
-all: clean $(ROOT_DIR)/$(BIN_DIR)/$(BIN)
+CUR_OBJS = $(ROOT_DIR)/$(CUR_OBJS_DIR)/$(OBJS)
+
+all: clean $(ROOT_DIR)/$(CUR_BIN_DIR)/$(CUR_BIN) $(ROOT_DIR)/$(CUR_LIB_DIR)/lib${CUR_LIB_BIN}.a $(ROOT_DIR)/$(CUR_LIB_DIR)/lib${CUR_LIB_BIN}.so $(ROOT_DIR)/$(CUR_LIB_DIR)/lib${CUR_LIB_BIN_TEST}.so
+
+$(ROOT_DIR)/$(CUR_BIN_DIR)/$(CUR_BIN):
+	$(CC) -o $@ $(CUR_OBJS) $(CLDFLAGS)
+
+$(ROOT_DIR)/$(CUR_LIB_DIR)/lib${CUR_LIB_BIN}.a:
+	ar -cr $@ $(CUR_OBJS)
+
+$(ROOT_DIR)/$(CUR_LIB_DIR)/lib${CUR_LIB_BIN}.so:$(ALL_SOURCE)
+	$(CC) -shared -fPIC -o $@ $^ $(CFLAGS) $(CLDFLAGS)
+
+$(ROOT_DIR)/$(CUR_LIB_DIR)/lib${CUR_LIB_BIN_TEST}.so:$(ALL_SOURCE)
+	$(CC) -shared -fPIC -o $@ $^ $(CFLAGS) $(CFLAGS_TEST) $(CLDFLAGS_TEST)
+
 clean:
-	@rm -rf $(ROOT_DIR)/$(BIN_DIR)/$(BIN)
-
-$(ROOT_DIR)/$(BIN_DIR)/$(BIN):
-	$(CC) -o $@ $(ALL_OBJS) $(LDFLAGS)
-
-#	$(CC) -o $@ /home/jason/github/The_C_Programming_Language/chapter_1/src/exercise/exercise_1_19.o $(LDFLAGS)
-#$(ROOT_DIR)/$(LIB_DIR)/lib${BIN}.a:
-#	ar -cr $@ $(ROOT_DIR)/$(OBJS_DIR)/$(OBJS)
-
-#$(ROOT_DIR)/$(LIB_DIR)/lib${BIN}.so:$(ALL_SOURCE)
-#	$(CC) -shared -fPIC -o $@ $^ $(CFLAGS)
+	@rm -rf $(ROOT_DIR)/$(CUR_BIN_DIR)/$(CUR_BIN)
+	@rm -rf $(ROOT_DIR)/$(CUR_LIB_DIR)/lib${CUR_LIB_BIN}.a
+	@rm -rf $(ROOT_DIR)/$(CUR_LIB_DIR)/lib${CUR_LIB_BIN}.so
+	@rm -rf $(ROOT_DIR)/$(CUR_LIB_DIR)/lib${CUR_LIB_BIN_TEST}.so
