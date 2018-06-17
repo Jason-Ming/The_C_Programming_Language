@@ -2,6 +2,7 @@
 #define __DELCOM_H__
 #include "s_clinkage.h"
 #include "s_defines.h"
+#include "s_type.h"
 
 
 __BEGIN_C_DECLS

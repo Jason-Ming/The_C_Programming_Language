@@ -2,6 +2,7 @@
 #define __1_2_H__
 #include "s_clinkage.h"
 #include "s_defines.h"
+#include "s_type.h"
 
 __BEGIN_C_DECLS
 ENUM_RETURN main_1_2(void);

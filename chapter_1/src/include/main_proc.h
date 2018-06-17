@@ -2,6 +2,7 @@
 #define __MAIN_PROC_H__
 #include "s_clinkage.h"
 #include "s_defines.h"
+#include "s_type.h"
 
 typedef ENUM_RETURN (*FUNC_MAIN_PROC)(void);
 

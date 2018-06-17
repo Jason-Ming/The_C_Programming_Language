@@ -4,6 +4,7 @@
 #include <string.h>
 #include "s_draw.h"
 #include "s_defines.h"
+#include "exercise.1.14.h"
 
 #define MAX_ChARACTOR 256 //ASCII字符个数，如果有中文，那么字符的值可能超过127
 #define ARRAY_LENGTH_OF_NUM_OF_CHARACTORS (MAX_ChARACTOR)
