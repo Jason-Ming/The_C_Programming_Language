@@ -10,7 +10,7 @@
 
 #include "exercise.h"
 #include "exercise.3.1.h"
-#include "exercise.2.2.h"
+#include "exercise.3.2.h"
 #include "exercise.2.3.h"
 #include "exercise.2.4.h"
 #include "exercise.2.5.h"
@@ -27,7 +27,8 @@
 STRU_MAIN_PROC exercise_proc_array[] =
 {
     {"3.1", exercise_3_1, "different version of binsearch() "},
-    {"2.2", exercise_2_2, "get line form input "},
+    {"3.2", exercise_3_2, "escape(s,t): converts characters like newline and tab into\
+visible escape sequences like \\n and \\t as it copies the string t to s."},
     {"2.3", exercise_2_3, "htou: converts a string of hexadecimal digits (including an optional 0x or 0X) into its\
 equivalent integer value."},
     {"2.4", exercise_2_4, "squeeze: deletes each character in the\
