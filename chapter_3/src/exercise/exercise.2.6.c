@@ -5,18 +5,20 @@
 #include "s_text.h"
 #include "s_type.h"
 #include "s_bits.h"
+#include "s_log.h"
 
 #include "exercise.2.6.h"
 
 #define lim 20
 
-int exercise_2_6(void)
+ENUM_RETURN exercise_2_6(_VOID)
 {
-    int i, c;
-    char s[2][lim];
-    unsigned long long x[2], y;
+    _S32 i, c;
+    _S8 s[2][lim];
+    _U64 x[2], y;
+    ENUM_RETURN retval;
     
-    for(int j = 0; j < 2; j++)
+    for(_S32 j = 0; j < 2; j++)
     {
         printf("input string%d:\n", j);
         
@@ -31,7 +33,10 @@ int exercise_2_6(void)
         DISPLAY_VAR_MEM_MULTI_LINES(s[j]);
         
         printf("the string%d is %s\n", j, s[j]);
-        x[j] = htou(s[j]);
+
+        retval = htou(s[j], &(x[j]));
+        R_ASSERT(retval == RETURN_SUCCESS, RETURN_FAILURE);
+        
         printf("the unsigned integer is %llu\n", x[j]);
     }
 
@@ -39,7 +44,7 @@ int exercise_2_6(void)
     DISPLAY_VAR_MEM_ONE_LINE(y);
     printf("after SET_BITS, result is %llu\n", y);
 
-    return 0;
+    return RETURN_SUCCESS;
 }
 
 

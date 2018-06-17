@@ -4,7 +4,7 @@
 #include "s_defines.h"
 
 __BEGIN_C_DECLS
-ENUM_RETURN exercise_2_7(void);
+ENUM_RETURN exercise_2_7(_VOID);
 __END_C_DECLS
     
 #endif

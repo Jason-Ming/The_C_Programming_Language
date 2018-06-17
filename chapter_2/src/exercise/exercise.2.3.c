@@ -4,15 +4,16 @@
 #include "s_mem.h"
 #include "s_text.h"
 #include "s_type.h"
+#include "s_log.h"
 
 #include "exercise.2.3.h"
 
 #define lim 20
 
-int exercise_2_3(void)
+ENUM_RETURN exercise_2_3(_VOID)
 {
-    int i, c;
-    char s[lim];
+    _S32 i, c;
+    _S8 s[lim];
 
     printf("input a string:\n");
     
@@ -28,9 +29,19 @@ int exercise_2_3(void)
     
     printf("the string is %s\n", s);
 
-    printf("the unsigned integer is %llu\n", htou(s));
-    printf("the integer is %lld\n", htoi(s));
-    return 0;
+    _U64 value = 0;
+    _S64 value1 = 0;
+    
+    ENUM_RETURN retval = htou(s, &value);
+    R_ASSERT(retval == RETURN_SUCCESS, RETURN_FAILURE);
+    
+    printf("the unsigned integer is %llu\n", value);
+
+    retval = htoi(s, &value1);
+    R_ASSERT(retval == RETURN_SUCCESS, RETURN_FAILURE);
+    printf("the integer is %lld\n", value1);
+    
+    return RETURN_SUCCESS;
 }
 
 

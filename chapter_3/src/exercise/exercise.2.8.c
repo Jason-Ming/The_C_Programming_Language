@@ -5,16 +5,19 @@
 #include "s_text.h"
 #include "s_type.h"
 #include "s_bits.h"
+#include "s_log.h"
+
 #include "exercise.2.8.h"
 
 #define lim 20
 
-int exercise_2_8(void)
+ENUM_RETURN exercise_2_8(_VOID)
 {
-    int i, c;
-    char s[lim];
-    unsigned long long x, y;
-    int n;
+    _S32 i, c;
+    _S8 s[lim];
+    _U64 x, y;
+    _S32 n;
+    ENUM_RETURN retval;
     
     printf("input string:\n");
     
@@ -30,7 +33,8 @@ int exercise_2_8(void)
     
     printf("the string is %s\n", s);
     
-    x = htou(s);
+    retval = htou(s, &x);
+    R_ASSERT(retval == RETURN_SUCCESS, RETURN_FAILURE);
     printf("the unsigned integer is %llu\n", x);
     DISPLAY_VAR_MEM_ONE_LINE(x);
 
@@ -42,7 +46,7 @@ int exercise_2_8(void)
     printf("after RIGHT_ROT(%llu, %d), result is %llu\n", x, n, y);
     DISPLAY_VAR_MEM_ONE_LINE(y);
 
-    return 0;
+    return RETURN_SUCCESS;
 }
 
 
