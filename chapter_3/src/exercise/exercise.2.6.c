@@ -37,12 +37,12 @@ ENUM_RETURN exercise_2_6(_VOID)
         retval = htou(s[j], &(x[j]));
         R_ASSERT(retval == RETURN_SUCCESS, RETURN_FAILURE);
         
-        printf("the unsigned integer is %llu\n", (_ULL)x[j]);
+        printf("the unsigned integer is %llu\n", x[j]);
     }
 
     y = SET_BITS(x[0], 2, 2, x[1]);
     DISPLAY_VAR_MEM_ONE_LINE(y);
-    printf("after SET_BITS, result is %llu\n",(_ULL)y);
+    printf("after SET_BITS, result is %llu\n",y);
 
     return RETURN_SUCCESS;
 }
