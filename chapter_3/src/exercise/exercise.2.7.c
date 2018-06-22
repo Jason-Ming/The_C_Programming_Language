@@ -36,7 +36,7 @@ ENUM_RETURN exercise_2_7(void)
     retval = htou(s, &x);
     R_ASSERT(retval == RETURN_SUCCESS, RETURN_FAILURE);
     
-    printf("the unsigned integer is %llu\n", x);
+    printf("the unsigned integer is %llu\n", (_ULL)x);
     DISPLAY_VAR_MEM_ONE_LINE(x);
 
     printf("input p and n:\n");
@@ -44,7 +44,7 @@ ENUM_RETURN exercise_2_7(void)
 
     y = INVERT_BITS(x, p, n);
     
-    printf("after INVERT_BITS(%llu, %d, %d), result is %llu\n", x, p, n, y);
+    printf("after INVERT_BITS(%llu, %d, %d), result is %llu\n", (_ULL)x, p, n, (_ULL)y);
     DISPLAY_VAR_MEM_ONE_LINE(y);
 
     return RETURN_SUCCESS;

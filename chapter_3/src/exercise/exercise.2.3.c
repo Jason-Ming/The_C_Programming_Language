@@ -35,11 +35,11 @@ ENUM_RETURN exercise_2_3(_VOID)
     ENUM_RETURN retval = htou(s, &value);
     R_ASSERT(retval == RETURN_SUCCESS, RETURN_FAILURE);
     
-    printf("the unsigned integer is %llu\n", value);
+    printf("the unsigned integer is %llu\n", (_ULL)value);
 
     retval = htoi(s, &value1);
     R_ASSERT(retval == RETURN_SUCCESS, RETURN_FAILURE);
-    printf("the integer is %lld\n", value1);
+    printf("the integer is %lld\n", (_ULL)value1);
     
     return RETURN_SUCCESS;
 }
