@@ -32,12 +32,12 @@ ENUM_RETURN exercise_2_3(_VOID)
     _U64 value = 0;
     _S64 value1 = 0;
     
-    ENUM_RETURN retval = htou(s, &value);
+    ENUM_RETURN retval = s_htou(s, &value);
     R_ASSERT(retval == RETURN_SUCCESS, RETURN_FAILURE);
     
     printf("the unsigned integer is %llu\n", value);
 
-    retval = htoi(s, &value1);
+    retval = s_htoi(s, &value1);
     R_ASSERT(retval == RETURN_SUCCESS, RETURN_FAILURE);
     printf("the integer is %lld\n", value1);
     

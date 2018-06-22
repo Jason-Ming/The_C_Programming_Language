@@ -34,7 +34,7 @@ ENUM_RETURN exercise_2_6(_VOID)
         
         printf("the string%d is %s\n", j, s[j]);
 
-        retval = htou(s[j], &(x[j]));
+        retval = s_htou(s[j], &(x[j]));
         R_ASSERT(retval == RETURN_SUCCESS, RETURN_FAILURE);
         
         printf("the unsigned integer is %llu\n", x[j]);
