@@ -11,6 +11,7 @@
 #include "exercise.h"
 #include "exercise.3.1.h"
 #include "exercise.3.2.h"
+#include "exercise.3.3.h"
 
 
 #define SUBCMD_EXERCISE "exercise"
@@ -20,8 +21,12 @@
 STRU_MAIN_PROC exercise_proc_array[] =
 {
     {"3.1", exercise_3_1, "different version of binsearch() "},
-    {"3.2", exercise_3_2, "escape(s,t): converts characters like newline and tab into\
+    {"3.2", exercise_3_2, "s_escape(s,t): converts characters like newline and tab into\
 visible escape sequences like \\n and \\t as it copies the string t to s."},
+    {"3.3", exercise_3_3, "expand(s1,s2) that expands shorthand notations like a-z in the\
+string s1 into the equivalent complete list abc...xyz in s2 . Allow for letters of either\
+case and digits, and be prepared to handle cases like a-b-c and a-z0-9 and -a-z .\
+Arrange that a leading or trailing - is taken literally."},
 
 };
 
