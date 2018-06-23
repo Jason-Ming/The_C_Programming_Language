@@ -33,7 +33,7 @@ ENUM_RETURN exercise_2_8(_VOID)
     
     printf("the string is %s\n", s);
     
-    retval = s_htou(s, &x);
+    retval = s_hstrtou64(s, &x);
     R_ASSERT(retval == RETURN_SUCCESS, RETURN_FAILURE);
     printf("the unsigned integer is %llu\n", x);
     DISPLAY_VAR_MEM_ONE_LINE(x);

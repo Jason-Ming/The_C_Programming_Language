@@ -10,6 +10,8 @@
 
 #define MAX_LINE_BUFFER 1000 //maximum input line length
 
+#define SUBCMD_REVERSE "reverse"
+#define SUBCMD_REVERSE_OPTION "-o"
 
 
 ENUM_RETURN process_lines_and_output(const char *filename, const char *filename_output, int *lines)
@@ -45,9 +47,9 @@ ENUM_RETURN process_lines_and_output(const char *filename, const char *filename_
     
     *lines = 0; //maximum length seen so far
     
-    while((len = get_line(fp, line, MAX_LINE_BUFFER)) > 0)
+    while((len = s_getline(fp, line, MAX_LINE_BUFFER)) > 0)
     {
-        ret_val = reverse(line);
+        ret_val = s_reverse(line);
         R_ASSERT_DO(ret_val == RETURN_SUCCESS, RETURN_FAILURE, fclose(fp);fclose(fpw););
         if(strlen(line) != 0)
         {
@@ -220,13 +222,13 @@ int reverse_init(void)
     ENUM_RETURN ret_val;
 
     ret_val = register_subcmd(
-        "reverse", 
+        SUBCMD_REVERSE, 
         subcmd_reverse_proc, 
         "reverse the lines to input file and output the result to output file");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
     ret_val = register_option(
-        "reverse", 
+        SUBCMD_REVERSE, 
         "-g",
         BOOLEAN_FALSE, 
         OPTION_TYPE_OPTIONAL,
@@ -237,7 +239,7 @@ int reverse_init(void)
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
     ret_val = register_option(
-        "reverse",
+        SUBCMD_REVERSE,
         "-t",
         BOOLEAN_FALSE, 
         OPTION_TYPE_OPTIONAL,
@@ -248,8 +250,8 @@ int reverse_init(void)
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
     ret_val = register_option(
-        "reverse", 
-        "-o", 
+        SUBCMD_REVERSE, 
+        SUBCMD_REVERSE_OPTION, 
         BOOLEAN_TRUE, 
         OPTION_TYPE_MANDATORY, 
         ARG_TYPE_DATA, 

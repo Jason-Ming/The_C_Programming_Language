@@ -28,7 +28,7 @@ STRU_MAIN_PROC exercise_proc_array[] =
 {
     {"2.1", exercise_2_1, "print type size and extremum "},
     {"2.2", exercise_2_2, "get line form input "},
-    {"2.3", exercise_2_3, "s_htou: converts a string of hexadecimal digits (including an optional 0x or 0X) into its\
+    {"2.3", exercise_2_3, "s_hstrtou64: converts a string of hexadecimal digits (including an optional 0x or 0X) into its\
 equivalent integer value."},
     {"2.4", exercise_2_4, "squeeze: deletes each character in the\
 string s1 that matches any character in the string s2 ."},
