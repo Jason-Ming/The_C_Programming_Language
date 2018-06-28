@@ -76,7 +76,7 @@ INCLUDEFLAGS = -I$(ROOT_DIR)/include
 INCLUDEFLAGS += -I$(ROOT_DIR)/src/include
 INCLUDEFLAGS += -I$(LIB_PATH)/include
 
-CLDFLAGS += -L$(LIB_PATH)/debug/lib -Wl,-rpath $(LIB_PATH)/debug/lib -l$(LIB_BIN)
+CLDFLAGS += -L$(LIB_PATH)/debug/lib -Wl,-rpath $(LIB_PATH)/debug/lib -l$(LIB_BIN) -lm
 CLDFLAGS_TEST = -L$(CPPUTEST_HOME)/lib -lCppUTest -lCppUTestExt
 
 #将以下变量导出到子shell中，本次相当于导出到子目录下的makefile中

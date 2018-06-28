@@ -35,7 +35,7 @@ CFLAGS   += -I$(ROOT_DIR)/include -I$(ROOT_DIR)/src/include
 CFLAGS   += -I$(LIB_PATH)/include
 INCLUDEFLAGS = -I$(ROOT_DIR)/include -I$(ROOT_DIR)/src/include
 INCLUDEFLAGS += -I$(LIB_PATH)/include
-LDFLAGS += -L$(LIB_PATH)/debug/lib -Wl,-rpath $(LIB_PATH)/debug/lib -lstupid
+LDFLAGS += -L$(LIB_PATH)/debug/lib -Wl,-rpath $(LIB_PATH)/debug/lib -lstupid -lm
 
 #将以下变量导出到子shell中，本次相当于导出到子目录下的makefile中
 export CC CFLAGS BIN OBJS_DIR BIN_DIR ROOT_DIR LIB_DIR INCLUDEFLAGS LIB_PATH ALL_SOURCE ALL_OBJS LDFLAGS

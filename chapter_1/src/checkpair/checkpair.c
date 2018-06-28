@@ -57,10 +57,10 @@ typedef struct TAG_STRU_CHECKPAIR_STM_RUN_DATA
 PRIVATE STM stm = NULL;
 PRIVATE STRU_CHECKPAIR_STM_RUN_DATA run_data;
 
-PRIVATE void display_check_error_info(const int expected, const int actual)
+PRIVATE void display_check_error_info(const int c)
 {
-    printf("Error: expected %c, actual %c, at line: %d, column :%d\n", 
-        expected, actual, run_data.line, run_data.column);
+    printf("Error: \'%c\', at line: %d, column :%d\n", 
+        c, run_data.line, run_data.column);
 }
 
 PRIVATE void display_check_correct_info(void)
@@ -72,7 +72,8 @@ PRIVATE ENUM_RETURN push(const int c)
 {
     ENUM_RETURN ret_val = RETURN_SUCCESS;
 
-    ret_val = stack_push(&(run_data.stack), (void *)&c, sizeof(c));
+    R_LOG("%c, line %d, column %d", c, run_data.line, run_data.column);
+    ret_val = stack_push(run_data.stack, (void *)&c, sizeof(c));
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
     return RETURN_SUCCESS;
@@ -81,13 +82,20 @@ PRIVATE ENUM_RETURN push(const int c)
 PRIVATE ENUM_RETURN pop_and_check(const int c, ENUM_RETURN *result)
 {
     R_ASSERT(result != NULL, RETURN_FAILURE);
-    
-    ENUM_RETURN ret_val = RETURN_SUCCESS;
+
+    ENUM_RETURN ret_val = RETURN_FAILURE;
     int c_temp = 0;
     unsigned int len = 0;
-    ret_val = stack_pop(&(run_data.stack), (void *)&c_temp, &len, sizeof(c_temp));
+    ret_val = stack_pop(run_data.stack, (void *)&c_temp, &len, sizeof(c_temp));
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
+    if(len == 0)
+    {
+        c_temp = 0;
+    }
+
+    R_LOG("%c, %c, line %d, column %d", c, c_temp, run_data.line, run_data.column);
+    
     switch (c_temp)
     {
         case '(':
@@ -105,6 +113,10 @@ PRIVATE ENUM_RETURN pop_and_check(const int c, ENUM_RETURN *result)
             c_temp = '}';
             break;
         }
+        case 0:
+        {
+            break;
+        }
         default:
         {
             ret_val = RETURN_FAILURE;
@@ -112,15 +124,16 @@ PRIVATE ENUM_RETURN pop_and_check(const int c, ENUM_RETURN *result)
         }
     }
 
-    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+    R_ASSERT_LOG(ret_val == RETURN_SUCCESS, RETURN_FAILURE, "the data poped is error: %c", c_temp);
     
     *result = RETURN_SUCCESS;
+
     if(c_temp != c)
     {
         *result = RETURN_FAILURE;
         R_LOG("c_temp = %c, c = %c", c_temp, c);
         run_data.is_error_exist = BOOLEAN_TRUE;
-        display_check_error_info(c_temp, c);
+        display_check_error_info(c_temp);
     }
     
     return RETURN_SUCCESS;
@@ -214,26 +227,29 @@ PRIVATE ENUM_RETURN checkpair_stm_proc_normal()
         case ']':
         case '}':
         {
-            ENUM_RETURN result = RETURN_SUCCESS;
+            ENUM_RETURN result = RETURN_FAILURE;
             ret_val = pop_and_check(c, &result);
             R_ASSERT_LOG(ret_val == RETURN_SUCCESS, RETURN_FAILURE, 
                 "c = %c", c);
-            R_FALSE_RET(result == RETURN_SUCCESS, RETURN_SUCCESS);
             break;
         }
         case '"'://this is a test comment
         {/* this is a test comment */
-            set_current_stm_state(stm, CHECKPAIR_STM_STRING_DOUBLE_QUOTE);
+            ret_val = set_current_stm_state(stm, CHECKPAIR_STM_STRING_DOUBLE_QUOTE);
+            R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
             break;
         }
         case '/':
         {
-            set_current_stm_state(stm, CHECKPAIR_STM_INTERMEDIATE);
+            ret_val = set_current_stm_state(stm, CHECKPAIR_STM_INTERMEDIATE);
+            R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
             break;
         }
         case '\'':
         {
-            set_current_stm_state(stm, CHECKPAIR_STM_STRING_SINGLE_QUOTE);
+            R_LOG("line %d, column %d", run_data.line, run_data.column);
+            ret_val = set_current_stm_state(stm, CHECKPAIR_STM_STRING_SINGLE_QUOTE);
+            R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
             break;
         }
         default:
@@ -248,6 +264,7 @@ PRIVATE ENUM_RETURN checkpair_stm_proc_normal()
 PRIVATE ENUM_RETURN checkpair_stm_proc_string_double_quote()
 {
     static ENUM_BOOLEAN backslash = BOOLEAN_FALSE;
+    ENUM_RETURN ret_val;
     int c = run_data.c;
     switch (c)
     {
@@ -255,7 +272,8 @@ PRIVATE ENUM_RETURN checkpair_stm_proc_string_double_quote()
         {
             if(backslash == BOOLEAN_FALSE)
             {
-                set_current_stm_state(stm, CHECKPAIR_STM_NORMAL);
+                ret_val = set_current_stm_state(stm, CHECKPAIR_STM_NORMAL);
+                R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
             }
 
             backslash = BOOLEAN_FALSE;
@@ -280,13 +298,16 @@ PRIVATE ENUM_RETURN checkpair_stm_proc_string_single_quote()
 {
     static ENUM_BOOLEAN backslash = BOOLEAN_FALSE;
     int c = run_data.c;
+    ENUM_RETURN ret_val;
     switch (c)
     {
         case '\''://a line comment
         {
             if(backslash == BOOLEAN_FALSE)
             {
-                set_current_stm_state(stm, CHECKPAIR_STM_NORMAL);
+                R_LOG("line %d, column %d", run_data.line, run_data.column);
+                ret_val = set_current_stm_state(stm, CHECKPAIR_STM_NORMAL);
+                R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
             }
 
             backslash = BOOLEAN_FALSE;
@@ -294,7 +315,15 @@ PRIVATE ENUM_RETURN checkpair_stm_proc_string_single_quote()
         }
         case '\\':
         {
-            backslash = BOOLEAN_TRUE;
+            if(backslash == BOOLEAN_TRUE)
+            {
+                backslash = BOOLEAN_FALSE;
+            }
+            else
+            {
+                backslash = BOOLEAN_TRUE;
+            }
+            
             break;
         }
         default:
@@ -310,11 +339,13 @@ PRIVATE ENUM_RETURN checkpair_stm_proc_string_single_quote()
 PRIVATE ENUM_RETURN checkpair_stm_proc_oneline_comment()
 {
     int c = run_data.c;
+    ENUM_RETURN ret_val;
     switch (c)
     {
         case '\n':
         {
-            set_current_stm_state(stm, CHECKPAIR_STM_NORMAL);
+            ret_val = set_current_stm_state(stm, CHECKPAIR_STM_NORMAL);
+            R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
             break;
         }
         default:
@@ -330,6 +361,7 @@ PRIVATE ENUM_RETURN checkpair_stm_proc_pair_comment()
 {
     static ENUM_BOOLEAN star = BOOLEAN_FALSE;
     int c = run_data.c;
+    ENUM_RETURN ret_val;
     switch (c)
     {
         case '*':
@@ -341,7 +373,8 @@ PRIVATE ENUM_RETURN checkpair_stm_proc_pair_comment()
         {
             if(star == BOOLEAN_TRUE)
             {
-                set_current_stm_state(stm, CHECKPAIR_STM_NORMAL);
+                ret_val = set_current_stm_state(stm, CHECKPAIR_STM_NORMAL);
+                R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
             }
             star = BOOLEAN_FALSE;
             break;
@@ -359,21 +392,25 @@ PRIVATE ENUM_RETURN checkpair_stm_proc_pair_comment()
 PRIVATE ENUM_RETURN checkpair_stm_proc_intermediate()
 {
     int c = run_data.c;
+    ENUM_RETURN ret_val;
     switch (c)
     {
         case '*':
         {
-            set_current_stm_state(stm, CHECKPAIR_STM_PAIR_COMMENT);
+            ret_val = set_current_stm_state(stm, CHECKPAIR_STM_PAIR_COMMENT);
+            R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
             break;
         }
         case '/':
         {
-            set_current_stm_state(stm, CHECKPAIR_STM_ONELINE_COMMENT);
+            ret_val = set_current_stm_state(stm, CHECKPAIR_STM_ONELINE_COMMENT);
+            R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
             break;
         }
         default:
         {
-            set_current_stm_state(stm, CHECKPAIR_STM_NORMAL);
+            ret_val = set_current_stm_state(stm, CHECKPAIR_STM_NORMAL);
+            R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
             break;
         }
     }
@@ -383,6 +420,24 @@ PRIVATE ENUM_RETURN checkpair_stm_proc_intermediate()
 
 PRIVATE ENUM_RETURN checkpair_stm_proc_end()
 {
+    //if there is any error before return to the main process to display the error
+    R_FALSE_RET(run_data.is_error_exist == BOOLEAN_FALSE, RETURN_SUCCESS);
+
+    //run to here will mean missing some char in the end of the file
+    size_t stack_data_count = 0;
+    ENUM_RETURN ret_val = stack_get_data_count(run_data.stack, &stack_data_count);
+    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+    if(stack_data_count != 0)
+    {
+        int c_temp = 0;
+        unsigned int len = 0;
+        ret_val = stack_pop(run_data.stack, (void *)&c_temp, &len, sizeof(c_temp));
+        R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+    
+        run_data.is_error_exist = BOOLEAN_TRUE;
+        display_check_error_info(c_temp);
+    }
+    
     return RETURN_SUCCESS;
 }
 
