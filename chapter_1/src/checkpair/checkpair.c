@@ -87,7 +87,7 @@ PRIVATE ENUM_RETURN pop_and_check(const int c, ENUM_RETURN *result)
     int c_temp = 0;
     size_t len = 0;
     size_t stack_data_count = 0;
-    ret_val = stack_get_data_count(run_data.stack, &stack_data_count);
+    ret_val = stack_get_element_count(run_data.stack, &stack_data_count);
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
     if(stack_data_count > 0)
@@ -431,7 +431,7 @@ PRIVATE ENUM_RETURN checkpair_stm_proc_end()
 
     //run to here will mean missing some char in the end of the file
     size_t stack_data_count = 0;
-    ENUM_RETURN ret_val = stack_get_data_count(run_data.stack, &stack_data_count);
+    ENUM_RETURN ret_val = stack_get_element_count(run_data.stack, &stack_data_count);
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     if(stack_data_count != 0)
     {
