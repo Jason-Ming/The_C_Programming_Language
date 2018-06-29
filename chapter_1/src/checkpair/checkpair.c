@@ -86,10 +86,16 @@ PRIVATE ENUM_RETURN pop_and_check(const int c, ENUM_RETURN *result)
     ENUM_RETURN ret_val = RETURN_FAILURE;
     int c_temp = 0;
     unsigned int len = 0;
-    ret_val = stack_pop(run_data.stack, (void *)&c_temp, &len, sizeof(c_temp));
+    size_t stack_data_count = 0;
+    ret_val = stack_get_data_count(run_data.stack, &stack_data_count);
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-    if(len == 0)
+    if(stack_data_count > 0)
+    {
+        ret_val = stack_pop(run_data.stack, (void *)&c_temp, &len, sizeof(c_temp));
+        R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+    }
+    else
     {
         c_temp = 0;
     }
