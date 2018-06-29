@@ -436,7 +436,7 @@ PRIVATE ENUM_RETURN checkpair_stm_proc_end()
     if(stack_data_count != 0)
     {
         int c_temp = 0;
-        unsigned int len = 0;
+        size_t len = 0;
         ret_val = stack_pop(run_data.stack, (void *)&c_temp, &len, sizeof(c_temp));
         R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     
