@@ -12,8 +12,8 @@
 #include "exercise.4.1.h"
 #include "exercise.4.2.h"
 #include "exercise.4.3.h"
-#include "exercise.4.4.h"
-#include "exercise.4.5.h"
+#include "exercise.4.13.h"
+#include "exercise.4.14.h"
 #include "exercise.4.6.h"
 
 
@@ -29,13 +29,10 @@ occurrence of t in s , or -1 if there is none."},
 floating-point number may be followed by e or E and an optionally signed exponent."},
     {"4.3", exercise_4_3, "Given the basic framework, it's straightforward to extend the calculator. Add the\
 modulus ( % ) operator and provisions for negative numbers"},
-    {"4.4", exercise_4_4, "n a two's complement number representation, our version of itoa does not handle\
-the largest negative number, that is, the value of n equal to -(2 to the power\
-(wordsize - 1)) . Explain why not. Modify it to print that value correctly regardless\
-of the machine on which it runs."},
-    {"4.5", exercise_4_5, "Write the function itob(n,s,b) that converts the integer n into a base b character\
-representation in the string s . In particular, itob(n,s,16) formats n as a\
-hexadecimal integer in s ."},
+    {"4.13", exercise_4_13, "Write a recursive version of the function reverse(s) , which reverses the string s in\
+place."},
+    {"4.14", exercise_4_14, "Define a macro swap(t,x,y) that interchanges two arguments of type t . (Block\
+structure will help.)"},
     {"4.6", exercise_4_6, "Write a version of itoa that accepts three arguments instead of two. The third\
 argument is a minimum field width; the converted number must be padded with\
 blanks on the left if necessary to make it wide enough"},
