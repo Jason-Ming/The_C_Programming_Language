@@ -69,7 +69,7 @@ ENUM_RETURN subcmd_fold_proc(STRU_OPTION_RUN_BLOCK *value)
     char temp[MAX_LINE_BUFFER * 2] = {'\0'};
 
     int len = 0;
-    while((len = s_getline(fpr, line, MAX_LINE_BUFFER)) > 0)
+    while(s_getline(fpr, line, MAX_LINE_BUFFER, &len) == RETURN_SUCCESS && len > 0)
     {
         ret_val = s_fold(line, temp, MAX_LINE_BUFFER * 2, fold_num);
         R_ASSERT_DO(ret_val == RETURN_SUCCESS, RETURN_FAILURE, fclose(fpr);fclose(fpw););
@@ -98,7 +98,7 @@ int fold_init(void)
         SUBCMD_FOLD, 
         "-n", 
         BOOLEAN_TRUE, 
-        OPTION_TYPE_OPTIONAL, 
+        OPTION_TYPE_MANDATORY, 
         ARG_TYPE_DATA, 
         subcmd_fold_option_n_proc, 
         BOOLEAN_FALSE,
