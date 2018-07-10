@@ -1,0 +1,174 @@
+#include <stdio.h>
+#include <assert.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "s_defines.h"
+#include "s_log.h"
+#include "s_text.h"
+#include "s_cmd.h"
+
+#include "tab.h"
+
+#define SUBCMD_TAB "tab"
+#define SUBCMD_TAB_OPTION_D "-d"
+#define SUBCMD_TAB_OPTION_C "-c"
+#define SUBCMD_TAB_OPTION_O "-o"
+
+PRIVATE const char *output_file = NULL;
+PRIVATE _S32 tab_stop = 8;
+PRIVATE ENUM_BOOLEAN delete_tab = BOOLEAN_FALSE;
+
+PRIVATE ENUM_RETURN subcmd_tab_proc_do(FILE *pfr, FILE *pfw)
+{
+    R_ASSERT(pfr != NULL, RETURN_FAILURE);
+    R_ASSERT(pfw != NULL, RETURN_FAILURE);
+
+    _S8 line[1000] = {0};
+    _S8 line_new[1000] = {0};
+    _S32 len = 0;
+    ENUM_RETURN ret_val;
+    
+    while(s_getline(pfr, line, 1000, &len) == RETURN_SUCCESS && len > 0)
+    {
+        line_new[0] = '\0';
+
+        if(delete_tab == BOOLEAN_TRUE)
+        {
+            ret_val = s_detab(line, line_new, 1000, tab_stop);
+        }
+        else
+        {
+            ret_val = s_entab(line, line_new, 1000, tab_stop);
+        }
+        
+        if(ret_val != RETURN_SUCCESS)
+        {
+            DEBUG_PRINT("detab error!\n    line: %s\nline_new: %s\n", line, line_new);
+            break;
+        }
+
+        printf("    line: %s\nline_new: %s\n", line, line_new);
+        fputs(line_new, pfw);
+    };
+
+    return RETURN_SUCCESS;
+}
+
+PRIVATE ENUM_RETURN subcmd_tab_proc(STRU_OPTION_RUN_BLOCK *value)
+{
+    ENUM_RETURN ret_val = RETURN_SUCCESS;
+    
+    const char* file_name = get_input_file_of_subcmd(SUBCMD_TAB);
+    R_ASSERT(file_name != NULL, RETURN_FAILURE);
+
+    FILE *pfr = fopen(file_name, "r");
+    FALSE_ADD_ERROR_DO(
+        pfr != NULL, 
+        ERROR_CODE_FILE_NOT_EXIST, 
+        file_name,
+        return RETURN_FAILURE;);
+    
+    FILE *pfw = fopen(output_file, "w");
+    if(pfw == NULL)
+    {
+        fclose(pfr);
+        
+        ret_val = add_current_user_error(
+            ERROR_CODE_FILE_CAN_NOT_BE_CREATED, output_file);
+        R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+
+        return RETURN_FAILURE;
+    }
+
+    ret_val = subcmd_tab_proc_do(pfr, pfw);
+    R_ASSERT_DO(ret_val == RETURN_SUCCESS, RETURN_FAILURE,fclose(pfr);fclose(pfw););
+
+    fclose(pfr);
+    fclose(pfw);
+    return RETURN_SUCCESS;
+}
+
+PRIVATE ENUM_RETURN subcmd_tab_option_d_proc(STRU_ARG *arg)
+{
+    R_ASSERT(arg != NULL, RETURN_FAILURE);
+    R_ASSERT(arg->value != NULL, RETURN_FAILURE);
+
+    delete_tab = BOOLEAN_TRUE;
+    
+    return RETURN_SUCCESS;
+}
+
+PRIVATE ENUM_RETURN subcmd_tab_option_c_proc(STRU_ARG *arg)
+{
+    R_ASSERT(arg != NULL, RETURN_FAILURE);
+    R_ASSERT(arg->value != NULL, RETURN_FAILURE);
+
+    ENUM_RETURN ret_val = s_strtos32(arg->value, &tab_stop);
+    if(ret_val == RETURN_FAILURE)
+    {
+        ret_val = add_current_system_error(ERROR_CODE_INVALID_ARGS, arg->value);
+        R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+    }
+    
+    return ret_val;
+}
+
+PRIVATE ENUM_RETURN subcmd_tab_option_o_proc(STRU_ARG *arg)
+{
+    R_ASSERT(arg != NULL, RETURN_FAILURE);
+    R_ASSERT(arg->value != NULL, RETURN_FAILURE);
+
+    /* 检查文件名是否合法 */
+    output_file = arg->value;
+
+    return RETURN_SUCCESS;
+}
+
+ENUM_RETURN tab_init(_VOID)
+{
+    ENUM_RETURN ret_val;
+
+    ret_val = register_subcmd(
+        SUBCMD_TAB, 
+        BOOLEAN_TRUE,
+        subcmd_tab_proc, 
+        "replaces strings of blanks with the minimum number of tabs and blanks to achieve the same spacing. ");
+    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+
+    ret_val = register_option(
+        SUBCMD_TAB, 
+        SUBCMD_TAB_OPTION_D, 
+        BOOLEAN_TRUE, 
+        OPTION_TYPE_OPTIONAL, 
+        ARG_TYPE_SWITCH, 
+        subcmd_tab_option_d_proc, 
+        BOOLEAN_FALSE,
+        "replaces tabs in the input with the proper number of blanks to space to the next tab stop. ");
+    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+    
+    ret_val = register_option(
+        SUBCMD_TAB, 
+        SUBCMD_TAB_OPTION_C, 
+        BOOLEAN_TRUE, 
+        OPTION_TYPE_OPTIONAL, 
+        ARG_TYPE_DATA, 
+        subcmd_tab_option_c_proc, 
+        BOOLEAN_FALSE,
+        "specify tab stops as columns <arg>, default value is 8");
+    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+
+    ret_val = register_option(
+        SUBCMD_TAB, 
+        SUBCMD_TAB_OPTION_O, 
+        BOOLEAN_TRUE, 
+        OPTION_TYPE_MANDATORY, 
+        ARG_TYPE_DATA, 
+        subcmd_tab_option_o_proc, 
+        BOOLEAN_FALSE,
+        "specify output file name as <arg>");
+    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+
+    return RETURN_SUCCESS;
+}
+

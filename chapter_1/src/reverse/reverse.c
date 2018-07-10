@@ -223,6 +223,7 @@ int reverse_init(void)
 
     ret_val = register_subcmd(
         SUBCMD_REVERSE, 
+        BOOLEAN_TRUE,
         subcmd_reverse_proc, 
         "reverse the lines to input file and output the result to output file");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);

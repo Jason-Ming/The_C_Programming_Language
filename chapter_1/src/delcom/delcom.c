@@ -362,6 +362,7 @@ int delcom_init(void)
 
     ret_val = register_subcmd(
         SUBCMD_DELCOM, 
+        BOOLEAN_TRUE,
         subcmd_delcom_proc, 
         "remove all comments from a C program");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);

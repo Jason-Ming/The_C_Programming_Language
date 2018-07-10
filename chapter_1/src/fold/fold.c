@@ -90,6 +90,7 @@ int fold_init(void)
 
     ret_val = register_subcmd(
         SUBCMD_FOLD, 
+        BOOLEAN_TRUE,
         subcmd_fold_proc, 
         "fold each line in input files");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);

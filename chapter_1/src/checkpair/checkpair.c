@@ -542,6 +542,7 @@ int checkpair_init(void)
 
     ret_val = register_subcmd(
         SUBCMD_CHECKPAIR, 
+        BOOLEAN_TRUE,
         subcmd_checkpair_proc, 
         "check a C program for rudimentary syntax errors like unbalanced "
         "parentheses, brackets and braces.");
