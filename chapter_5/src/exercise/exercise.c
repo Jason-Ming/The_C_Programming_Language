@@ -12,8 +12,6 @@
 #include "exercise.5.4.h"
 #include "exercise.5.8.h"
 #include "exercise.5.10.h"
-#include "exercise.4.13.h"
-#include "exercise.4.14.h"
 
 
 #define SUBCMD_EXERCISE "exercise"

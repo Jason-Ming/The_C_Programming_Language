@@ -54,11 +54,6 @@ FUNC_MAIN_PROC get_exercise_handler_by_name(const char *name)
     return NULL;
 }
 
-ENUM_RETURN subcmd_exercise_proc(STRU_OPTION_RUN_BLOCK *value)
-{
-    return RETURN_SUCCESS;
-}
-
 ENUM_RETURN subcmd_exercise_option_n_proc(struct TAG_STRU_ARG *value)
 {
     R_ASSERT(value != NULL, RETURN_FAILURE);
@@ -71,7 +66,7 @@ ENUM_RETURN subcmd_exercise_option_n_proc(struct TAG_STRU_ARG *value)
         return RETURN_FAILURE;
     }
 
-    return handler();;
+    return handler();
 }
 
 ENUM_RETURN subcmd_exercise_option_l_proc(struct TAG_STRU_ARG *value)
@@ -98,7 +93,8 @@ int exercise_init(void)
     ENUM_RETURN ret_val = RETURN_SUCCESS;
 
     ret_val = register_subcmd(SUBCMD_EXERCISE, 
-        subcmd_exercise_proc, 
+        BOOLEAN_FALSE,
+        default_subcmd_proc_handler, 
         "execute exercises.");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
@@ -115,7 +111,7 @@ int exercise_init(void)
     ret_val = register_option(SUBCMD_EXERCISE, 
         SUBCMD_EXERCISE_OPTION_N, 
         BOOLEAN_FALSE, 
-        OPTION_TYPE_MANDATORY, 
+        OPTION_TYPE_OPTIONAL, 
         ARG_TYPE_DATA, 
         subcmd_exercise_option_n_proc, 
         BOOLEAN_TRUE,

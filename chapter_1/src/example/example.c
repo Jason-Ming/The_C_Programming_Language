@@ -115,7 +115,7 @@ ENUM_RETURN example_init(void)
     ret_val = register_option(SUBCMD_EXAMPLE, 
         SUBCMD_EXAMPLE_OPTION_N, 
         BOOLEAN_FALSE, 
-        OPTION_TYPE_MANDATORY, 
+        OPTION_TYPE_OPTIONAL, 
         ARG_TYPE_DATA, 
         subcmd_example_option_n_proc, 
         BOOLEAN_TRUE,

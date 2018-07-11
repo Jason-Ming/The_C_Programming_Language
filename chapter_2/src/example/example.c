@@ -39,11 +39,6 @@ FUNC_MAIN_PROC get_example_handler_by_name(const char *name)
     return NULL;
 }
 
-ENUM_RETURN subcmd_example_proc(STRU_OPTION_RUN_BLOCK *value)
-{
-    return RETURN_SUCCESS;
-}
-
 ENUM_RETURN subcmd_example_option_n_proc(struct TAG_STRU_ARG *value)
 {
     R_ASSERT(value != NULL, RETURN_FAILURE);
@@ -83,7 +78,8 @@ ENUM_RETURN example_init(void)
     ENUM_RETURN ret_val = RETURN_SUCCESS;
 
     ret_val = register_subcmd(SUBCMD_EXAMPLE, 
-        subcmd_example_proc, 
+        BOOLEAN_FALSE,
+        default_subcmd_proc_handler, 
         "execute examples.");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
@@ -100,7 +96,7 @@ ENUM_RETURN example_init(void)
     ret_val = register_option(SUBCMD_EXAMPLE, 
         SUBCMD_EXAMPLE_OPTION_N, 
         BOOLEAN_FALSE, 
-        OPTION_TYPE_MANDATORY, 
+        OPTION_TYPE_OPTIONAL, 
         ARG_TYPE_DATA, 
         subcmd_example_option_n_proc, 
         BOOLEAN_TRUE,

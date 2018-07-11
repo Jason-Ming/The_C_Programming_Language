@@ -83,7 +83,7 @@ ENUM_RETURN subcmd_exercise_option_n_proc(struct TAG_STRU_ARG *value)
         return RETURN_FAILURE;
     }
 
-    return handler();;
+    return handler();
 }
 
 ENUM_RETURN subcmd_exercise_option_l_proc(struct TAG_STRU_ARG *value)
@@ -128,7 +128,7 @@ int exercise_init(void)
     ret_val = register_option(SUBCMD_EXERCISE, 
         SUBCMD_EXERCISE_OPTION_N, 
         BOOLEAN_FALSE, 
-        OPTION_TYPE_MANDATORY, 
+        OPTION_TYPE_OPTIONAL, 
         ARG_TYPE_DATA, 
         subcmd_exercise_option_n_proc, 
         BOOLEAN_TRUE,
