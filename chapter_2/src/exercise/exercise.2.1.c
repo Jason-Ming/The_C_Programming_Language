@@ -10,7 +10,7 @@
 
 int exercise_2_1(void)
 {
-    print_types();
+    s_print_types();
     
 	return 0;
 }
