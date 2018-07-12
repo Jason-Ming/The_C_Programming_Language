@@ -6,6 +6,8 @@
 #include "s_text.h"
 #include "s_cmd.h"
 #include "s_log.h"
+#include "s_mem.h"
+
 #include "main_proc.h"
 #include "example.h"
 #include "2.3.h"

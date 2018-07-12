@@ -31,16 +31,11 @@ int exercise_2_5(void)
         printf("the string%d is %s\n", j, s[j]);
     }
 
-    char *p = NULL;
-    ENUM_RETURN ret_val = s_any(s[0], s[1], &p);
+    const char *p = NULL;
+    s_any(s[0], s[1], &p);
     DISPLAY_VAR_MEM_MULTI_LINES(s[0]);
     printf("after s_any, p is %s \n", p);
 
     return 0;
 }
-
-
-
-
-
 

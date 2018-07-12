@@ -4,6 +4,7 @@
 #include "s_mem.h"
 #include "s_text.h"
 #include "s_type.h"
+#include "s_mem.h"
 
 #include "exercise.2.4.h"
 
@@ -31,7 +32,7 @@ int exercise_2_4(void)
         printf("the string%d is %s\n", j, s[j]);
     }
 
-    ENUM_RETURN ret_val = s_squeeze(s[0], s[1]);
+    s_squeeze(s[0], s[1]);
 
     DISPLAY_VAR_MEM_MULTI_LINES(s[0]);
     printf("after s_squeeze, string%d is %s\n", 0, s[0]);

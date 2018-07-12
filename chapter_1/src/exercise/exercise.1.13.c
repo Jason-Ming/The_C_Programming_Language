@@ -4,6 +4,7 @@
 #include <string.h>
 #include "s_draw.h"
 #include "s_defines.h"
+#include "s_mem.h"
 
 #define MAX_WORD_LENGTH 20//最大长度为20
 #define ARRAY_LENGTH_OF_NUM_OF_WORD_LENGTH (MAX_WORD_LENGTH+1)

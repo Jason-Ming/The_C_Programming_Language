@@ -4,6 +4,8 @@
 #include <string.h>
 
 #include "s_defines.h"
+#include "s_mem.h"
+
 #include "exercise.1.16.h"
 
 #define MAX_LINE_BUFFER 100 //maximum input line length

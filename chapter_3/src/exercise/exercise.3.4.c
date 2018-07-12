@@ -6,6 +6,7 @@
 #include "s_type.h"
 #include "s_text.h"
 #include "s_limits.h"
+#include "s_mem.h"
 
 #include "exercise.3.4.h"
 

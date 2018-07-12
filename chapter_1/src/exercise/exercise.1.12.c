@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include "s_text.h"
+#include "s_mem.h"
 #include "exercise.1.12.h"
 
 int exercise_1_12(void)

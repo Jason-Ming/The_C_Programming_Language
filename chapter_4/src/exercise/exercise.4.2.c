@@ -3,6 +3,7 @@
 #include <time.h>
 
 #include "s_alg.h"
+#include "s_mem.h"
 
 #include "s_type.h"
 #include "s_text.h"

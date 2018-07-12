@@ -7,6 +7,7 @@
 #include "s_log.h"
 #include "s_text.h"
 #include "s_cmd.h"
+#include "s_mem.h"
 
 #include "tail.h"
 

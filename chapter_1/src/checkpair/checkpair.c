@@ -8,6 +8,7 @@
 #include "s_log.h"
 #include "s_stack.h"
 #include "s_stm.h"
+#include "s_mem.h"
 
 #include "checkpair.h"
 

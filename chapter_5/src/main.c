@@ -11,7 +11,7 @@
 #include "example.h"
 #include "expr.h"
 #include "tail.h"
-
+#include "sortf.h"
 
 int main(int argc, char **argv)
 {
@@ -31,6 +31,10 @@ int main(int argc, char **argv)
 
     ret_val = tail_init();
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+
+    ret_val = sortf_init();
+    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+    
     return process(argc, argv);
 }
 

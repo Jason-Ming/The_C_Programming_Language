@@ -7,6 +7,7 @@
 #include "s_text.h"
 #include "s_cmd.h"
 #include "s_log.h"
+#include "s_mem.h"
 
 #define MAX_LINE_BUFFER 1000 //maximum input line length
 
