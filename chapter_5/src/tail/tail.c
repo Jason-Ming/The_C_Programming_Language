@@ -58,7 +58,7 @@ PRIVATE ENUM_RETURN subcmd_tail_proc_do(FILE *pfr, FILE *pfw)
             p_positoin[i] = offset;
         }
 
-        DEBUG_PRINT("offset: %ld, c: %c\n", offset, c);
+        DEBUG_PRINT("offset: %ld, c: %c", offset, c);
         
         if(i == line_num)
         {
@@ -70,7 +70,7 @@ PRIVATE ENUM_RETURN subcmd_tail_proc_do(FILE *pfr, FILE *pfw)
 
     for(i = line_num - 1; i >= 0; i--)
     {
-        DEBUG_PRINT("p_positoin[%d]: %d\n", i, p_positoin[i]);
+        DEBUG_PRINT("p_positoin[%d]: %d", i, p_positoin[i]);
         
         if(p_positoin[i] == 0)
         {
@@ -97,7 +97,7 @@ PRIVATE ENUM_RETURN subcmd_tail_proc_do(FILE *pfr, FILE *pfw)
     return RETURN_SUCCESS;
 }
 
-PRIVATE ENUM_RETURN subcmd_tail_proc(STRU_OPTION_RUN_BLOCK *value)
+PRIVATE ENUM_RETURN subcmd_tail_proc(_VOID)
 {
     ENUM_RETURN ret_val = RETURN_SUCCESS;
     
@@ -136,28 +136,27 @@ PRIVATE ENUM_RETURN subcmd_tail_proc(STRU_OPTION_RUN_BLOCK *value)
     return RETURN_SUCCESS;
 }
 
-PRIVATE ENUM_RETURN subcmd_tail_option_n_proc(STRU_ARG *arg)
+PRIVATE ENUM_RETURN subcmd_tail_option_n_proc(const char *value)
 {
-    R_ASSERT(arg != NULL, RETURN_FAILURE);
-    R_ASSERT(arg->value != NULL, RETURN_FAILURE);
+    R_ASSERT(value != NULL, RETURN_FAILURE);
 
-    ENUM_RETURN ret_val = s_strtos32(arg->value, &line_num);
+    ENUM_RETURN ret_val = s_strtos32(value, &line_num);
     if(ret_val == RETURN_FAILURE || (ret_val == RETURN_SUCCESS && line_num <= 0))
     {
-        ret_val = add_current_system_error(ERROR_CODE_INVALID_ARGS, arg->value);
+        ret_val = add_current_system_error(ERROR_CODE_INVALID_ARGS, value);
         R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+        return RETURN_FAILURE;
     }
     
-    return ret_val;
+    return RETURN_SUCCESS;
 }
 
-PRIVATE ENUM_RETURN subcmd_tail_option_o_proc(STRU_ARG *arg)
+PRIVATE ENUM_RETURN subcmd_tail_option_o_proc(const char *value)
 {
-    R_ASSERT(arg != NULL, RETURN_FAILURE);
-    R_ASSERT(arg->value != NULL, RETURN_FAILURE);
+    R_ASSERT(value != NULL, RETURN_FAILURE);
 
     /* 检查文件名是否合法 */
-    output_file = arg->value;
+    output_file = value;
 
     return RETURN_SUCCESS;
 }

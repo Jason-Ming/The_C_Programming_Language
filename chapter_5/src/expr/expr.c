@@ -15,16 +15,15 @@
 #define SUBCMD_EXPR "expr"
 #define SUBCMD_EXPR_OPTION_S "-s"
 
-ENUM_RETURN subcmd_expr_option_s_proc(struct TAG_STRU_ARG *value)
+ENUM_RETURN subcmd_expr_option_s_proc(const char *value)
 {
     R_ASSERT(value != NULL, RETURN_FAILURE);
-    R_ASSERT(value->value != NULL, RETURN_FAILURE);
 
-    printf("expressoin: %s\n", value->value);
+    printf("expressoin: %s\n", value);
 
     _SD result = 0.0;
 
-    ENUM_RETURN ret_val = s_calc_rp(value->value, &result);
+    ENUM_RETURN ret_val = s_calc_rp(value, &result);
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     
     printf("result: %g\n", result);

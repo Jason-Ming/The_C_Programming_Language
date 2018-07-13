@@ -37,25 +37,23 @@ FUNC_MAIN_PROC get_example_handler_by_name(const char *name)
     return NULL;
 }
 
-ENUM_RETURN subcmd_example_option_n_proc(struct TAG_STRU_ARG *value)
+ENUM_RETURN subcmd_example_option_n_proc(const char *value)
 {
     R_ASSERT(value != NULL, RETURN_FAILURE);
-    R_ASSERT(value->value != NULL, RETURN_FAILURE);
 
-    FUNC_MAIN_PROC handler = get_example_handler_by_name(value->value);
+    FUNC_MAIN_PROC handler = get_example_handler_by_name(value);
     if(handler == NULL)
     {
-        add_current_user_error(ERROR_CODE_INVALID_ARGS, value->value);
+        add_current_user_error(ERROR_CODE_INVALID_ARGS, value);
         return RETURN_FAILURE;
     }
 
     return handler();;
 }
 
-ENUM_RETURN subcmd_example_option_l_proc(struct TAG_STRU_ARG *value)
+ENUM_RETURN subcmd_example_option_l_proc(const char *value)
 {
     R_ASSERT(value != NULL, RETURN_FAILURE);
-    R_ASSERT(value->value != NULL, RETURN_FAILURE);
 
     printf("Here is the example list:\n");
     

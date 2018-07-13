@@ -111,7 +111,7 @@ PRIVATE ENUM_RETURN subcmd_sortf_proc_do(FILE * pfr, FILE * pfw)
 }
 
 
-PRIVATE ENUM_RETURN subcmd_sortf_proc(STRU_OPTION_RUN_BLOCK * value)
+PRIVATE ENUM_RETURN subcmd_sortf_proc(_VOID)
 {
 	ENUM_RETURN ret_val = RETURN_SUCCESS;
 
@@ -156,10 +156,9 @@ PRIVATE ENUM_RETURN subcmd_sortf_proc(STRU_OPTION_RUN_BLOCK * value)
 }
 
 
-PRIVATE ENUM_RETURN subcmd_sortf_option_n_proc(STRU_ARG * arg)
+PRIVATE ENUM_RETURN subcmd_sortf_option_n_proc(const char *value)
 {
-	R_ASSERT(arg != NULL, RETURN_FAILURE);
-	R_ASSERT(arg->value != NULL, RETURN_FAILURE);
+	R_ASSERT(value != NULL, RETURN_FAILURE);
 
 	numeric = BOOLEAN_TRUE;
 
@@ -167,13 +166,12 @@ PRIVATE ENUM_RETURN subcmd_sortf_option_n_proc(STRU_ARG * arg)
 }
 
 
-PRIVATE ENUM_RETURN subcmd_sortf_option_o_proc(STRU_ARG * arg)
+PRIVATE ENUM_RETURN subcmd_sortf_option_o_proc(const char *value)
 {
-	R_ASSERT(arg != NULL, RETURN_FAILURE);
-	R_ASSERT(arg->value != NULL, RETURN_FAILURE);
+	R_ASSERT(value != NULL, RETURN_FAILURE);
 
 	/* 检查文件名是否合法 */
-	output_file = arg->value;
+	output_file = value;
 
 	return RETURN_SUCCESS;
 }
