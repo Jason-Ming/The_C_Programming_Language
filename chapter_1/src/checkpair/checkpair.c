@@ -51,7 +51,7 @@ typedef struct TAG_STRU_CHECKPAIR_STM_RUN_DATA
     int column;
     FILE *pfr;
     int c;
-    ENUM_BOOLEAN is_error_exist;
+    ENUM_BOOLEAN whether_any_error_exists;
 }STRU_CHECKPAIR_STM_RUN_DATA;
 
 
@@ -139,7 +139,7 @@ PRIVATE ENUM_RETURN pop_and_check(const int c, ENUM_RETURN *result)
     {
         *result = RETURN_FAILURE;
         R_LOG("c_temp = %c, c = %c", c_temp, c);
-        run_data.is_error_exist = BOOLEAN_TRUE;
+        run_data.whether_any_error_exists = BOOLEAN_TRUE;
         display_check_error_info(c_temp);
     }
     
@@ -153,7 +153,7 @@ PRIVATE ENUM_RETURN checkpair_stm_prepare_proc()
 
     run_data.line = 1;
     run_data.column = 0;
-    run_data.is_error_exist = BOOLEAN_FALSE;
+    run_data.whether_any_error_exists = BOOLEAN_FALSE;
 
     return RETURN_SUCCESS;
 }
@@ -163,7 +163,7 @@ PRIVATE ENUM_RETURN checkpair_stm_clear_proc()
     ENUM_RETURN ret_val = stack_delete(&(run_data.stack));
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-    if(run_data.is_error_exist == BOOLEAN_FALSE)
+    if(run_data.whether_any_error_exists == BOOLEAN_FALSE)
     {
         display_check_correct_info();
     }
@@ -176,7 +176,7 @@ PRIVATE ENUM_RETURN checkpair_stm_preproc()
     ENUM_RETURN ret_val;
     
     run_data.c = fgetc(run_data.pfr);
-    if(run_data.is_error_exist == BOOLEAN_TRUE)
+    if(run_data.whether_any_error_exists == BOOLEAN_TRUE)
     {
         R_LOG("check error!");
         ret_val = set_current_stm_state(stm, CHECKPAIR_STM_END);
@@ -270,30 +270,30 @@ PRIVATE ENUM_RETURN checkpair_stm_proc_normal()
 //this is a test comment
 PRIVATE ENUM_RETURN checkpair_stm_proc_string_double_quote()
 {
-    static ENUM_BOOLEAN backslash = BOOLEAN_FALSE;
+    static ENUM_BOOLEAN whether_backslash_occured = BOOLEAN_FALSE;
     ENUM_RETURN ret_val;
     int c = run_data.c;
     switch (c)
     {
         case '"'://a line comment
         {
-            if(backslash == BOOLEAN_FALSE)
+            if(whether_backslash_occured == BOOLEAN_FALSE)
             {
                 ret_val = set_current_stm_state(stm, CHECKPAIR_STM_NORMAL);
                 R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
             }
 
-            backslash = BOOLEAN_FALSE;
+            whether_backslash_occured = BOOLEAN_FALSE;
             break;
         }
         case '\\':
         {
-            backslash = BOOLEAN_TRUE;
+            whether_backslash_occured = BOOLEAN_TRUE;
             break;
         }
         default:
         {
-            backslash = BOOLEAN_FALSE;
+            whether_backslash_occured = BOOLEAN_FALSE;
             break;
         }
     }
@@ -303,39 +303,39 @@ PRIVATE ENUM_RETURN checkpair_stm_proc_string_double_quote()
 
 PRIVATE ENUM_RETURN checkpair_stm_proc_string_single_quote()
 {
-    static ENUM_BOOLEAN backslash = BOOLEAN_FALSE;
+    static ENUM_BOOLEAN whether_backslash_occured = BOOLEAN_FALSE;
     int c = run_data.c;
     ENUM_RETURN ret_val;
     switch (c)
     {
         case '\''://a line comment
         {
-            if(backslash == BOOLEAN_FALSE)
+            if(whether_backslash_occured == BOOLEAN_FALSE)
             {
                 R_LOG("line %d, column %d", run_data.line, run_data.column);
                 ret_val = set_current_stm_state(stm, CHECKPAIR_STM_NORMAL);
                 R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
             }
 
-            backslash = BOOLEAN_FALSE;
+            whether_backslash_occured = BOOLEAN_FALSE;
             break;
         }
         case '\\':
         {
-            if(backslash == BOOLEAN_TRUE)
+            if(whether_backslash_occured == BOOLEAN_TRUE)
             {
-                backslash = BOOLEAN_FALSE;
+                whether_backslash_occured = BOOLEAN_FALSE;
             }
             else
             {
-                backslash = BOOLEAN_TRUE;
+                whether_backslash_occured = BOOLEAN_TRUE;
             }
             
             break;
         }
         default:
         {
-            backslash = BOOLEAN_FALSE;
+            whether_backslash_occured = BOOLEAN_FALSE;
             break;
         }
     }
@@ -366,29 +366,29 @@ PRIVATE ENUM_RETURN checkpair_stm_proc_oneline_comment()
 
 PRIVATE ENUM_RETURN checkpair_stm_proc_pair_comment()
 {
-    static ENUM_BOOLEAN star = BOOLEAN_FALSE;
+    static ENUM_BOOLEAN whether_star_occured = BOOLEAN_FALSE;
     int c = run_data.c;
     ENUM_RETURN ret_val;
     switch (c)
     {
         case '*':
         {
-            star = BOOLEAN_TRUE;
+            whether_star_occured = BOOLEAN_TRUE;
             break;
         }
         case '/':
         {
-            if(star == BOOLEAN_TRUE)
+            if(whether_star_occured == BOOLEAN_TRUE)
             {
                 ret_val = set_current_stm_state(stm, CHECKPAIR_STM_NORMAL);
                 R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
             }
-            star = BOOLEAN_FALSE;
+            whether_star_occured = BOOLEAN_FALSE;
             break;
         }
         default:
         {
-            star = BOOLEAN_FALSE;
+            whether_star_occured = BOOLEAN_FALSE;
             break;
         }
     }
@@ -428,7 +428,7 @@ PRIVATE ENUM_RETURN checkpair_stm_proc_intermediate()
 PRIVATE ENUM_RETURN checkpair_stm_proc_end()
 {
     //if there is any error before return to the main process to display the error
-    R_FALSE_RET(run_data.is_error_exist == BOOLEAN_FALSE, RETURN_SUCCESS);
+    R_FALSE_RET(run_data.whether_any_error_exists == BOOLEAN_FALSE, RETURN_SUCCESS);
 
     //run to here will mean missing some char in the end of the file
     size_t stack_data_count = 0;
@@ -441,7 +441,7 @@ PRIVATE ENUM_RETURN checkpair_stm_proc_end()
         ret_val = stack_pop(run_data.stack, (void *)&c_temp, &len, sizeof(c_temp));
         R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     
-        run_data.is_error_exist = BOOLEAN_TRUE;
+        run_data.whether_any_error_exists = BOOLEAN_TRUE;
         display_check_error_info(c_temp);
     }
     
@@ -516,7 +516,7 @@ PRIVATE ENUM_RETURN subcmd_checkpair_proc_do(FILE *pfr)
     return RETURN_SUCCESS;
 }
 
-PRIVATE ENUM_RETURN subcmd_checkpair_proc(STRU_OPTION_RUN_BLOCK *value)
+PRIVATE ENUM_RETURN subcmd_checkpair_proc(_VOID)
 {
     ENUM_RETURN ret_val = RETURN_SUCCESS;
     

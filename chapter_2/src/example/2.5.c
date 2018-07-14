@@ -8,7 +8,7 @@ ENUM_RETURN main_2_5(_VOID)
     printf("input year:\n");
     scanf("%u", &year);
 
-    if (is_leapyear(year) == BOOLEAN_TRUE)
+    if (whether_year_is_leapyear(year) == BOOLEAN_TRUE)
     {
         printf("%d is a leap year\n", year); 
     }

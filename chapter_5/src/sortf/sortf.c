@@ -23,7 +23,7 @@
 #define MAX_LINE				5000
 
 PRIVATE const char * output_file = NULL;
-PRIVATE ENUM_BOOLEAN numeric = BOOLEAN_FALSE;
+PRIVATE ENUM_BOOLEAN whether_option_n_is_enable = BOOLEAN_FALSE;
 PRIVATE _S32 *p_positoin = NULL;
 
 PRIVATE _S8 *line_ptr[MAX_LINE];
@@ -102,7 +102,7 @@ PRIVATE ENUM_RETURN subcmd_sortf_proc_do(FILE * pfr, FILE * pfw)
 	ret_val = s_getlines(pfr, line_ptr, SIZE_OF_ARRAY(line_ptr), &line_num);
 	R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-	s_qsort_ptr((_VOID * *) line_ptr, 0, line_num - 1, (numeric ? (COMPARE_FUNC) numcmp: (COMPARE_FUNC) strcmp));
+	s_qsort_ptr((_VOID * *) line_ptr, 0, line_num - 1, (whether_option_n_is_enable ? (COMPARE_FUNC) numcmp: (COMPARE_FUNC) strcmp));
 
 	//s_qsort_ptr((_VOID**)line_ptr, 0, line_num - 1, (COMPARE_FUNC)strcmp);
 	write_lines(pfw, line_ptr, line_num);
@@ -160,7 +160,7 @@ PRIVATE ENUM_RETURN subcmd_sortf_option_n_proc(const char *value)
 {
 	R_ASSERT(value != NULL, RETURN_FAILURE);
 
-	numeric = BOOLEAN_TRUE;
+	whether_option_n_is_enable = BOOLEAN_TRUE;
 
 	return RETURN_SUCCESS;
 }

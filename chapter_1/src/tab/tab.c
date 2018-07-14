@@ -17,7 +17,7 @@
 
 PRIVATE const char *output_file = NULL;
 PRIVATE _S32 tab_stop = 8;
-PRIVATE ENUM_BOOLEAN delete_tab = BOOLEAN_FALSE;
+PRIVATE ENUM_BOOLEAN whether_option_d_is_enable = BOOLEAN_FALSE;
 
 PRIVATE ENUM_RETURN subcmd_tab_proc_do(FILE *pfr, FILE *pfw)
 {
@@ -33,7 +33,7 @@ PRIVATE ENUM_RETURN subcmd_tab_proc_do(FILE *pfr, FILE *pfw)
     {
         line_new[0] = '\0';
 
-        if(delete_tab == BOOLEAN_TRUE)
+        if(whether_option_d_is_enable == BOOLEAN_TRUE)
         {
             ret_val = s_detab(line, line_new, 1000, tab_stop);
         }
@@ -44,18 +44,18 @@ PRIVATE ENUM_RETURN subcmd_tab_proc_do(FILE *pfr, FILE *pfw)
         
         if(ret_val != RETURN_SUCCESS)
         {
-            DEBUG_PRINT("detab error!\n    line: %s\nline_new: %s\n", line, line_new);
+            DEBUG_PRINT("detab error!\n    line: %s\nline_new: %s", line, line_new);
             break;
         }
 
-        printf("    line: %s\nline_new: %s\n", line, line_new);
+        DEBUG_PRINT("    line: %s\nline_new: %s", line, line_new);
         fputs(line_new, pfw);
     };
 
     return RETURN_SUCCESS;
 }
 
-PRIVATE ENUM_RETURN subcmd_tab_proc(STRU_OPTION_RUN_BLOCK *value)
+PRIVATE ENUM_RETURN subcmd_tab_proc(_VOID)
 {
     ENUM_RETURN ret_val = RETURN_SUCCESS;
     
@@ -89,38 +89,35 @@ PRIVATE ENUM_RETURN subcmd_tab_proc(STRU_OPTION_RUN_BLOCK *value)
     return RETURN_SUCCESS;
 }
 
-PRIVATE ENUM_RETURN subcmd_tab_option_d_proc(STRU_ARG *arg)
+PRIVATE ENUM_RETURN subcmd_tab_option_d_proc(const char *value)
 {
-    R_ASSERT(arg != NULL, RETURN_FAILURE);
-    R_ASSERT(arg->value != NULL, RETURN_FAILURE);
+    R_ASSERT(value != NULL, RETURN_FAILURE);
 
-    delete_tab = BOOLEAN_TRUE;
+    whether_option_d_is_enable = BOOLEAN_TRUE;
     
     return RETURN_SUCCESS;
 }
 
-PRIVATE ENUM_RETURN subcmd_tab_option_c_proc(STRU_ARG *arg)
+PRIVATE ENUM_RETURN subcmd_tab_option_c_proc(const char *value)
 {
-    R_ASSERT(arg != NULL, RETURN_FAILURE);
-    R_ASSERT(arg->value != NULL, RETURN_FAILURE);
+    R_ASSERT(value != NULL, RETURN_FAILURE);
 
-    ENUM_RETURN ret_val = s_strtos32(arg->value, &tab_stop);
+    ENUM_RETURN ret_val = s_strtos32(value, &tab_stop);
     if(ret_val == RETURN_FAILURE)
     {
-        ret_val = add_current_system_error(ERROR_CODE_INVALID_ARGS, arg->value);
+        ret_val = add_current_system_error(ERROR_CODE_INVALID_ARGS, value);
         R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     }
     
     return ret_val;
 }
 
-PRIVATE ENUM_RETURN subcmd_tab_option_o_proc(STRU_ARG *arg)
+PRIVATE ENUM_RETURN subcmd_tab_option_o_proc(const char *value)
 {
-    R_ASSERT(arg != NULL, RETURN_FAILURE);
-    R_ASSERT(arg->value != NULL, RETURN_FAILURE);
+    R_ASSERT(value != NULL, RETURN_FAILURE);
 
     /* 检查文件名是否合法 */
-    output_file = arg->value;
+    output_file = value;
 
     return RETURN_SUCCESS;
 }

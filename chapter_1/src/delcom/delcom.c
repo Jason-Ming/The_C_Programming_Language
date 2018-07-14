@@ -62,7 +62,7 @@ PRIVATE STRU_DELCOM_STM_PROC delcom_stm_proc[DELCOM_STM_MAX] =
     {DELCOM_STM_INTERMEDIATE, del_stm_proc_intermediate, "intermediate"},
 };
 
-PRIVATE ENUM_BOOLEAN is_delcom_stm_state_valid(int arg)
+PRIVATE ENUM_BOOLEAN whether_delcom_stm_state_is_valid(int arg)
 {
     R_FALSE_RET(arg >= DELCOM_STM_NORMAL && arg < DELCOM_STM_MAX, BOOLEAN_FALSE);
 
@@ -84,14 +84,14 @@ PRIVATE ENUM_RETURN delcom_stm_init(void)
 
 PRIVATE const char* get_delcom_stm_string(ENUM_DELCOM_STM state)
 {
-    R_ASSERT(is_delcom_stm_state_valid(state) == BOOLEAN_TRUE, NULL);
+    R_ASSERT(whether_delcom_stm_state_is_valid(state) == BOOLEAN_TRUE, NULL);
 
     return delcom_stm_proc[(state)].info;
 }
 
 PRIVATE DELCOM_STM_PROC get_delcom_stm_proc(ENUM_DELCOM_STM state)
 {
-    R_ASSERT(is_delcom_stm_state_valid(state) == BOOLEAN_TRUE, NULL);
+    R_ASSERT(whether_delcom_stm_state_is_valid(state) == BOOLEAN_TRUE, NULL);
 
     return delcom_stm_proc[(state)].handler;
 }
@@ -146,31 +146,31 @@ PRIVATE ENUM_RETURN del_stm_proc_normal(FILE *pfr, FILE *pfw, int c)
 //this is a test comment
 PRIVATE ENUM_RETURN del_stm_proc_string_double_quote(FILE *pfr, FILE *pfw, int c)
 {
-    static ENUM_BOOLEAN backslash = BOOLEAN_FALSE;
+    static ENUM_BOOLEAN whether_backslash_occured = BOOLEAN_FALSE;
     
     switch (c)
     {
         case '"'://a line comment
         {
             fputc(c, pfw);
-            if(backslash == BOOLEAN_FALSE)
+            if(whether_backslash_occured == BOOLEAN_FALSE)
             {
                 set_current_stm_state(DELCOM_STM_NORMAL);
             }
 
-            backslash = BOOLEAN_FALSE;
+            whether_backslash_occured = BOOLEAN_FALSE;
             break;
         }
         case '\\':
         {
-            backslash = BOOLEAN_TRUE;
+            whether_backslash_occured = BOOLEAN_TRUE;
             fputc(c, pfw);
             break;
         }
         case '\n':
         default:
         {
-            backslash = BOOLEAN_FALSE;
+            whether_backslash_occured = BOOLEAN_FALSE;
             fputc(c, pfw);
             break;
         }
@@ -181,31 +181,31 @@ PRIVATE ENUM_RETURN del_stm_proc_string_double_quote(FILE *pfr, FILE *pfw, int c
 
 PRIVATE ENUM_RETURN del_stm_proc_string_single_quote(FILE *pfr, FILE *pfw, int c)
 {
-    static ENUM_BOOLEAN backslash = BOOLEAN_FALSE;
+    static ENUM_BOOLEAN whether_backslash_occured = BOOLEAN_FALSE;
     
     switch (c)
     {
         case '\''://a line comment
         {
             fputc(c, pfw);
-            if(backslash == BOOLEAN_FALSE)
+            if(whether_backslash_occured == BOOLEAN_FALSE)
             {
                 set_current_stm_state(DELCOM_STM_NORMAL);
             }
 
-            backslash = BOOLEAN_FALSE;
+            whether_backslash_occured = BOOLEAN_FALSE;
             break;
         }
         case '\\':
         {
-            backslash = BOOLEAN_TRUE;
+            whether_backslash_occured = BOOLEAN_TRUE;
             fputc(c, pfw);
             break;
         }
         case '\n':
         default:
         {
-            backslash = BOOLEAN_FALSE;
+            whether_backslash_occured = BOOLEAN_FALSE;
             fputc(c, pfw);
             break;
         }
@@ -235,27 +235,27 @@ PRIVATE ENUM_RETURN del_stm_proc_oneline_comment(FILE *pfr, FILE *pfw, int c)
 
 PRIVATE ENUM_RETURN del_stm_proc_pair_comment(FILE *pfr, FILE *pfw, int c)
 {
-    static ENUM_BOOLEAN star = BOOLEAN_FALSE;
+    static ENUM_BOOLEAN whether_star_occured = BOOLEAN_FALSE;
     switch (c)
     {
         case '*':
         {
-            star = BOOLEAN_TRUE;
+            whether_star_occured = BOOLEAN_TRUE;
             break;
         }
         case '/':
         {
-            if(star == BOOLEAN_TRUE)
+            if(whether_star_occured == BOOLEAN_TRUE)
             {
                 set_current_stm_state(DELCOM_STM_NORMAL);
             }
-            star = BOOLEAN_FALSE;
+            whether_star_occured = BOOLEAN_FALSE;
             break;
         }
         case '\n':
         default:
         {
-            star = BOOLEAN_FALSE;
+            whether_star_occured = BOOLEAN_FALSE;
             break;
         }
     }
@@ -290,13 +290,11 @@ PRIVATE ENUM_RETURN del_stm_proc_intermediate(FILE *pfr, FILE *pfw, int c)
     return RETURN_SUCCESS;
 }
 
-PRIVATE ENUM_RETURN subcmd_delcom_option_o_proc(STRU_ARG *arg)
+PRIVATE ENUM_RETURN subcmd_delcom_option_o_proc(const _S8 *arg)
 {
     R_ASSERT(arg != NULL, RETURN_FAILURE);
-    R_ASSERT(arg->value != NULL, RETURN_FAILURE);
-
     /* 检查文件名是否合法 */
-    output_file = arg->value;
+    output_file = arg;
 
     return RETURN_SUCCESS;
 }
@@ -322,7 +320,7 @@ PRIVATE ENUM_RETURN subcmd_delcom_proc_do(FILE *pfr, FILE *pfw)
     return RETURN_SUCCESS;
 }
 
-PRIVATE ENUM_RETURN subcmd_delcom_proc(STRU_OPTION_RUN_BLOCK *value)
+PRIVATE ENUM_RETURN subcmd_delcom_proc(_VOID)
 {
     ENUM_RETURN ret_val = RETURN_SUCCESS;
     

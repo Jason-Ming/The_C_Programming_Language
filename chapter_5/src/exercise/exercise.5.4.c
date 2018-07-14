@@ -17,8 +17,8 @@ int exercise_5_4(void)
 	char *			s3 = "ng";
 
     ENUM_RETURN ret_val;
-    ENUM_BOOLEAN occur;
-	if ((ret_val = s_strend(s1, s2, &occur)) == RETURN_SUCCESS && occur == BOOLEAN_TRUE)
+    ENUM_BOOLEAN whether_any_charactor_occured;
+	if ((ret_val = s_strend(s1, s2, &whether_any_charactor_occured)) == RETURN_SUCCESS && whether_any_charactor_occured == BOOLEAN_TRUE)
 	{
 		printf("The string (%s) has (%s) at the end.\n", s1, s2);
 	}
@@ -30,7 +30,7 @@ int exercise_5_4(void)
 	}
 	
 	
-	if ((ret_val = s_strend(s1, s3, &occur)) == RETURN_SUCCESS && occur == BOOLEAN_TRUE)
+	if ((ret_val = s_strend(s1, s3, &whether_any_charactor_occured)) == RETURN_SUCCESS && whether_any_charactor_occured == BOOLEAN_TRUE)
 	{
 		printf("The string (%s) has (%s) at the end.\n", s1, s3);
 	}

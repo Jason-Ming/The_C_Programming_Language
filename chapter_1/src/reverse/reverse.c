@@ -145,7 +145,7 @@ STRU_TEST_INFO test_info[] =
     },
 };
 
-ENUM_RETURN subcmd_reverse_option_g_proc(STRU_ARG *arg)
+ENUM_RETURN subcmd_reverse_option_g_proc(const char *value)
 {
     FILE *f = NULL;
 
@@ -162,7 +162,7 @@ ENUM_RETURN subcmd_reverse_option_g_proc(STRU_ARG *arg)
 	return RETURN_SUCCESS;
 }
 
-ENUM_RETURN subcmd_reverse_option_t_proc(STRU_ARG *arg)
+ENUM_RETURN subcmd_reverse_option_t_proc(const char *value)
 {
     ENUM_RETURN ret_val = RETURN_SUCCESS;
     int  lines = 0;
@@ -192,22 +192,19 @@ ENUM_RETURN subcmd_reverse_option_t_proc(STRU_ARG *arg)
 }
 
 PRIVATE const char *output_file = NULL;
-ENUM_RETURN subcmd_reverse_option_o_proc(STRU_ARG *arg)
+ENUM_RETURN subcmd_reverse_option_o_proc(const char *value)
 {
-    R_ASSERT(arg != NULL, RETURN_FAILURE);
-    R_ASSERT(arg->value != NULL, RETURN_FAILURE);
+    R_ASSERT(value != NULL, RETURN_FAILURE);
 
     /* 检查文件名是否合法 */
-    output_file = arg->value;
+    output_file = value;
 
     return RETURN_SUCCESS;
 }
 
-ENUM_RETURN subcmd_reverse_proc(STRU_OPTION_RUN_BLOCK *value)
+ENUM_RETURN subcmd_reverse_proc(_VOID)
 {
-    R_ASSERT(value != NULL, RETURN_FAILURE);
-
-    const char* file1 = get_input_file_of_subcmd(value->subcmd);
+    const char* file1 = get_input_file_of_subcmd(SUBCMD_REVERSE);
     const char *file2 = output_file;
 
     ENUM_RETURN ret_val; 

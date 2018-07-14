@@ -13,29 +13,27 @@
 PRIVATE int fold_num = DEFAULT_FOLD_NUM;
 #define MAX_LINE_BUFFER 1000 //maximum input line length
 
-ENUM_RETURN subcmd_fold_option_n_proc(struct TAG_STRU_ARG *value)
+ENUM_RETURN subcmd_fold_option_n_proc(const char *value)
 {
     R_ASSERT(value != NULL, RETURN_FAILURE);
-    R_ASSERT(value->value != NULL, RETURN_FAILURE);
 
-    fold_num = atoi(value->value);
+    fold_num = atoi(value);
     
     return RETURN_SUCCESS;
 }
 
 PRIVATE const char *output_file = NULL;
-ENUM_RETURN subcmd_fold_option_o_proc(STRU_ARG *arg)
+ENUM_RETURN subcmd_fold_option_o_proc(const char *value)
 {
-    R_ASSERT(arg != NULL, RETURN_FAILURE);
-    R_ASSERT(arg->value != NULL, RETURN_FAILURE);
+    R_ASSERT(value != NULL, RETURN_FAILURE);
 
     /* 检查文件名是否合法 */
-    output_file = arg->value;
+    output_file = value;
 
     return RETURN_SUCCESS;
 }
 
-ENUM_RETURN subcmd_fold_proc(STRU_OPTION_RUN_BLOCK *value)
+ENUM_RETURN subcmd_fold_proc(_VOID)
 {
     ENUM_RETURN ret_val = RETURN_SUCCESS;
     char line[MAX_LINE_BUFFER]; //current input line
