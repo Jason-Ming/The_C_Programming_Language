@@ -520,8 +520,12 @@ PRIVATE ENUM_RETURN subcmd_checkpair_proc(_VOID)
 {
     ENUM_RETURN ret_val = RETURN_SUCCESS;
     
-    const char* file_name = get_input_file_of_subcmd(SUBCMD_CHECKPAIR);
-    R_ASSERT(file_name != NULL, RETURN_FAILURE);
+    const char* file_name = get_input_file_of_current_running_subcmd();
+    FALSE_ADD_ERROR_DO(
+        file_name != NULL, 
+        ERROR_CODE_NO_INPUT_FILES, 
+        SUBCMD_CHECKPAIR,
+        return RETURN_FAILURE;);
 
     FILE *pfr = fopen(file_name, "r");
     FALSE_ADD_ERROR_DO(

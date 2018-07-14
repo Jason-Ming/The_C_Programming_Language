@@ -115,9 +115,13 @@ PRIVATE ENUM_RETURN subcmd_sortf_proc(_VOID)
 {
 	ENUM_RETURN ret_val = RETURN_SUCCESS;
 
-	const char * file_name = get_input_file_of_subcmd(SUBCMD_SORTF);
+	const char * file_name = get_input_file_of_current_running_subcmd();
 
-	R_ASSERT(file_name != NULL, RETURN_FAILURE);
+	FALSE_ADD_ERROR_DO(
+        file_name != NULL, 
+        ERROR_CODE_NO_INPUT_FILES, 
+        SUBCMD_SORTF,
+        return RETURN_FAILURE;);
 
 	FILE *	pfr = fopen(file_name, "r");
 

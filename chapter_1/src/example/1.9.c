@@ -2,6 +2,9 @@
 #include <assert.h>
 
 #include "s_defines.h"
+#include "s_print.h"
+#include "s_type.h"
+
 
 //these lines is for test:
 //this line's length is 100: 
@@ -48,21 +51,26 @@ PRIVATE void copy(char to[], char from[])
 }
 
 //print the longest input line
-int main_1_9(int argc, char **argv)
+int main_1_9(_VOID)
 {
     int len; //current line length
     int max; //maximum length seen so far
-    
+
+    char file_name[MAX_LINE_BUFFER] = {'\0'};
     char line[MAX_LINE_BUFFER]; //current input line
     char longest[MAX_LINE_BUFFER]; //longest line saved here
 
     max = 0;
 
-    assert(argc == 2);
-    assert(argv[1] != NULL);
+    printf("please input file:\n");
+    scanf("%s", file_name);
 
-    FILE *fp = fopen(argv[1], "r");
-    assert(fp != NULL);
+    FILE *fp = fopen(file_name, "r");
+    if(fp == NULL)
+    {
+        printf(RED"No such file or directory: %s \n"NONE, file_name);
+        return RETURN_FAILURE;
+    }
     
     while((len = getline(fp, line, MAX_LINE_BUFFER)) > 0)
     {

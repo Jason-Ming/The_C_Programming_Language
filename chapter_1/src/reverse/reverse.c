@@ -204,7 +204,13 @@ ENUM_RETURN subcmd_reverse_option_o_proc(const char *value)
 
 ENUM_RETURN subcmd_reverse_proc(_VOID)
 {
-    const char* file1 = get_input_file_of_subcmd(SUBCMD_REVERSE);
+    const char* file1 = get_input_file_of_current_running_subcmd();
+    FALSE_ADD_ERROR_DO(
+        file1 != NULL, 
+        ERROR_CODE_NO_INPUT_FILES, 
+        SUBCMD_REVERSE,
+        return RETURN_FAILURE;);
+    
     const char *file2 = output_file;
 
     ENUM_RETURN ret_val; 
