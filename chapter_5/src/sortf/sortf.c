@@ -186,14 +186,12 @@ ENUM_RETURN sortf_init(_VOID)
 	ENUM_RETURN ret_val;
 
 	ret_val = register_subcmd(SUBCMD_SORTF, 
-		BOOLEAN_TRUE, 
 		subcmd_sortf_proc, 
 		"sort lines of input file and output to target file.");
 	R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
 	ret_val = register_option(SUBCMD_SORTF, 
 		SUBCMD_SORTF_OPTION_N, 
-		BOOLEAN_TRUE, 
 		OPTION_TYPE_OPTIONAL, 
 		ARG_TYPE_SWITCH, 
 		subcmd_sortf_option_n_proc, 
@@ -203,7 +201,6 @@ ENUM_RETURN sortf_init(_VOID)
 
 	ret_val = register_option(SUBCMD_SORTF, 
 		SUBCMD_SORTF_OPTION_O, 
-		BOOLEAN_TRUE, 
 		OPTION_TYPE_OPTIONAL, 
 		ARG_TYPE_DATA, 
 		subcmd_sortf_option_o_proc, 

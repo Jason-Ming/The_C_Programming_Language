@@ -171,7 +171,6 @@ ENUM_RETURN tail_init(_VOID)
 
     ret_val = register_subcmd(
         SUBCMD_TAIL, 
-        BOOLEAN_TRUE,
         subcmd_tail_proc, 
         "prints the last n lines of its input.");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
@@ -179,7 +178,6 @@ ENUM_RETURN tail_init(_VOID)
     ret_val = register_option(
         SUBCMD_TAIL, 
         SUBCMD_TAIL_OPTION_N, 
-        BOOLEAN_TRUE, 
         OPTION_TYPE_OPTIONAL, 
         ARG_TYPE_DATA, 
         subcmd_tail_option_n_proc, 
@@ -190,7 +188,6 @@ ENUM_RETURN tail_init(_VOID)
     ret_val = register_option(
         SUBCMD_TAIL, 
         SUBCMD_TAIL_OPTION_O, 
-        BOOLEAN_TRUE, 
         OPTION_TYPE_OPTIONAL, 
         ARG_TYPE_DATA, 
         subcmd_tail_option_o_proc, 

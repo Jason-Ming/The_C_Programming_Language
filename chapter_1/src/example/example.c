@@ -96,14 +96,12 @@ ENUM_RETURN example_init(void)
     ENUM_RETURN ret_val = RETURN_SUCCESS;
 
     ret_val = register_subcmd(SUBCMD_EXAMPLE, 
-        BOOLEAN_FALSE,
         default_subcmd_proc_handler, 
         "execute examples.");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
     ret_val = register_option(SUBCMD_EXAMPLE, 
         SUBCMD_EXAMPLE_OPTION_L, 
-        BOOLEAN_FALSE, 
         OPTION_TYPE_OPTIONAL, 
         ARG_TYPE_SWITCH, 
         subcmd_example_option_l_proc, 
@@ -113,7 +111,6 @@ ENUM_RETURN example_init(void)
 
     ret_val = register_option(SUBCMD_EXAMPLE, 
         SUBCMD_EXAMPLE_OPTION_N, 
-        BOOLEAN_FALSE, 
         OPTION_TYPE_OPTIONAL, 
         ARG_TYPE_DATA, 
         subcmd_example_option_n_proc, 

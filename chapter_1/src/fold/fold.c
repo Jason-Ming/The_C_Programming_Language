@@ -88,7 +88,6 @@ int fold_init(void)
 
     ret_val = register_subcmd(
         SUBCMD_FOLD, 
-        BOOLEAN_TRUE,
         subcmd_fold_proc, 
         "fold each line in input files");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
@@ -96,7 +95,6 @@ int fold_init(void)
     ret_val = register_option(
         SUBCMD_FOLD, 
         "-n", 
-        BOOLEAN_TRUE, 
         OPTION_TYPE_MANDATORY, 
         ARG_TYPE_DATA, 
         subcmd_fold_option_n_proc, 
@@ -107,7 +105,6 @@ int fold_init(void)
     ret_val = register_option(
         SUBCMD_FOLD, 
         "-o", 
-        BOOLEAN_TRUE, 
         OPTION_TYPE_MANDATORY, 
         ARG_TYPE_DATA, 
         subcmd_fold_option_o_proc, 

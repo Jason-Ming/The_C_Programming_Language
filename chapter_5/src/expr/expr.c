@@ -37,14 +37,12 @@ int expr_init(void)
     ENUM_RETURN ret_val = RETURN_SUCCESS;
 
     ret_val = register_subcmd(SUBCMD_EXPR, 
-        BOOLEAN_FALSE,
         default_subcmd_proc_handler, 
         "evaluates a reverse Polish expression.");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
     ret_val = register_option(SUBCMD_EXPR, 
         SUBCMD_EXPR_OPTION_S, 
-        BOOLEAN_FALSE, 
         OPTION_TYPE_MANDATORY, 
         ARG_TYPE_DATA, 
         subcmd_expr_option_s_proc, 

@@ -227,7 +227,6 @@ int reverse_init(void)
 
     ret_val = register_subcmd(
         SUBCMD_REVERSE, 
-        BOOLEAN_TRUE,
         subcmd_reverse_proc, 
         "reverse the lines to input file and output the result to output file");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
@@ -235,7 +234,6 @@ int reverse_init(void)
     ret_val = register_option(
         SUBCMD_REVERSE, 
         "-g",
-        BOOLEAN_FALSE, 
         OPTION_TYPE_OPTIONAL,
         ARG_TYPE_SWITCH,
         subcmd_reverse_option_g_proc, 
@@ -246,7 +244,6 @@ int reverse_init(void)
     ret_val = register_option(
         SUBCMD_REVERSE,
         "-t",
-        BOOLEAN_FALSE, 
         OPTION_TYPE_OPTIONAL,
         ARG_TYPE_SWITCH,
         subcmd_reverse_option_t_proc,
@@ -257,7 +254,6 @@ int reverse_init(void)
     ret_val = register_option(
         SUBCMD_REVERSE, 
         SUBCMD_REVERSE_OPTION, 
-        BOOLEAN_TRUE, 
         OPTION_TYPE_MANDATORY, 
         ARG_TYPE_DATA, 
         subcmd_reverse_option_o_proc, 

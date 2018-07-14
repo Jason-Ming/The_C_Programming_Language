@@ -132,7 +132,6 @@ ENUM_RETURN tab_init(_VOID)
 
     ret_val = register_subcmd(
         SUBCMD_TAB, 
-        BOOLEAN_TRUE,
         subcmd_tab_proc, 
         "replaces strings of blanks with the minimum number of tabs and blanks to achieve the same spacing. ");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
@@ -140,7 +139,6 @@ ENUM_RETURN tab_init(_VOID)
     ret_val = register_option(
         SUBCMD_TAB, 
         SUBCMD_TAB_OPTION_D, 
-        BOOLEAN_TRUE, 
         OPTION_TYPE_OPTIONAL, 
         ARG_TYPE_SWITCH, 
         subcmd_tab_option_d_proc, 
@@ -151,7 +149,6 @@ ENUM_RETURN tab_init(_VOID)
     ret_val = register_option(
         SUBCMD_TAB, 
         SUBCMD_TAB_OPTION_C, 
-        BOOLEAN_TRUE, 
         OPTION_TYPE_OPTIONAL, 
         ARG_TYPE_DATA, 
         subcmd_tab_option_c_proc, 
@@ -162,7 +159,6 @@ ENUM_RETURN tab_init(_VOID)
     ret_val = register_option(
         SUBCMD_TAB, 
         SUBCMD_TAB_OPTION_O, 
-        BOOLEAN_TRUE, 
         OPTION_TYPE_MANDATORY, 
         ARG_TYPE_DATA, 
         subcmd_tab_option_o_proc, 
