@@ -39,14 +39,14 @@ ENUM_RETURN subcmd_fold_proc(_VOID)
     char line[MAX_LINE_BUFFER]; //current input line
     
     const char* file_name = get_input_file_of_current_running_subcmd();
-    FALSE_ADD_ERROR_DO(
+    FALSE_GEN_SYSTEM_ERROR_DO(
         file_name != NULL, 
         ERROR_CODE_NO_INPUT_FILES, 
         SUBCMD_FOLD,
         return RETURN_FAILURE;);
 
     FILE *fpr = fopen(file_name, "r");
-    FALSE_ADD_ERROR_DO(
+    FALSE_GEN_SYSTEM_ERROR_DO(
         fpr != NULL, 
         ERROR_CODE_FILE_NOT_EXIST, 
         file_name,
@@ -57,7 +57,7 @@ ENUM_RETURN subcmd_fold_proc(_VOID)
     {
         fclose(fpr);
         
-        ret_val = add_current_user_error(
+        ret_val = generate_system_error(
             ERROR_CODE_FILE_NOT_EXIST, output_file);
         R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 

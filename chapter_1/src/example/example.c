@@ -66,7 +66,7 @@ ENUM_RETURN subcmd_example_option_n_proc(const _S8 *value)
     FUNC_MAIN_PROC handler = get_example_handler_by_name(value);
     if(handler == NULL)
     {
-        add_current_user_error(ERROR_CODE_INVALID_ARGS, value);
+        generate_system_error(ERROR_CODE_INVALID_ARGS, value);
         return RETURN_FAILURE;
     }
 
@@ -92,7 +92,6 @@ ENUM_RETURN subcmd_example_option_l_proc(const _S8 *value)
 
 ENUM_RETURN example_init(void)
 {
-
     ENUM_RETURN ret_val = RETURN_SUCCESS;
 
     ret_val = register_subcmd(SUBCMD_EXAMPLE, 

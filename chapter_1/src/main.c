@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 {
 
     ENUM_RETURN ret_val = RETURN_SUCCESS;
-    ret_val = register_introduction("this program execute examples and exerceses in chapter 1.");
+    ret_val = prepare(argv[0], "this program execute examples and exerceses in chapter 1.");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     
     ret_val = example_init();

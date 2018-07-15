@@ -60,14 +60,14 @@ PRIVATE ENUM_RETURN subcmd_tab_proc(_VOID)
     ENUM_RETURN ret_val = RETURN_SUCCESS;
     
     const char* file_name = get_input_file_of_current_running_subcmd();
-    FALSE_ADD_ERROR_DO(
+    FALSE_GEN_SYSTEM_ERROR_DO(
         file_name != NULL, 
         ERROR_CODE_NO_INPUT_FILES, 
         SUBCMD_TAB,
         return RETURN_FAILURE;);
 
     FILE *pfr = fopen(file_name, "r");
-    FALSE_ADD_ERROR_DO(
+    FALSE_GEN_SYSTEM_ERROR_DO(
         pfr != NULL, 
         ERROR_CODE_FILE_NOT_EXIST, 
         file_name,
@@ -78,7 +78,7 @@ PRIVATE ENUM_RETURN subcmd_tab_proc(_VOID)
     {
         fclose(pfr);
         
-        ret_val = add_current_user_error(
+        ret_val = generate_system_error(
             ERROR_CODE_FILE_CAN_NOT_BE_CREATED, output_file);
         R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
@@ -109,7 +109,7 @@ PRIVATE ENUM_RETURN subcmd_tab_option_c_proc(const char *value)
     ENUM_RETURN ret_val = s_strtos32(value, &tab_stop);
     if(ret_val == RETURN_FAILURE)
     {
-        ret_val = add_current_system_error(ERROR_CODE_INVALID_ARGS, value);
+        ret_val = generate_system_error(ERROR_CODE_INVALID_ARGS, value);
         R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     }
     

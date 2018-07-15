@@ -28,7 +28,7 @@ ENUM_RETURN process_lines_and_output(const char *filename, const char *filename_
     FILE *fp = fopen(filename, "r");
     if(fp == NULL)
     {
-        ret_val = add_current_user_error(ERROR_CODE_FILE_NOT_EXIST, filename);
+        ret_val = generate_system_error(ERROR_CODE_FILE_NOT_EXIST, filename);
         R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
         return RETURN_FAILURE;
@@ -39,7 +39,7 @@ ENUM_RETURN process_lines_and_output(const char *filename, const char *filename_
     {
         fclose(fp);
         
-        ret_val = add_current_user_error(ERROR_CODE_FILE_NOT_EXIST, filename_output);
+        ret_val = generate_system_error(ERROR_CODE_FILE_NOT_EXIST, filename_output);
         R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
         return RETURN_FAILURE;
@@ -205,7 +205,7 @@ ENUM_RETURN subcmd_reverse_option_o_proc(const char *value)
 ENUM_RETURN subcmd_reverse_proc(_VOID)
 {
     const char* file1 = get_input_file_of_current_running_subcmd();
-    FALSE_ADD_ERROR_DO(
+    FALSE_GEN_SYSTEM_ERROR_DO(
         file1 != NULL, 
         ERROR_CODE_NO_INPUT_FILES, 
         SUBCMD_REVERSE,

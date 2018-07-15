@@ -52,7 +52,7 @@ ENUM_RETURN subcmd_exercise_option_n_proc(const char *value)
     FUNC_MAIN_PROC handler = get_exercise_handler_by_name(value);
     if(handler == NULL)
     {
-        add_current_user_error(ERROR_CODE_INVALID_ARGS, value);
+        generate_system_error(ERROR_CODE_INVALID_ARGS, value);
         return RETURN_FAILURE;
     }
 
