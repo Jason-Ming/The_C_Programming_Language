@@ -24,7 +24,7 @@ PRIVATE ENUM_RETURN subcmd_tail_proc_do(FILE *pfr, FILE *pfw)
     R_ASSERT(pfr != NULL, RETURN_FAILURE);
 
     _S8 line[1000] = {0};
-    _S32 len = 0;
+    size_t len = 0;
     ENUM_RETURN ret_val;
     _S32 i = 0;
 
@@ -90,7 +90,7 @@ PRIVATE ENUM_RETURN subcmd_tail_proc_do(FILE *pfr, FILE *pfw)
         }
         else
         {
-            fputs(line, pfw);
+            fprintf(pfw, "%s", line);
         }
     }
 

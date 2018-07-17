@@ -10,14 +10,8 @@
 #include "s_cmd.h"
 #include "s_mem.h"
 #include "s_alg.h"
-
+#include "usr_error.h"
 #include "sortf.h"
-typedef enum TAG_ENUM_SORTF_ERROR_CODE
-{
-    ERROR_SORTF_CODE_OPTION_ERROR = 0,
-
-    ERROR_SORTF_CODE_MAX = USER_DEFINE_ERROR_CODE_MAX,
-}ENUM_SORTF_ERROR_CODE;
 
 #define SUBCMD_SORTF			"sortf"
 #define SUBCMD_SORTF_OPTION_N	"-n" /* compare lines numerically */
@@ -78,7 +72,7 @@ PRIVATE ENUM_RETURN write_lines(FILE * pfw, _S8 *line_ptr[], size_t line_num)
 		}
 		else 
 		{
-			fputs(line_ptr[i], pfw);
+			fprintf(pfw, "%s", line_ptr[i]);
 		}
 	}
 
@@ -167,7 +161,7 @@ PRIVATE ENUM_RETURN subcmd_sortf_proc(_VOID)
 
     FALSE_GEN_USER_ERROR_DO(
         compare_handler != NULL,
-        ERROR_SORTF_CODE_OPTION_ERROR,
+        USR_ERROR_CODE_SORTF_OPTION_ERROR,
         NULL,
         return RETURN_FAILURE;);
 
@@ -315,7 +309,7 @@ ENUM_RETURN sortf_init(_VOID)
 		"specify output file name as <arg>, if it is ignored, the lines will be print to the standard output");
 	R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-    ret_val = register_user_error_info(ERROR_SORTF_CODE_OPTION_ERROR, 
+    ret_val = register_user_error_info(USR_ERROR_CODE_SORTF_OPTION_ERROR, 
         "option '-n' cann't be uesed with '-d' or '-f'", BOOLEAN_FALSE);
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     

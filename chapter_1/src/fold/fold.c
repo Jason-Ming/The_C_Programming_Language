@@ -66,7 +66,7 @@ ENUM_RETURN subcmd_fold_proc(_VOID)
 
     char temp[MAX_LINE_BUFFER * 2] = {'\0'};
 
-    int len = 0;
+    size_t len = 0;
     while(s_getline(fpr, line, MAX_LINE_BUFFER, &len) == RETURN_SUCCESS && len > 0)
     {
         ret_val = s_fold(line, temp, MAX_LINE_BUFFER * 2, fold_num);
