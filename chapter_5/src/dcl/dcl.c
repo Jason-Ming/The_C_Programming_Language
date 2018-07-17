@@ -62,12 +62,12 @@ PRIVATE ENUM_RETURN subcmd_dcl_proc_do(FILE * pfr, FILE * pfw)
 	ENUM_RETURN ret_val = RETURN_SUCCESS;
     size_t token_len = 0;
     size_t statement_len = 0;
-    while(RETURN_SUCCESS == get_statement(pfr, statement_buffer, MAX_STATEMENT_LEN, &statement_len) && statement_len >0)
+    while(RETURN_SUCCESS == s_cget_statement(pfr, statement_buffer, MAX_STATEMENT_LEN, &statement_len) && statement_len >0)
     {
         _S8 *p_statement = statement_buffer;
         printf("-------->%s\n", p_statement);
         
-        while(RETURN_SUCCESS == get_token(p_statement, token_buffer, MAX_TOKEN_LEN, &token_len, &token, &p_statement) && token_len > 0)
+        while(RETURN_SUCCESS == s_cget_token(p_statement, token_buffer, MAX_TOKEN_LEN, &token_len, &token, &p_statement) && token_len > 0)
         {
             switch(token)
             {

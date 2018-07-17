@@ -63,7 +63,7 @@ PRIVATE ENUM_RETURN subcmd_delcom_proc(_VOID)
         return RETURN_FAILURE;
     }
 
-    ret_val = s_delcmnt(pfr, pfw);
+    ret_val = s_cdel_cmnt(pfr, pfw);
     R_ASSERT_DO(ret_val == RETURN_SUCCESS, RETURN_FAILURE,fclose(pfr);fclose(pfw););
 
     fclose(pfr);
