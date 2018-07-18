@@ -140,7 +140,7 @@ PRIVATE ENUM_RETURN subcmd_sortf_proc_do(FILE * pfr, FILE * pfw)
 	ENUM_RETURN ret_val;
 	size_t	line_num = 0;
 
-	ret_val = s_getlines(pfr, line_ptr, SIZE_OF_ARRAY(line_ptr), &line_num);
+	ret_val = s_getlines_f(pfr, line_ptr, SIZE_OF_ARRAY(line_ptr), &line_num);
 	R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
     R_ASSERT(compare_handler != NULL, RETURN_FAILURE);

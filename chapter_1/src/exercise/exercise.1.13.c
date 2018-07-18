@@ -2,10 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "s_text.h"
 #include "s_draw.h"
 #include "s_defines.h"
 #include "s_mem.h"
 
+#define MAX_WORD_BUFFER_LENGTH 1000*1024
 #define MAX_WORD_LENGTH 20//最大长度为20
 #define ARRAY_LENGTH_OF_NUM_OF_WORD_LENGTH (MAX_WORD_LENGTH+1)
 
@@ -29,7 +32,7 @@ PRIVATE void init_chart_data_array(void)
     sprintf(num_of_word_length[ARRAY_LENGTH_OF_NUM_OF_WORD_LENGTH - 1].info, ">%d", ARRAY_LENGTH_OF_NUM_OF_WORD_LENGTH - 1);
 }
 
-PRIVATE void save_word_length(int length)
+PRIVATE void save_word_length(size_t length)
 {
     assert(length >=1);
 
@@ -45,48 +48,21 @@ PRIVATE void save_word_length(int length)
 
 PRIVATE ENUM_RETURN calculate_word_length(const char* filename)
 {
-    int finish = 0;
     FILE* fpr = NULL;
     fpr = fopen(filename, "r");
 	assert(fpr != NULL);
 
-    int c, state;
-    int a_word_length = 0;
-    state = OUT;
     init_chart_data_array();
+    _S8 word_buf[MAX_WORD_BUFFER_LENGTH];
+    size_t a_word_length = 0;
+    s_set_separators(NULL);
     
-    while(finish == 0)
+    while(RETURN_SUCCESS == s_get_word_f(fpr, word_buf, MAX_WORD_BUFFER_LENGTH, &a_word_length) && a_word_length > 0)
     {
-        c = fgetc(fpr);
-        if(c == EOF || c == ' ' || c == '\n' || c == '\t' || c == '\v' || c == '\f')
-        {
-            if(state == IN)
-            {
-                //记录上一个单词的长度到数组中
-                save_word_length(a_word_length);
-            }
-            
-            state = OUT;
-            
-            //单词长度清零
-            a_word_length = 0;
-
-            if(c == EOF)
-            {
-                finish =1;
-            }
-        }
-        else
-        {
-            if(state == OUT)
-            {
-                state = IN;
-            }
-            //单词长度++
-            a_word_length++;
-        }
+        //记录上一个单词的长度到数组中
+        save_word_length(a_word_length);
     }
-
+    
 	fclose(fpr);
 
     return RETURN_SUCCESS;

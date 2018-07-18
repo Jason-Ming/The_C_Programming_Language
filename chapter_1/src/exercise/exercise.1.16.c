@@ -5,7 +5,7 @@
 
 #include "s_defines.h"
 #include "s_mem.h"
-
+#include "s_text.h"
 #include "exercise.1.16.h"
 
 #define MAX_LINE_BUFFER 100 //maximum input line length
@@ -55,13 +55,13 @@ PRIVATE void copy(char to[], char from[])
 //print the longest input line
 int get_maxline_and_length(const char *filename, char longest[])
 {
-    int len; //current line length
+    size_t len = 0; //current line length
     int max = 0; //maximum length seen so far
     char line[MAX_LINE_BUFFER]; //current input line
     FILE *fp = fopen(filename, "r");
     assert(fp != NULL);
     
-    while((len = getline(fp, line, MAX_LINE_BUFFER)) > 0)
+    while((RETURN_SUCCESS == s_getline_f(fp, line, MAX_LINE_BUFFER, &len)) && len > 0)
     {
         if(len > max )
         {

@@ -6,6 +6,7 @@
 #include "s_defines.h"
 #include "s_log.h"
 #include "s_mem.h"
+#include "s_text.h"
 
 #include "exercise.1.18.h"
 #define MAX_LINE_BUFFER 100 //maximum input line length
@@ -85,7 +86,7 @@ int cutoff_space_and_tabs(char *pstr_buf)
 
 ENUM_RETURN exercise_1_18_process_lines_and_output(const char *filename, const char *filename_output, int *lines)
 {
-    int len; //current line length
+    size_t len; //current line length
     
     char line[MAX_LINE_BUFFER]; //current input line
     
@@ -97,9 +98,10 @@ ENUM_RETURN exercise_1_18_process_lines_and_output(const char *filename, const c
 
     *lines = 0; //maximum length seen so far
     
-    while((len = getline(fp, line, MAX_LINE_BUFFER)) > 0)
+    while((RETURN_SUCCESS == s_getline_f(fp, line, MAX_LINE_BUFFER, &len))&& len > 0)
     {
-        cutoff_space_and_tabs(line);
+        s_trim_nl(line);
+        
         if(strlen(line) != 0)
         {
             fputs(line, fpw);

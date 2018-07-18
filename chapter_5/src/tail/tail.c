@@ -80,7 +80,7 @@ PRIVATE ENUM_RETURN subcmd_tail_proc_do(FILE *pfr, FILE *pfw)
         ret_val = fseek(pfr, p_positoin[i], SEEK_END);
         R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-        ret_val = s_getline(pfr, line, 1000, &len);
+        ret_val = s_getline_f(pfr, line, 1000, &len);
         R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
         R_ASSERT(len > 0, RETURN_FAILURE);
 

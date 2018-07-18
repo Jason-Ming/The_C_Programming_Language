@@ -21,7 +21,7 @@ ENUM_RETURN process_lines_and_output(const char *filename, const char *filename_
     R_ASSERT(filename_output != NULL, RETURN_FAILURE);
     R_ASSERT(lines != NULL, RETURN_FAILURE);
     
-    int len; //current line length
+    size_t len; //current line length
     ENUM_RETURN ret_val = RETURN_SUCCESS;
     
     char line[MAX_LINE_BUFFER]; //current input line
@@ -48,7 +48,7 @@ ENUM_RETURN process_lines_and_output(const char *filename, const char *filename_
     
     *lines = 0; //maximum length seen so far
     
-    while(s_getline(fp, line, MAX_LINE_BUFFER, &len) == RETURN_SUCCESS && len > 0)
+    while(s_getline_f(fp, line, MAX_LINE_BUFFER, &len) == RETURN_SUCCESS && len > 0)
     {
         ret_val = s_reverse(line);
         R_ASSERT_DO(ret_val == RETURN_SUCCESS, RETURN_FAILURE, fclose(fp);fclose(fpw););

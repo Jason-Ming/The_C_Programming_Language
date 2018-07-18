@@ -26,10 +26,10 @@ PRIVATE ENUM_RETURN subcmd_tab_proc_do(FILE *pfr, FILE *pfw)
 
     _S8 line[1000] = {0};
     _S8 line_new[1000] = {0};
-    _S32 len = 0;
+    size_t len = 0;
     ENUM_RETURN ret_val;
     
-    while(s_getline(pfr, line, 1000, &len) == RETURN_SUCCESS && len > 0)
+    while(s_getline_f(pfr, line, 1000, &len) == RETURN_SUCCESS && len > 0)
     {
         line_new[0] = '\0';
 
