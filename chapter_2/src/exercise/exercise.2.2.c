@@ -14,6 +14,12 @@ int exercise_2_2(void)
     int i, c;
     char s[lim];
 
+    /* Exercise 2-2 discusses a for loop from the text. Here it is: */
+    /*
+    for(i=; i<lim-1 && (c=getchar()) != '\n' && c != EOF; ++i)
+    s[i] = c;
+    */
+    
     for(i = 0; i < lim - 1 ? (c = getchar()) != '\n' ? c != EOF:0:0; i++)
     {
         s[i] = c;

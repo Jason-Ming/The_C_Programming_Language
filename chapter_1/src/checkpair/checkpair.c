@@ -26,7 +26,7 @@
 PRIVATE ENUM_RETURN subcmd_checkpair_proc(_VOID)
 {
     ENUM_RETURN ret_val = RETURN_SUCCESS;
-    
+    ENUM_RETURN check_result = RETURN_SUCCESS;
     const char* file_name = get_input_file_of_current_running_subcmd();
     FALSE_GEN_SYSTEM_ERROR_DO(
         file_name != NULL, 
@@ -41,11 +41,11 @@ PRIVATE ENUM_RETURN subcmd_checkpair_proc(_VOID)
         file_name,
         return RETURN_FAILURE;);
     
-    ret_val = s_cchk_pair(pfr);
+    ret_val = s_cchk_pair(pfr, &check_result);
     R_ASSERT_DO(ret_val == RETURN_SUCCESS, RETURN_FAILURE,fclose(pfr););
 
     fclose(pfr);
-    return RETURN_SUCCESS;
+    return check_result;
 }
 
 int checkpair_init(void)
