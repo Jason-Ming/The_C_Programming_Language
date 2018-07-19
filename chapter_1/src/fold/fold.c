@@ -69,7 +69,7 @@ ENUM_RETURN subcmd_fold_proc(_VOID)
     size_t len = 0;
     while(s_getline_f(fpr, line, MAX_LINE_BUFFER, &len) == RETURN_SUCCESS && len > 0)
     {
-        ret_val = s_fold(line, temp, MAX_LINE_BUFFER * 2, fold_num);
+        ret_val = s_fold_s(line, temp, MAX_LINE_BUFFER * 2, fold_num);
         R_ASSERT_DO(ret_val == RETURN_SUCCESS, RETURN_FAILURE, fclose(fpr);fclose(fpw););
         if(strlen(temp) != 0)
         {
