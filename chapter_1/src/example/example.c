@@ -78,14 +78,16 @@ ENUM_RETURN subcmd_example_option_l_proc(const _S8 *value)
     R_ASSERT(value != NULL, RETURN_FAILURE);
 
     printf("Here is the example list:\n");
-    
+    STRU_TABLE_TEXT_FORMAT format[2] = {{1, 0, 21, BOOLEAN_TRUE}, {4, 0, 70, BOOLEAN_TRUE}};
+    const _S8 *text[2];
     for(int i = 0; i < SIZE_OF_ARRAY(main_proc_array); i++)
     {
-        printf(" %-20s    %s\n", main_proc_array[i].n_value, main_proc_array[i].introduction);
-
+        text[0] = main_proc_array[i].n_value;
+        text[1] = main_proc_array[i].introduction;
+        R_ASSERT(s_print_table_text(text, 1, 2, format) == RETURN_SUCCESS, RETURN_FAILURE);
+        
+        //printf(" %-20s    %s\n", main_proc_array[i].n_value, main_proc_array[i].introduction);
     }
-
-    printf("\n");
     
     return RETURN_SUCCESS;
 }

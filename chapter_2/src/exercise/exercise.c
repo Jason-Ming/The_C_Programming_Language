@@ -82,13 +82,14 @@ ENUM_RETURN subcmd_exercise_option_l_proc(const char *value)
 
     printf("Here is the exercise list:\n");
     
+    STRU_TABLE_TEXT_FORMAT format[2] = {{1, 0, 21, BOOLEAN_TRUE}, {4, 0, 70, BOOLEAN_TRUE}};
+    const _S8 *text[2];
     for(int i = 0; i < SIZE_OF_ARRAY(exercise_proc_array); i++)
     {
-        printf(" %-20s    %s\n", exercise_proc_array[i].n_value, exercise_proc_array[i].introduction);
-
+        text[0] = exercise_proc_array[i].n_value;
+        text[1] = exercise_proc_array[i].introduction;
+        R_ASSERT(s_print_table_text(text, 1, 2, format) == RETURN_SUCCESS, RETURN_FAILURE);
     }
-
-    printf("\n");
     
     return RETURN_SUCCESS;
 }

@@ -36,8 +36,7 @@ ENUM_RETURN subcmd_fold_option_o_proc(const char *value)
 ENUM_RETURN subcmd_fold_proc(_VOID)
 {
     ENUM_RETURN ret_val = RETURN_SUCCESS;
-    char line[MAX_LINE_BUFFER]; //current input line
-    
+
     const char* file_name = get_input_file_of_current_running_subcmd();
     FALSE_GEN_SYSTEM_ERROR_DO(
         file_name != NULL, 
