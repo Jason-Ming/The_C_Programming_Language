@@ -38,7 +38,7 @@ PRIVATE ENUM_RETURN subcmd_tail_proc_do(FILE *pfr, FILE *pfw)
     
     ret_val = fseek(pfr, 0, SEEK_END);
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
-    _S8 c;
+    _S32 c;
     _SL offset = 0;
 
     i = 0;
