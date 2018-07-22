@@ -63,7 +63,7 @@ ENUM_RETURN subcmd_example_option_l_proc(const char *value)
     {
         text[0] = main_proc_array[i].n_value;
         text[1] = main_proc_array[i].introduction;
-        R_ASSERT(s_print_table_text(text, 1, 2, format) == RETURN_SUCCESS, RETURN_FAILURE);
+        R_ASSERT(s_print_text_table(text, 1, 2, format) == RETURN_SUCCESS, RETURN_FAILURE);
         
         //printf(" %-20s    %s\n", main_proc_array[i].n_value, main_proc_array[i].introduction);
     }

@@ -82,7 +82,7 @@ ENUM_RETURN subcmd_exercise_option_l_proc(const char *value)
     {
         text[0] = exercise_proc_array[i].n_value;
         text[1] = exercise_proc_array[i].introduction;
-        R_ASSERT(s_print_table_text(text, 1, 2, format) == RETURN_SUCCESS, RETURN_FAILURE);
+        R_ASSERT(s_print_text_table(text, 1, 2, format) == RETURN_SUCCESS, RETURN_FAILURE);
     }
     
     return RETURN_SUCCESS;
