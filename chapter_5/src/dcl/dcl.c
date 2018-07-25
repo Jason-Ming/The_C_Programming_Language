@@ -57,29 +57,17 @@ PRIVATE ENUM_RETURN subcmd_dcl_proc_do(FILE * pfr, FILE * pfw)
 {
 	R_ASSERT(pfr != NULL, RETURN_FAILURE);
     PRIVATE _S8 statement_buffer[MAX_STATEMENT_LEN];
-    PRIVATE _S8 token_buffer[MAX_TOKEN_LEN];
-    ENUM_DCL_TOKEN token = DCL_TOKEN_INVALID;
+
 	ENUM_RETURN ret_val = RETURN_SUCCESS;
-    size_t token_len = 0;
+
     size_t statement_len = 0;
     while(RETURN_SUCCESS == s_cget_statement(pfr, statement_buffer, MAX_STATEMENT_LEN, &statement_len) && statement_len >0)
     {
         _S8 *p_statement = statement_buffer;
         printf("-------->%s\n", p_statement);
         
-        while(RETURN_SUCCESS == s_cget_token(p_statement, token_buffer, MAX_TOKEN_LEN, &token_len, &token, &p_statement) && token_len > 0)
-        {
-            switch(token)
-            {
-                case DCL_TOKEN_TYPE:
-                {
-                    
-                }
-            }
-            
-            ret_val = write_token(pfw, token, token_buffer);
-            R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
-        }
+        ret_val = s_cdcl(p_statement);
+        R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     }
 
 	return RETURN_SUCCESS;
