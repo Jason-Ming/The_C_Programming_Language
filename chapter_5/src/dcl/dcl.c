@@ -63,10 +63,7 @@ PRIVATE ENUM_RETURN subcmd_dcl_proc_do(FILE * pfr, FILE * pfw)
     size_t statement_len = 0;
     while(RETURN_SUCCESS == s_cget_statement(pfr, statement_buffer, MAX_STATEMENT_LEN, &statement_len) && statement_len >0)
     {
-        _S8 *p_statement = statement_buffer;
-        printf("-------->%s\n", p_statement);
-        
-        ret_val = s_cdcl(p_statement);
+        ret_val = s_cdcl(statement_buffer);
         R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     }
 

@@ -1,9 +1,11 @@
+int (*(*fp)(int x[][10]))(int(*f)(char* c));
+int (*(*fp)(int [][10]))(int(*)(void));
 
-int (*(*fp)(int []))(int(*)(void));
-ENUM_RETURN get_token(FILE * pfr, _S8 token_buffer[], size_t buffer_size, size_t *len, ENUM_DCL_TOKEN *token);
-ENUM_RETURN s_squeeze(_S8 *source, const _S8 *target);
-
-    _S8 s[256];
-    _S32 c;
-
-    _S8 *p;
+char **argv;
+int(*daytab)[13];
+int *daytab[13];
+void *comp();
+void (*comp)();
+char (*(*x(int()))[])();
+char (*(*x[3])())[5];
+int [];
