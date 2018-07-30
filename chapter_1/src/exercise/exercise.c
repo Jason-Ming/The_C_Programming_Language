@@ -94,7 +94,7 @@ ENUM_RETURN subcmd_exercise_option_l_proc(const char *value)
     printf("Here is the exercise list:\n");
     
     STRU_TABLE_TEXT_FORMAT format[2] = {{1, 0, 21, BOOLEAN_TRUE}, {4, 0, 70, BOOLEAN_TRUE}};
-    _S8 *text[2];
+    const _S8 *text[2];
     for(int i = 0; i < SIZE_OF_ARRAY(exercise_proc_array); i++)
     {
         text[0] = exercise_proc_array[i].n_value;

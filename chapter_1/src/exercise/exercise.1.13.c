@@ -4,7 +4,7 @@
 #include <string.h>
 
 #include "s_text.h"
-#include "s_draw.h"
+#include "s_diagram.h"
 #include "s_defines.h"
 #include "s_mem.h"
 
