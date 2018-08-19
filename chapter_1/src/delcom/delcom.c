@@ -50,12 +50,11 @@ PRIVATE ENUM_RETURN subcmd_delcom_proc(_VOID)
         ERROR_CODE_FILE_NOT_EXIST, 
         file_name,
         return RETURN_FAILURE;);
+    fclose(pfr);
     
     FILE *pfw = fopen(output_file, "w");
     if(pfw == NULL)
     {
-        fclose(pfr);
-        
         ret_val = generate_system_error(
             ERROR_CODE_FILE_CAN_NOT_BE_CREATED, output_file);
         R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
@@ -63,10 +62,9 @@ PRIVATE ENUM_RETURN subcmd_delcom_proc(_VOID)
         return RETURN_FAILURE;
     }
 
-    ret_val = s_cdel_cmnt(pfr, pfw);
+    ret_val = s_cc(file_name, pfw);
     R_ASSERT_DO(ret_val == RETURN_SUCCESS, RETURN_FAILURE,fclose(pfr);fclose(pfw););
 
-    fclose(pfr);
     fclose(pfw);
     return RETURN_SUCCESS;
 }

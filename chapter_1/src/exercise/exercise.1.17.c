@@ -11,35 +11,6 @@
 
 #define MAX_LINE_BUFFER 100 //maximum input line length
 
-/* read a line into line, return length */
-PRIVATE int getline(FILE *fp, char line[], int maxline)
-{
-    int c;
-    int i = 0;
-
-    while((c = fgetc(fp)) != EOF && c != '\n')
-    {
-        if(i < maxline-1)
-        {
-            line[i] = c;
-        }
-        ++i;
-    }
-
-    if(c == '\n')
-    {
-        if(i < (maxline-1))
-        {
-            line[i] = c;
-        }
-        ++i;
-    }
-
-    line[(maxline - 1) > i ? i : (maxline - 1)] = '\0';
-
-    return i;
-}
-
 //print the longest input line
 int find_spec_line_and_length(const char *filename)
 {

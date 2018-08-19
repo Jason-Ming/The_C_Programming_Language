@@ -68,10 +68,10 @@ ENUM_RETURN format_words(const _S8 * filename, const _S8 * separator)
 {
     ENUM_RETURN ret_val;
     ret_val = format_words_prepare(filename);
-    R_FALSE_LOG(ret_val == RETURN_SUCCESS, "format_words_prepare failed! ret_val = %d", ret_val);
+    S_FALSE_LOG(ret_val == RETURN_SUCCESS, "format_words_prepare failed! ret_val = %d", ret_val);
 
     ret_val = format_words_do(separator);
-    R_FALSE_LOG(ret_val == RETURN_SUCCESS, "format_words_do failed! ret_val = %d", ret_val);
+    S_FALSE_LOG(ret_val == RETURN_SUCCESS, "format_words_do failed! ret_val = %d", ret_val);
 
     format_words_clear();
     return ret_val;
