@@ -1,0 +1,89 @@
+
+#include<stdio.h>ASDF   得分  /* DSAFASD */ DDD
+//this is a one line comment\
+one line comment
+//\
+this is a valid oneline comment
+#def\
+ine MAC\
+RO this is a valid\
+ macro define
+cha\
+r* s="this is a valid string\
+n string";
+/*this is */#/* a */define/* valid */ID/* preprocessing */replacement/*direc*/list/*tive*/
+#define str(s) #s  //generate string from arguments(see 6.10.3.2,P153)
+    #define str2(s) str(s)  //用实参宏替换后的序列生成字符串
+    puts(str2(ID));  //原样输出宏ID的替换列表
+//#include "s_cerror.h\"
+"/*`"
+#define aaa "SSS"
+#define aaa() "xxx"
+
+#define hash_hash1 #123 ## #
+#define hash_hash(STR) #STR ## ## # STR
+#define mkstr(a) # a
+#define in_between(a) mkstr(a)
+#define join(c, d) in_between(c hash_hash d)
+
+#define hash #
+#define STRSS(sd,sd2) #sd##"abc"###sd #sd###sd  
+*///this is a test comment
+//test snippet begin========================================================================================
+#define STRING "checkpair//  \ 
+/**/\t  'this is a string' \" good! \"\n"//a line comment\ 
+#define CALC(x, y, z) (x/y/*this is a comment"a common\ 
+string" 'a' // x/y/z*//z)
+#define STRING1 'this is a single quote// /* lalala\
+*/ \" "hehe" \'sssss\''//a line comment
+//a line comment
+
+#define a\   
+bc "abc /*\  
+*/abc"
+''
+//test snippet end==========================================================================================
+
+/*
+about:'\'
+1.'\\' optional-' ' '\n' means the sequence can be deleted and the original token separated by it can be regarded as a whole token
+2.'\\' occurs in "" or '' means the backescape charactor
+3.other case , illegal
+
+about: comment
+1.comment can be deleted directly, but the original token separated by it can not be regarded as a whole token, it means two tokens
+
+about: macro
+1.start with # oneline
+2.# define token optional(x,y,etc)
+3.# must start at the beginning of line, caution: last line ending with '\'
+*/
+const int const (*const (*fp)(int x[][10], void *p))(int(*f)(char* c, int argc, char**argv));
+/*identifier-'fp' is a pointer to a function(identifier-'x' is a array[][10] of type-'int'identifier-'p' is a pointer to type-'void') returning a const pointer to a function(identifier-'f' is a pointer to a function(identifier-'c' is a pointer to type-'char'identifier-'argc' is type-'int'identifier-'argv' is a pointer to a pointer to type-'char') returning type-'int') returning const type-'int'*/
+int const(*(*fp)(int [][10]))(int(*)(void));
+/*identifier-'fp' is a pointer to a function(identifier-'not given' is a array[][10] of type-'int') returning a pointer to a function(identifier-'not given' is a pointer to a function(identifier-'not given' is type-'void') returning type-'int') returning const type-'int'*/
+int a;
+/*identifier-'a' is type-'int'*/
+char const **argv;
+/*identifier-'argv' is a pointer to a pointer to const type-'char'*/
+const int x;
+/*identifier-'x' is const type-'int'*/
+int(*daytab)[13];
+/*identifier-'daytab' is a pointer to a array[13] of type-'int'*/
+int *daytab[13];
+/*identifier-'daytab' is a array[13] of a pointer to type-'int'*/
+void *comp();
+/*identifier-'comp' is a function() returning a pointer to type-'void'*/
+void (*comp)();
+/*identifier-'comp' is a pointer to a function() returning type-'void'*/
+char (*(*x(int()))[])();
+/*identifier-'x' is a function(identifier-'not given' is a function() returning type-'int') returning a pointer to a array[] of a pointer to a function() returning type-'char'*/
+char (*(*x[3])())[5];
+/*identifier-'x' is a array[3] of a pointer to a function() returning a pointer to a array[5] of type-'char'*/
+int aa[];
+//identifier-'aa' is a array[] of type-'int'
+int main()
+{
+    printf("%s", aaa);
+		return 0;
+}

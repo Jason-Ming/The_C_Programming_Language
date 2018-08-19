@@ -1,0 +1,1 @@
+const int const (*const (*fp)(int x[][10], void *p))(int(*f)(char* c, int argc, char**argv))
