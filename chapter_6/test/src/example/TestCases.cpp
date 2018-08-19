@@ -1,12 +1,13 @@
 #include "CppUTest/TestHarness.h"
 #include <string.h>
 #include "s_type.h"
-
+#include "s_mem.h"
+#include "s_cproc.h"
 #include <iostream>
 
 using namespace std;
 
-TEST_GROUP(TYPE)
+TEST_GROUP(S_CC)
 {
     void setup()
     {
@@ -19,10 +20,22 @@ TEST_GROUP(TYPE)
     	//«Â¿Ì≤‚ ‘…Ë÷√
         //cout << "Test end ......" << endl;
     }
+
 };
 
-TEST(TYPE, test0)
+TEST(S_CC, test0)
 {
-    s_print_types();
+    _S8 *file_name[] = {
+        "test_files/func.input",
+        "test_files/c.input",
+        "test_files/s.input",
+        "test_files/empty.input",
+        "test_files/s.input"};
+    ENUM_RETURN ret_val;
+    for(_S32 i = 0; i < SIZE_OF_ARRAY(file_name); i++)
+    {
+        ret_val = s_cc(file_name[i], NULL);
+        CHECK_EQUAL(RETURN_SUCCESS, ret_val);
+    }
 }
 
