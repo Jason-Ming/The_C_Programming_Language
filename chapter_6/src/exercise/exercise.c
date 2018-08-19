@@ -11,9 +11,7 @@
 #include "main_proc.h"
 
 #include "exercise.h"
-#include "exercise.5.4.h"
-#include "exercise.5.8.h"
-#include "exercise.5.10.h"
+
 
 
 #define SUBCMD_EXERCISE "exercise"
@@ -22,12 +20,6 @@
 
 STRU_MAIN_PROC exercise_proc_array[] =
 {
-    {"5.4", exercise_5_4, "Write the function strend(s,t) , which returns 1 if the string t occurs at the end of\
-the string s , and zero otherwise"},
-    {"5.8", exercise_5_8, "There is no error-checking in day_of_year or month_day. Remedy this defect"},
-    {"5.10", exercise_5_10, "rite the program expr , which evaluates a reverse Polish expression from the\
-command line, where each operator or operand is a separate argument. For example,\
-expr 2 3 4 + * evaluates 2 X (3 + 4)."},
 };
 
 FUNC_MAIN_PROC get_exercise_handler_by_name(const char *name)
