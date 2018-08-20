@@ -1,1 +1,2 @@
-
+#include "func.input"
+int const(*(*fp)(int [][10]))(int(*)(void));
