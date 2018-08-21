@@ -1,0 +1,5 @@
+int x_a;
+#define MACRO_X_A "MACRO_A"
+#include "test_files/b.input"
+int y_a;
+#define MACRO_Y_A "MACRO_Y_A"

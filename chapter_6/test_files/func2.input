@@ -3,12 +3,13 @@ const int const (*const (*fp_in_func2)(int x[][10], void *p))(int(*f)(char* c, i
 one line comment
 //\
 this is a valid oneline comment
-#include <test_files/c.input>
 #def\
 ine MAC\
-RO_IN_FUNC this is a valid\
+RO this is a valid\
  macro define
-
+cha\
+r* s="this is a valid string\
+n string";
 /*this is */#/* a */define/* valid */ID/* preprocessing */replacement/*direc*/list/*tive*/
 #define str(s) #s  //generate string from arguments(see 6.10.3.2,P153)
     #define str2(s) str(s)  //用实参宏替换后的序列生成字符串

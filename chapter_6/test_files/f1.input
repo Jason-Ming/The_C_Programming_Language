@@ -3,10 +3,9 @@ const int const (*const (*fp_in_func2)(int x[][10], void *p))(int(*f)(char* c, i
 one line comment
 //\
 this is a valid oneline comment
-#include <test_files/c.input>
 #def\
 ine MAC\
-RO_IN_FUNC this is a valid\
+RO this is a valid\
  macro define
 
 /*this is */#/* a */define/* valid */ID/* preprocessing */replacement/*direc*/list/*tive*/
