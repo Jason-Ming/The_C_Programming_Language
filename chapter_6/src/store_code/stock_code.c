@@ -70,7 +70,7 @@ PRIVATE ENUM_RETURN subcmd_sc_proc(_VOID)
 
 		if (pfw == NULL)
 		{
-			FCLOSE(pfr);
+			S_FCLOSE(pfr);
 
 			ret_val = generate_system_error(ERROR_CODE_FILE_CAN_NOT_BE_CREATED, output_file);
 			R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
@@ -81,8 +81,8 @@ PRIVATE ENUM_RETURN subcmd_sc_proc(_VOID)
 
 	ret_val = subcmd_sc_proc_do(pfr, pfw);
 
-	FCLOSE(pfr);
-	FCLOSE(pfw);
+	S_FCLOSE(pfr);
+	S_FCLOSE(pfw);
 	return ret_val;
 }
 

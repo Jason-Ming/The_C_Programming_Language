@@ -32,10 +32,10 @@ PRIVATE ENUM_RETURN subcmd_scc_proc_do(const _S8 * file_name, FILE * pfw)
 
 	ENUM_RETURN ret_val = RETURN_SUCCESS;
     
-    ret_val = s_cc(file_name, pfw);
-    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+    return s_cc(file_name, pfw);
+    //R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-	return RETURN_SUCCESS;
+	//return RETURN_SUCCESS;
 }
 
 PRIVATE ENUM_RETURN subcmd_scc_proc(_VOID)
@@ -56,7 +56,8 @@ PRIVATE ENUM_RETURN subcmd_scc_proc(_VOID)
 		ERROR_CODE_FILE_NOT_EXIST, 
 		file_name, 
 		return RETURN_FAILURE;);
-    FCLOSE(pfr);
+    S_FCLOSE(pfr);
+
 
 	FILE *pfw = NULL;
 
@@ -75,7 +76,7 @@ PRIVATE ENUM_RETURN subcmd_scc_proc(_VOID)
 
 	ret_val = subcmd_scc_proc_do(file_name, pfw);
 
-	FCLOSE(pfw);
+	S_FCLOSE(pfw);
 	return ret_val;
 }
 

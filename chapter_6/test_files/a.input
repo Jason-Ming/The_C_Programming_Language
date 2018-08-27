@@ -1,5 +1,34 @@
 int x_a;
-#define MACRO_X_A "MACRO_A"
-#include "test_files/b.input"
+#define AXSDF(a,b)
+#define VA(...) __VA_ARGS__
+#define VA1(arg...) (##arg)
+//s_cproc_replace.c:9:25: warning: extra tokens at end of #include directive
+ //#include FILE_B()FILE_B()
+//                         ^
+//s_cproc_replace.c:10:12: error: "." may not appear in macro parameter list
+ #define VA(args...) __VA_ARGS__
+//            ^
+//s_cproc_replace.c:10:18: warning: __VA_ARGS__ can only appear in the expansion of a C99 variadic macro
+ //#define VA(. ..) __VA_ARGS__
+//                  ^
+//s_cproc_replace.c:11:19: error: missing ')' in macro parameter list
+ //#define VA1(arg...,.) (##arg)
+//                   ^
+//s_cproc_replace.c:12:16: error: "*" may not appear in macro parameter list
+ //#define MACRO(A*&&& ... 123)
+//                ^
+//s_cproc_replace.c:13:19: error: "*" may not appear in macro parameter list
+ //#define MACRO1(A, *&&& ... 123)
+//                   ^
+//s_cproc_replace.c:14:16: error: parameter name missing
+// #define MACRO2(,A, *&&& ... 123)
+//                ^
+//s_cproc_replace.c:15:24: error: parameter name missing
+ //#define MACRO2(A, a123,)
+#define MACRO_X_A "MACRO_X_A"
+#define FILE_B "b.input\"
+//#include FILE_B
 int y_a;
 #define MACRO_Y_A "MACRO_Y_A"
+#undef MACRO_X_A dsafsdf
+/*

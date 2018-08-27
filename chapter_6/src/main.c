@@ -9,9 +9,7 @@
 #include "main.h"
 #include "exercise.h"
 #include "example.h"
-#include "expr.h"
-#include "tail.h"
-#include "sortf.h"
+
 #include "scc.h"
 #include "stock_code.h"
 
