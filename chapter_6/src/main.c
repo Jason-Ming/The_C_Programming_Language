@@ -26,15 +26,6 @@ int main(int argc, char **argv)
     ret_val = exercise_init();
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-    ret_val = expr_init();
-    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
-
-    ret_val = tail_init();
-    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
-
-    ret_val = sortf_init();
-    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
-
     ret_val = scc_init();
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 

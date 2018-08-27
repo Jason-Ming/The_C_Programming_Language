@@ -30,11 +30,12 @@ PRIVATE ENUM_RETURN subcmd_scc_proc_do(const _S8 * file_name, FILE * pfw)
 {
 	R_ASSERT(file_name != NULL, RETURN_FAILURE);
 
-	ENUM_RETURN ret_val = RETURN_SUCCESS;
-    
-    return s_cc(file_name, pfw);
+#ifdef CPPUTEST
+    return s_cc(file_name, pfw, NULL);
     //R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
-
+#else
+    return s_cc(file_name, pfw);
+#endif
 	//return RETURN_SUCCESS;
 }
 
