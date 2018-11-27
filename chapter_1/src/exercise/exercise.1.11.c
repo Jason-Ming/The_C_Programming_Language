@@ -156,7 +156,7 @@ PRIVATE void exercise_1_11_check_do(_S8 *file_name, size_t word_number)
     CHECK_WORD_NUM(word_number,word_num1);
     CHECK_WORD_NUM(word_number,word_num2);
 
-    FCLOSE(pfr);
+    S_FCLOSE(pfr);
 }
 
 PRIVATE void exercise_1_11_check(_VOID)

@@ -59,9 +59,9 @@ ENUM_RETURN format_words_do(const _S8 * separator)
 
 _VOID format_words_clear(_VOID)
 {
-    FREE(filename_ouput);
-    FCLOSE(fpr);
-    FCLOSE(fpw);
+    S_FREE(filename_ouput);
+    S_FCLOSE(fpr);
+    S_FCLOSE(fpw);
 }
 
 ENUM_RETURN format_words(const _S8 * filename, const _S8 * separator)
