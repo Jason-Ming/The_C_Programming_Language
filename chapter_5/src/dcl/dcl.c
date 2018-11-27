@@ -34,10 +34,12 @@ PRIVATE ENUM_RETURN subcmd_dcl_proc(_VOID)
 		ERROR_CODE_FILE_NOT_EXIST, 
 		file_name, 
 		return RETURN_FAILURE;);
-    FCLOSE(pfr);
-
-	ret_val = s_cc(file_name, NULL);
-
+    S_FCLOSE(pfr);
+#ifdef CPPUTEST
+	ret_val = s_cc(file_name, NULL, NULL);
+#else
+    ret_val = s_cc(file_name, NULL);
+#endif
 	return ret_val;
 }
 

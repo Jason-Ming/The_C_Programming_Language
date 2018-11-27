@@ -121,7 +121,7 @@ PRIVATE ENUM_RETURN subcmd_tail_proc(_VOID)
         pfw = fopen(output_file, "w");
         if(pfw == NULL)
         {
-            FCLOSE(pfr);
+            S_FCLOSE(pfr);
             
             ret_val = generate_system_error(
                 ERROR_CODE_FILE_CAN_NOT_BE_CREATED, output_file);
@@ -132,11 +132,11 @@ PRIVATE ENUM_RETURN subcmd_tail_proc(_VOID)
     }
 
     ret_val = subcmd_tail_proc_do(pfr, pfw);
-    R_ASSERT_DO(ret_val == RETURN_SUCCESS, RETURN_FAILURE,FCLOSE(pfr);FCLOSE(pfw);FREE(p_positoin););
+    R_ASSERT_DO(ret_val == RETURN_SUCCESS, RETURN_FAILURE,S_FCLOSE(pfr);S_FCLOSE(pfw);S_FREE(p_positoin););
 
-    FCLOSE(pfr);
-    FCLOSE(pfw);
-    FREE(p_positoin);
+    S_FCLOSE(pfr);
+    S_FCLOSE(pfw);
+    S_FREE(p_positoin);
     return RETURN_SUCCESS;
 }
 
