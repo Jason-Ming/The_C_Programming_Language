@@ -27,6 +27,7 @@ void count_charactors_in_input_v2()
 
 int main_1_5_2(void)
 {
+    printf("type some charactors, CTRL+D to exit and diplay the count of charactors\n");
     count_charactors_in_input_v2();
     return 0;
 }

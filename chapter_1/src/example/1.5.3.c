@@ -8,6 +8,8 @@ int main_1_5_3(void)
     nc = 0;
     c_n = 0;
     c_r = 0;
+
+    printf("type some charactors, CTRL+D to exit and diplay the count of charactors and lines\n");
     
     while((c = getchar()) != EOF)
     {
