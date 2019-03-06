@@ -15,84 +15,63 @@
 #define SUBCMD_TAIL_OPTION_N "-n"
 #define SUBCMD_TAIL_OPTION_O "-o"
 
+#define MAX_LINE				5000
+
+PRIVATE _S8 *line_ptr[MAX_LINE];
+
 PRIVATE const char *output_file = NULL;
 PRIVATE _S32 line_num = 10;
-PRIVATE _S32 *p_positoin = NULL;
+
+PRIVATE _VOID data_init(_VOID)
+{
+	for (_S32 i = 0; i < SIZE_OF_ARRAY(line_ptr); i++)
+	{
+		line_ptr[i] = NULL;
+	}
+}
+
+
+PRIVATE _VOID data_clear(_VOID)
+{
+	for (_S32 i = 0; i < SIZE_OF_ARRAY(line_ptr); i++)
+	{
+		S_FREE(line_ptr[i]);
+	}
+}
+
+
+PRIVATE ENUM_RETURN write_lines(FILE * pfw, _S8 *line_ptr[], size_t line_num)
+{
+	R_ASSERT(line_ptr != NULL, RETURN_FAILURE);
+
+	for (size_t i = 0; i < line_num; i++)
+	{
+        if (pfw == NULL)
+		{
+			printf("%s", line_ptr[line_num - i - 1]);
+		}
+		else 
+		{
+			fprintf(pfw, "%s", line_ptr[line_num -i - 1]);
+		}
+	}
+
+	return RETURN_SUCCESS;
+}
 
 PRIVATE ENUM_RETURN subcmd_tail_proc_do(FILE *pfr, FILE *pfw)
 {
     R_ASSERT(pfr != NULL, RETURN_FAILURE);
 
-    _S8 line[1000] = {0};
-    size_t len = 0;
-    ENUM_RETURN ret_val;
-    _S32 i = 0;
+    	R_ASSERT(pfr != NULL, RETURN_FAILURE);
 
-    p_positoin = (_S32 *)malloc(line_num * sizeof(_S32));
-    R_ASSERT(p_positoin != NULL, RETURN_FAILURE);
+	ENUM_RETURN ret_val;
+	size_t	line_numbers = 0;
 
-    for(i = 0; i < line_num; i++)
-    {
-        p_positoin[i] = 0;
-    }
-    
-    ret_val = fseek(pfr, 0, SEEK_END);
-    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
-    _S32 c;
-    _SL offset = 0;
+	ret_val = s_getlines_f_r(pfr, line_ptr, line_num, &line_numbers);
+	R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
-    i = 0;
-    while(fseek(pfr, -1, SEEK_CUR) == 0)
-    {
-        offset -= 1;
-        
-        if((c = fgetc(pfr)) == '\n')
-        {
-            if(offset + 1 != 0)
-            {
-                 p_positoin[i++] = offset + 1;
-            }
-        }
-        else
-        {
-            p_positoin[i] = offset;
-        }
-
-        DEBUG_PRINT("offset: %ld, c: %c", offset, c);
-        
-        if(i == line_num)
-        {
-            break;
-        }
-        
-        R_ASSERT(fseek(pfr, -1, SEEK_CUR) == 0, RETURN_FAILURE);
-    }
-
-    for(i = line_num - 1; i >= 0; i--)
-    {
-        DEBUG_PRINT("p_positoin[%d]: %d", i, p_positoin[i]);
-        
-        if(p_positoin[i] == 0)
-        {
-            continue;
-        }
-
-        ret_val = fseek(pfr, p_positoin[i], SEEK_END);
-        R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
-
-        ret_val = s_getline_f(pfr, line, 1000, &len);
-        R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
-        R_ASSERT(len > 0, RETURN_FAILURE);
-
-        if(pfw == NULL)
-        {
-            printf("%s", line);
-        }
-        else
-        {
-            fprintf(pfw, "%s", line);
-        }
-    }
+	write_lines(pfw, line_ptr, line_numbers);
 
     return RETURN_SUCCESS;
 }
@@ -130,14 +109,15 @@ PRIVATE ENUM_RETURN subcmd_tail_proc(_VOID)
             return RETURN_FAILURE;
         }
     }
+    
+	data_init();
 
     ret_val = subcmd_tail_proc_do(pfr, pfw);
-    R_ASSERT_DO(ret_val == RETURN_SUCCESS, RETURN_FAILURE,S_FCLOSE(pfr);S_FCLOSE(pfw);S_FREE(p_positoin););
 
-    S_FCLOSE(pfr);
-    S_FCLOSE(pfw);
-    S_FREE(p_positoin);
-    return RETURN_SUCCESS;
+	data_clear();
+	S_FCLOSE(pfr);
+	S_FCLOSE(pfw);
+	return ret_val;
 }
 
 PRIVATE ENUM_RETURN subcmd_tail_option_n_proc(const char *value)
@@ -145,7 +125,7 @@ PRIVATE ENUM_RETURN subcmd_tail_option_n_proc(const char *value)
     R_ASSERT(value != NULL, RETURN_FAILURE);
 
     ENUM_RETURN ret_val = s_strtos32(value, &line_num);
-    if(ret_val == RETURN_FAILURE || (ret_val == RETURN_SUCCESS && line_num <= 0))
+    if(ret_val == RETURN_FAILURE || (ret_val == RETURN_SUCCESS && (line_num <= 0 || line_num > MAX_LINE)))
     {
         ret_val = generate_system_error(ERROR_CODE_INVALID_ARGS, value);
         R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
@@ -182,7 +162,7 @@ ENUM_RETURN tail_init(_VOID)
         ARG_TYPE_DATA, 
         subcmd_tail_option_n_proc, 
         BOOLEAN_FALSE,
-        "specify the number of lines, default value is 10");
+        "specify the number of lines, default value is 10, range: 1~5000");
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
     ret_val = register_option(

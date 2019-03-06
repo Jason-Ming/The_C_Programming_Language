@@ -13,6 +13,7 @@
 #include "tail.h"
 #include "sortf.h"
 #include "dcl.h"
+#include "find.h"
 
 int main(int argc, char **argv)
 {
@@ -37,6 +38,9 @@ int main(int argc, char **argv)
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
     ret_val = dcl_init();
+    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+
+    ret_val = find_init();
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
     
     return process(argc, argv);
