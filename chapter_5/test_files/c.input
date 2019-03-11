@@ -1,5 +1,5 @@
 const int const (*const (*fp)(int x[][10], void *p))(int(*f)(char* c, int argc, char**argv));
-int const(*(*fp)(int [][10]))(int(*)(void));
+int const(*(*fp)(int a[][10]))(int(*)(void));
 int a;
 char const **argv;
 const int x;
