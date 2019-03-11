@@ -28,7 +28,7 @@ _VOID my_reverse(_S8 source[], _S32 left, _S32 right)
 
 int exercise_4_13(void)
 {
-    _S8 source[] = "This a incridable string!";
+    _S8 source[] = "This is a incridable string!";
 
     printf("string: %s\n", source);
     my_reverse(source, 0, strlen(source) - 1);
