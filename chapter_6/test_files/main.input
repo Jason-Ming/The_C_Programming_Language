@@ -1,5 +1,5 @@
 //#include <aaaa>
-#include "test_files/func.input"adsf 
+#include "func.input"adsf 
 //test snippet begin========================================================================================
 #define STRING "checkpair//  \ 
 /**/\t  'this is a string' \" good! \"\n"//a line comment\ 
@@ -8,13 +8,13 @@ string" 'a' // x/y/z*//z)
 #define STRING1 'this is a single quote// /* lalala\
 */ \" "hehe" \'sssss\''//a line comment
 //a line comment
-#include <test_files/empty.input>
+#include "empty.input"
 #define a\   
 bc "abc /*\  
 */abc"
 ''
 //test snippet end==========================================================================================
 int const(*(*fp_in_empty)(int [][10]))(int(*)(void));
-#include <test_files/s.input>
-#include "test_files/func.input"
-#include <test_files/c.input>
+#include "s.input"
+#include "func.input"
+#include "c.input"

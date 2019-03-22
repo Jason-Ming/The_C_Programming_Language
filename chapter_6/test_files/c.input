@@ -1,17 +1,4 @@
 
-
-//this is a one line comment\
-one line comment
-//\
-this is a valid oneline comment
-#def\
-ine MAC\
-RO this is a valid\
- macro define
-cha\
-r* s="this is a valid string\
-n string";
-/*this is */#/* a */define/* valid */ID/* preprocessing */replacement/*direc*/list/*tive*/
 #define str(s) #s  //generate string from arguments(see 6.10.3.2,P153)
     #define str2(s) str(s)  //用实参宏替换后的序列生成字符串
     puts(str2(ID));  //原样输出宏ID的替换列表
@@ -28,21 +15,7 @@ n string";
 
 #define hash #
 #define STRSS(sd,sd2) #sd##"abc"###sd #sd###sd  
-*///this is a test comment
-//test snippet begin========================================================================================
-#define STRING "checkpair//  \ 
-/**/\t  'this is a string' \" good! \"\n"//a line comment\ 
-#define CALC(x, y, z) (x/y/*this is a comment"a common\ 
-string" 'a' // x/y/z*//z)
-#define STRING1 'this is a single quote// /* lalala\
-*/ \" "hehe" \'sssss\''//a line comment
-//a line comment
 
-#define a\   
-bc "abc /*\  
-*/abc"
-''
-//test snippet end==========================================================================================
 
 /*
 about:'\'

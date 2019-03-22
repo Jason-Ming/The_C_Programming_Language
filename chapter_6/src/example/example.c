@@ -10,6 +10,8 @@
 
 #include "main_proc.h"
 #include "example.h"
+#include "6.1.h"
+#include "6.2.h"
 
 
 
@@ -19,6 +21,8 @@
 
 STRU_MAIN_PROC main_proc_array[] =
 {
+    {"6.1", main_6_1, "print points and calculate distance of two points"},
+    {"6.2", main_6_2, "print points and calculate middle of two points"},
 
 };
 
