@@ -29,11 +29,12 @@ TEST(S_CC, test0)
     //s_print_types();
     const _S8 *file_name[] = {
         //"test_files/func.input",
-        //"test_files/c.input",
+        "test_files/i.input",
         //"test_files/s.input",
-        "test_files/main.input"};
+        //"test_files/main.input"};
         //,
-        //"test_files/s.input"};
+        //"test_files/s.input"
+        };
     ENUM_RETURN ret_val;
     for(size_t i = 0; i < SIZE_OF_ARRAY(file_name); i++)
     {
