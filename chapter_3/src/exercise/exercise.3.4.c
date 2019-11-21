@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <time.h>
+#include <limits.h>
 
 #include "s_alg.h"
 
