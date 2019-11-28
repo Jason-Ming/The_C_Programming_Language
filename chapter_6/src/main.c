@@ -12,6 +12,7 @@
 
 #include "scc.h"
 #include "stock_code.h"
+#include "word_count.h"
 
 int main(int argc, char **argv)
 {
@@ -30,6 +31,9 @@ int main(int argc, char **argv)
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
 	ret_val = stock_code_init();
+    R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
+
+    ret_val = word_count_init();
     R_ASSERT(ret_val == RETURN_SUCCESS, RETURN_FAILURE);
 
 	return process(argc, argv);

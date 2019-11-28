@@ -11,7 +11,7 @@
 #include "main_proc.h"
 
 #include "exercise.h"
-
+#include "exercise.6.3.h"
 
 
 #define SUBCMD_EXERCISE "exercise"
@@ -20,6 +20,9 @@
 
 STRU_MAIN_PROC exercise_proc_array[] =
 {
+    {"6.3", exercise_6_3, "Write a cross-referencer that prints a list of all words in a document, and for"
+        "each word, a list of the line numbers on which it occurs. Remove noise words like ``the,''"
+        "``and,'' and so on."},
 };
 
 FUNC_MAIN_PROC get_exercise_handler_by_name(const char *name)
