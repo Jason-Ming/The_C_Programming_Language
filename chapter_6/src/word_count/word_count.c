@@ -61,7 +61,7 @@ PRIVATE ENUM_RETURN output_word(_VOID)
 
 PRIVATE ENUM_RETURN word_line_list_init(STRU_WORD_LINE *p_word_line_head)
 {
-    S_R_ASSERT(p_word_line_head != NULL, RETURN_FAILURE);
+    //S_R_ASSERT(p_word_line_head != NULL, RETURN_FAILURE);
 
     INIT_LIST_HEAD(&p_word_line_head->list);
     p_word_line_head->line = 0;//a invalid value
@@ -71,8 +71,8 @@ PRIVATE ENUM_RETURN word_line_list_init(STRU_WORD_LINE *p_word_line_head)
 
 PRIVATE ENUM_RETURN word_line_list_add(STRU_WORD_LINE *p_word_line_head, STRU_WORD_LINE *p_word_line_new)
 {
-    S_R_ASSERT(p_word_line_head != NULL, RETURN_FAILURE);
-    S_R_ASSERT(p_word_line_new != NULL, RETURN_FAILURE);
+    //S_R_ASSERT(p_word_line_head != NULL, RETURN_FAILURE);
+    //S_R_ASSERT(p_word_line_new != NULL, RETURN_FAILURE);
 
     list_add_tail(&p_word_line_new->list, &p_word_line_head->list);
 
@@ -81,7 +81,7 @@ PRIVATE ENUM_RETURN word_line_list_add(STRU_WORD_LINE *p_word_line_head, STRU_WO
 
 PRIVATE ENUM_RETURN word_line_list_release(STRU_WORD_LINE *p_word_line_head)
 {
-    S_R_ASSERT(p_word_line_head != NULL, RETURN_FAILURE);
+    //S_R_ASSERT(p_word_line_head != NULL, RETURN_FAILURE);
     STRU_WORD_LINE *p_word_line_temp;
 
     LIST_FOR_EACH_ALL_SAFE(p_word_line_head)
@@ -206,7 +206,7 @@ PRIVATE ENUM_RETURN word_bintree_data_print_proc(void *p_data_container)
 
 PRIVATE ENUM_RETURN subcmd_word_count_proc_do(FILE * pfr)
 {
-	S_R_ASSERT(pfr != NULL, RETURN_FAILURE);
+	//S_R_ASSERT(pfr != NULL, RETURN_FAILURE);
 
     PRIVATE _S8 line_buffer [MAX_LINE_LEN];
     const _S8 *p_line_buffer = &line_buffer[0];
@@ -215,8 +215,9 @@ PRIVATE ENUM_RETURN subcmd_word_count_proc_do(FILE * pfr)
     PRIVATE _S8 word_buf[MAX_WORD_LENGTH];
     size_t a_word_length = 0;
     size_t line = 0;
-    
-    s_set_separators(NULL);
+    const _S8 *separators = "\r\n\t\f \v`~!@#$%^&*()-+={}[]|\\:;\"'<>,.?/";
+
+    s_set_separators(separators);
     ENUM_RETURN ret_val = RETURN_FAILURE;
 
     ret_val = bintree_create(&g_words, 
